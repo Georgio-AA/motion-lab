@@ -26,7 +26,7 @@ document.querySelectorAll('[data-owner]').forEach(element => {
 });
 document.title = OWNER.name + ' — Interactive Web Developer';
 document.querySelector('meta[name="description"]').content =
-  OWNER.name + ', ' + OWNER.roleLine.toLowerCase() + '. ' + OWNER.promise + ' Explore ten interactive concept demos.';
+  OWNER.name + ', ' + OWNER.roleLine.toLowerCase() + '. ' + OWNER.promise + ' Explore eleven interactive concept demos.';
 document.querySelectorAll('[data-upwork]').forEach(link => { link.href = OWNER.upworkUrl; link.target = '_blank'; link.rel = 'noopener'; });
 document.querySelectorAll('[data-email]').forEach(link => {
   link.href = 'mailto:' + OWNER.email + '?subject=' + encodeURIComponent('Project inquiry from your portfolio');
