@@ -21,6 +21,14 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://georgio-aa.github.io/motion-lab/og/08-ops-worlds.jpg">
+
+<meta name="theme-color" content="#f6f3ea">
+<link rel="canonical" href="https://georgio-aa.github.io/motion-lab/08-ops-worlds/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="../shared/transition.css">
+<script type="module" src="../shared/transition.js"></script>
 </head>
 <body data-world="warehouse">
   <a class="back-to-hub" href="../index.html">← All demos</a>
@@ -37,11 +45,11 @@
       <p class="picker-heading">TWO WORLDS. <span>Choose your shift.</span></p>
       <div class="world-toggle" role="tablist" aria-label="Choose your operations world">
         <button class="world-card" id="warehouse-tab" role="tab" data-mode="warehouse" aria-selected="true" aria-controls="ops-stage" tabindex="0">
-          <span class="world-thumbnail day-thumbnail" aria-hidden="true"><svg viewBox="0 0 144 104" focusable="false"><ellipse cx="72" cy="88" rx="54" ry="9" fill="#a6b9c5" opacity=".22"/><path d="m15 58 74-25 40 25-75 27Z" fill="#809aaa"/><path d="M15 58v10l39 26V85l75-27v10L54 94" fill="#536c80"/><path d="m21 58 68-22 34 22-69 23Z" fill="#d0dde3"/><path d="m31 58 62-20M41 65l63-20M52 72l63-20" stroke="#91a8b7" stroke-width="4"/><g class="preview-box"><path d="m56 32 23-8 18 12-23 8Z" fill="#f1c47e"/><path d="M56 32v23l18 12V44Z" fill="#c88e4d"/><path d="M74 44v23l23-8V36Z" fill="#dfaa64"/><path d="m65 29 18 12v10" fill="none" stroke="#fff0cc" stroke-width="5"/></g></svg></span>
+          <span class="world-thumbnail day-thumbnail" aria-hidden="true"><svg viewBox="0 0 144 104" focusable="false" aria-hidden="true"><ellipse cx="72" cy="88" rx="54" ry="9" fill="#a6b9c5" opacity=".22"/><path d="m15 58 74-25 40 25-75 27Z" fill="#809aaa"/><path d="M15 58v10l39 26V85l75-27v10L54 94" fill="#536c80"/><path d="m21 58 68-22 34 22-69 23Z" fill="#d0dde3"/><path d="m31 58 62-20M41 65l63-20M52 72l63-20" stroke="#91a8b7" stroke-width="4"/><g class="preview-box"><path d="m56 32 23-8 18 12-23 8Z" fill="#f1c47e"/><path d="M56 32v23l18 12V44Z" fill="#c88e4d"/><path d="M74 44v23l23-8V36Z" fill="#dfaa64"/><path d="m65 29 18 12v10" fill="none" stroke="#fff0cc" stroke-width="5"/></g></svg></span>
           <span class="world-card-copy"><span class="shift-number">01 / DAY SHIFT</span><strong>Warehouse</strong><span class="world-teaser">Day shift · fulfilment</span><span class="world-invitation">Viewing <span aria-hidden="true">✓</span></span></span>
         </button>
         <button class="world-card airport-card" id="airport-tab" role="tab" data-mode="airport" aria-selected="false" aria-controls="ops-stage" tabindex="-1">
-          <span class="world-thumbnail night-thumbnail" aria-hidden="true"><svg viewBox="0 0 144 104" focusable="false"><ellipse cx="74" cy="86" rx="53" ry="8" fill="#030b1c" opacity=".5"/><path d="m9 67 87-40 39 27-87 41Z" fill="#253a59"/><path d="m29 73 84-39" stroke="#d6e6ff" stroke-width="2" stroke-dasharray="8 7"/><g class="preview-lights" fill="#9ac8ff"><circle cx="16" cy="66" r="2"/><circle cx="33" cy="58" r="2"/><circle cx="50" cy="50" r="2"/><circle cx="67" cy="42" r="2"/><circle cx="98" cy="66" r="2"/><circle cx="115" cy="58" r="2"/><circle cx="81" cy="74" r="2"/><circle cx="64" cy="82" r="2"/></g><g class="preview-plane"><path d="m35 50 62-25 4 7-61 25Z" fill="#b9cde2"/><path d="m70 39-8-24 8-3 17 20 27 7-6 7-30-1-15 18-8-2 9-20Z" fill="#e6eef7"/><path d="m41 51-9-14 7-3 13 12Z" fill="#f1a38c"/><path d="m43 50-18 4 3 5 23-3Z" fill="#f1a38c"/><circle cx="67" cy="17" r="2" fill="#ffbd9c"/><circle cx="109" cy="42" r="2" fill="#a3edc6"/></g></svg></span>
+          <span class="world-thumbnail night-thumbnail" aria-hidden="true"><svg viewBox="0 0 144 104" focusable="false" aria-hidden="true"><ellipse cx="74" cy="86" rx="53" ry="8" fill="#030b1c" opacity=".5"/><path d="m9 67 87-40 39 27-87 41Z" fill="#253a59"/><path d="m29 73 84-39" stroke="#d6e6ff" stroke-width="2" stroke-dasharray="8 7"/><g class="preview-lights" fill="#9ac8ff"><circle cx="16" cy="66" r="2"/><circle cx="33" cy="58" r="2"/><circle cx="50" cy="50" r="2"/><circle cx="67" cy="42" r="2"/><circle cx="98" cy="66" r="2"/><circle cx="115" cy="58" r="2"/><circle cx="81" cy="74" r="2"/><circle cx="64" cy="82" r="2"/></g><g class="preview-plane"><path d="m35 50 62-25 4 7-61 25Z" fill="#b9cde2"/><path d="m70 39-8-24 8-3 17 20 27 7-6 7-30-1-15 18-8-2 9-20Z" fill="#e6eef7"/><path d="m41 51-9-14 7-3 13 12Z" fill="#f1a38c"/><path d="m43 50-18 4 3 5 23-3Z" fill="#f1a38c"/><circle cx="67" cy="17" r="2" fill="#ffbd9c"/><circle cx="109" cy="42" r="2" fill="#a3edc6"/></g></svg></span>
           <span class="world-card-copy"><span class="shift-number">02 / NIGHT SHIFT</span><strong>Airport</strong><span class="world-teaser">Night shift · flights</span><span class="world-invitation" id="airport-invitation">See the airport <span aria-hidden="true">↗</span></span><span class="world-countdown" hidden><svg class="countdown-ring" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><circle class="ring-track" cx="16" cy="16" r="13"/><circle class="ring-fill" cx="16" cy="16" r="13" pathLength="100"/></svg><span id="countdown-label">Night shift starts in 5…</span></span></span>
         </button>
       </div>

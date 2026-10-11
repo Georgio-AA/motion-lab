@@ -1,4 +1,4 @@
-:root { --ground:#f6f3ea; --text:#252d34; --muted:#737d85; --accent:#315ee2; --glass:rgba(255,255,255,.79); --line:#253d5914; --card-shadow:0 12px 36px #3f53750a; }
+:root { --ground:#f6f3ea; --text:#252d34; --muted:#656f77; --accent:#315ee2; --glass:rgba(255,255,255,.79); --line:#253d5914; --card-shadow:0 12px 36px #3f53750a; }
 body { background:var(--ground); color:var(--text); font-size:15px; transition:background 1s,color .7s; overflow-x:clip; }
 body[data-world="airport"] { --ground:#0c1427; --text:#e6eaf6; --muted:#8c9ab2; --accent:#93b4ff; --glass:rgba(23,36,60,.86); --line:#adcbf51c; --card-shadow:0 15px 40px #0002; }
 button { border:0; background:none; }
@@ -72,7 +72,7 @@ h1 em { display:block; color:var(--accent); font-weight:400; }
 .main-metric { display:flex; flex-wrap:wrap; align-items:baseline; gap:6px; }
 #throughput { font-size:42px; font-weight:500; letter-spacing:-2px; line-height:1; font-variant-numeric:tabular-nums; }
 .metric-unit { font-size:12px; color:var(--muted); }
-.trend { display:block; width:100%; color:#559569; font-size:12px; margin:6px 0; }
+.trend { display:block; width:100%; color:#397b4d; font-size:12px; margin:6px 0; }
 .sparkline { width:100%; height:52px; margin:5px 0 15px; color:var(--accent); }
 .sparkline path { fill:none; stroke:currentColor; stroke-width:1.7; }.sparkline .chart-area { stroke:none; fill:url(#chart-fill); }
 .secondary-metrics { display:grid; grid-template-columns:1fr 1fr; border-top:1px solid var(--line); padding-top:14px; }
@@ -81,12 +81,12 @@ h1 em { display:block; color:var(--accent); font-weight:400; }
 .secondary-metrics .metric-divider { font-size:14px; color:var(--muted); letter-spacing:0; }
 .secondary-metrics small { display:block; color:var(--muted); font-size:12px; margin-top:2px; }
 .panel-foot { display:flex; justify-content:space-between; align-items:center; gap:8px; border-top:1px solid var(--line); padding-top:13px; margin-top:16px; font-size:12px; color:var(--muted); }
-.performance-panel .panel-foot { flex-wrap:wrap; }.healthy { color:#559569; }
+.performance-panel .panel-foot { flex-wrap:wrap; }.healthy { color:#397b4d; }
 .badge { background:var(--line); border-radius:5px; padding:4px 6px; font-size:12px; color:var(--muted); }
 .list-header { display:flex; justify-content:space-between; font-size:12px; color:var(--muted); padding-bottom:6px; }
 .dispatch-row { width:100%; display:flex; justify-content:space-between; text-align:left; align-items:center; gap:8px; padding:13px 0; border-bottom:1px solid var(--line); min-height:61px; }
 .dispatch-row:hover .dispatch-id { color:var(--accent); }.dispatch-id { font-size:14px; font-weight:600; display:block; transition:color .2s; }
-.dispatch-detail { font-size:12px; color:var(--muted); display:block; margin-top:2px; }.dispatch-status { font-size:12px; color:#559569; white-space:nowrap; }
+.dispatch-detail { font-size:12px; color:var(--muted); display:block; margin-top:2px; }.dispatch-status { font-size:12px; color:#397b4d; white-space:nowrap; }
 .flap { display:inline-block; padding:3px 5px; background:#050c17; color:#d9e6fa; border-radius:2px; border-top:1px solid #344566; box-shadow:inset 0 -9px 0 #ffffff08; font:12px monospace; transform-origin:center; }
 .flap.flip { animation:flap .5s ease; } @keyframes flap { 45% { transform:rotateX(90deg); color:transparent; } }
 .tiny-arrow { font-size:20px; color:var(--accent); }
@@ -145,3 +145,5 @@ h1 em { display:block; color:var(--accent); font-weight:400; }
   .follow-card { top:48px; left:14px; bottom:auto; width:calc(100% - 28px); padding:16px; }.follow-card h2 { font-size:23px; }.follow-status { margin-top:12px; }.follow-card .follow-hint { margin-top:8px; }.transition-label { bottom:255px; }.transition-label em { font-size:37px; }.below-scene { align-items:start; }.below-scene p { line-height:1.9; max-width:170px; }.below-scene>p>span:not(.hint-icon) { margin:0 4px; }#follow-next { font-size:14px; max-width:150px; padding:6px 0; text-align:right; }#follow-next span { margin-left:8px; }.page-footer { flex-wrap:wrap; padding-top:24px; }.page-footer>p { font-size:28px; }.page-footer div { width:100%; order:3; }.page-footer .edition { font-size:12px; max-width:125px; }.fallback { gap:40px; }.fallback-island { scale:.8; }
 }
 @media(prefers-reduced-motion:reduce) { .transition-label { display:none; }.world-card::before,.preview-box,.preview-lights { animation:none!important; }.world-card[aria-selected="false"]::before { opacity:.6; }.world-card,.preview-plane,.world-invitation span,.stage-switch,.ring-fill { transition:none; }.world-card:hover,.airport-card:hover .preview-plane,.airport-card.is-nudged .preview-plane { transform:none; } }
+
+body[data-world="airport"] .dispatch-status{color:#84c5ad}

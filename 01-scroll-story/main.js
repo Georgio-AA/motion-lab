@@ -76,7 +76,14 @@ function drawScene(key, progress, time) {
   if (reduced && item.lastProgress === progress && !item.needsFrame) return;
   try {
     item.pose(progress, reduced ? 0 : time / 1000, innerWidth < 700);
+    const started = performance.now();
     item.renderer.render(item.scene, item.camera);
+    // Reduce only pixel density after sustained expensive draws; preserve the scene.
+    item.slowDraws = performance.now() - started > 20 ? (item.slowDraws || 0) + 1 : 0;
+    if (item.slowDraws > 45 && item.renderer.getPixelRatio() > 1) {
+      item.renderer.setPixelRatio(Math.max(1, item.renderer.getPixelRatio() - .25));
+      item.slowDraws = 0; item.resize();
+    }
     item.lastProgress = progress; item.needsFrame = false;
   } catch { dropScene(key); }
 }
@@ -285,7 +292,7 @@ function makeBloom(T, RoomEnvironment) {
   const host = document.querySelector('#bloom-scene');
   const renderer = new T.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: reduced });
   renderers.bloom = renderer;
-  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
   renderer.setClearColor(0xfaf3ee, 0); renderer.toneMapping = T.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.15;
   host.append(renderer.domElement);
   const scene = new T.Scene();
@@ -426,7 +433,7 @@ function makeBloom(T, RoomEnvironment) {
 
 function makeRoom(T) {
   const host = document.querySelector('#room-scene');
-  const renderer = new T.WebGLRenderer({ antialias: true }); renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  const renderer = new T.WebGLRenderer({ antialias: true }); renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
   renderers.room = renderer;
   renderer.toneMapping = T.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.2; host.append(renderer.domElement);
   const scene = new T.Scene(); scene.background = new T.Color('#2b1c2a'); scene.fog = new T.FogExp2('#624353', .065);

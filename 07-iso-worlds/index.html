@@ -19,6 +19,14 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://georgio-aa.github.io/motion-lab/og/07-iso-worlds.jpg">
+
+<meta name="theme-color" content="#fbfbf2">
+<link rel="canonical" href="https://georgio-aa.github.io/motion-lab/07-iso-worlds/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="../shared/transition.css">
+<script type="module" src="../shared/transition.js"></script>
 </head>
 <body>
   <a class="back-to-hub" href="../index.html">← All demos</a>
@@ -32,7 +40,7 @@
       <div id="world-tooltip" class="world-tooltip" hidden><strong></strong><span></span></div>
       <div class="world-caption"><span id="world-name">OUTPOST 01 / THE QUIET DESERT</span><span id="follow-state"><i></i> Live local simulation</span></div>
       <div class="view-tools" aria-label="Camera controls"><button id="zoom-in" aria-label="Zoom in">+</button><button id="zoom-out" aria-label="Zoom out">−</button><button id="reset" aria-label="Reset camera">↺</button></div>
-      <div class="map-wrap"><div class="map-title">THE NEIGHBOURHOOD <span>↗ N</span></div><canvas id="minimap" width="160" height="100" aria-label="Minimap of the neighbourhood"></canvas></div>
+      <div class="map-wrap"><div class="map-title">THE NEIGHBOURHOOD <span>↗ N</span></div><canvas id="minimap" width="160" height="100" role="img" aria-label="Minimap of the neighbourhood"></canvas></div>
       <div class="time-control" id="time-control"><div><label for="time">Time of day</label><button id="auto-time" aria-pressed="true">Auto cycle</button></div><input id="time" type="range" min="0" max="3" step="0.01" value="1" aria-label="Time of day; adjusting overrides automatic cycle"><div class="time-ticks"><span>Dawn</span><output id="time-label" for="time">Day · 12:00</output><span>Night</span></div></div>
       <p class="gesture-hint">DRAG TO EXPLORE <span>·</span> DOUBLE CLICK TO GET CLOSER</p>
       <article id="agent-card" class="agent-card" hidden aria-label="Selected resident"><button id="close-card" class="close" aria-label="Release follow camera">×</button><p class="eyebrow" id="card-name">Resident</p><p id="card-role" class="card-role"></p><h2 id="card-task">A little work in progress</h2><p class="working"><i></i><span id="card-state">Working</span><span id="card-percent">0%</span></p><div class="progress" id="card-progress" role="progressbar" aria-label="Current activity progress" aria-valuemin="0" aria-valuemax="100"><span></span></div><div class="log-heading">FIELD NOTES <span>LIVE</span></div><ol id="activity-log" class="activity-log" aria-label="Recent activity"></ol><p class="release-hint">Following this resident · Esc to release</p></article>

@@ -30,7 +30,9 @@ function shaderScene(canvas, source) {
 
 // Particle positions spring back to their rotating homes after pointer repulsion.
 function canvasScene(canvas, nebula = false) {
-  const ctx=canvas.getContext('2d');let w=1,h=1;let ink=[];
+  const ctx=canvas.getContext('2d');
+  if (!ctx) return { resize() {}, draw() {} };
+  let w=1,h=1;let ink=[];
   // Tight angular scatter preserves three arms; a separate dense bulge fills the core.
   const stars=nebula ? Array.from({length:6800},(_,i)=>{
     const core=i<2300;
@@ -76,7 +78,16 @@ function canvasScene(canvas, nebula = false) {
     }};
 }
 
-const renderers=sections.map((s,i)=>i<2?shaderScene(s.querySelector('canvas'),i===0?ribbons:gradient):canvasScene(s.querySelector('canvas'),i===3));
+// Isolate each context: a failed shader cannot stop the other scenes or navigation.
+const renderers=sections.map((section,i)=>{
+  const canvas=section.querySelector('canvas');
+  try { return i<2?shaderScene(canvas,i===0?ribbons:gradient):canvasScene(canvas,i===3); }
+  catch {
+    // A canvas already bound to WebGL cannot acquire a 2D fallback context.
+    const fallback=canvas.cloneNode(false);canvas.replaceWith(fallback);
+    try { return canvasScene(fallback,true); } catch { return {resize(){},draw(){}}; }
+  }
+});
 function resize(){sections.forEach((s,i)=>{const dpr=Math.min(devicePixelRatio,2),r=s.getBoundingClientRect();renderers[i].resize(Math.round(r.width*dpr),Math.round(r.height*dpr));});if(active>=0)renderers[active].draw(reduced?6:time);}
 resize();window.addEventListener('resize',resize);
 sections.forEach((s,i)=>{s.addEventListener('pointermove',e=>{const r=s.getBoundingClientRect(),px=pointer.x,py=pointer.y;pointer.x=(e.clientX-r.left)/r.width;pointer.y=(e.clientY-r.top)/r.height;pointer.active=1;renderers[i].gesture?.(pointer.x,pointer.y,px,py);});s.addEventListener('pointerdown',e=>{const r=s.getBoundingClientRect();pointer.x=(e.clientX-r.left)/r.width;pointer.y=(e.clientY-r.top)/r.height;pointer.active=1;renderers[i].gesture?.(pointer.x,pointer.y,pointer.x+.002,pointer.y+.002);});s.addEventListener('pointerleave',()=>pointer.active=0);s.addEventListener('pointerup',e=>{if(e.pointerType!=='mouse')pointer.active=0;});});

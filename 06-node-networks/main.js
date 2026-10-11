@@ -18,7 +18,7 @@ function bezier(a,b,t,bend=0){const mx=(a.x+b.x)/2+ bend,my=(a.y+b.y)/2-bend;con
 function path(ctx,a,b,bend){ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.quadraticCurveTo((a.x+b.x)/2+bend,(a.y+b.y)/2-bend,b.x,b.y);ctx.stroke();}
 function dot(ctx,x,y,r,color,glow=0){ctx.fillStyle=color;ctx.shadowColor=color;ctx.shadowBlur=glow;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;}
 let taskNumber=481;
-function dispatch(i){const n=nodes[i];focused=i;select.value=i;n.task=++taskNumber;n.active=true;dismissHint();for(let j=0;j<16;j++)bursts.push({i,start:clock+j*.035});const message=`Hub -> ${n.role}: task #${n.task} dispatched`;$('dispatch-status').textContent=message;addLog('DISPATCH',message);hovered=i;updateTooltip();}
+function dispatch(i){const n=nodes[i];focused=i;select.value=i;n.task=++taskNumber;n.active=true;dismissHint();if(!reduced)for(let j=0;j<16;j++)bursts.push({i,start:clock+j*.035});const message=`Hub -> ${n.role}: task #${n.task} dispatched`;$('dispatch-status').textContent=message;addLog('DISPATCH',message);hovered=i;updateTooltip();}
 $('dispatch').addEventListener('click',()=>dispatch(+select.value));select.addEventListener('change',()=>{focused=+select.value;});
 graph.canvas.addEventListener('pointermove',e=>{const r=graph.canvas.getBoundingClientRect();pointer={x:e.clientX-r.left,y:e.clientY-r.top};hovered=nodes.findIndex(n=>Math.hypot(n.x-pointer.x,n.y-pointer.y)<Math.max(12,graph.w<600?13:10));updateTooltip();});
 graph.canvas.addEventListener('pointerleave',()=>{pointer=null;hovered=-1;$('tooltip').hidden=true;});
@@ -56,7 +56,7 @@ function renderPipeline(){const {ctx:c,w,h}=pipe;c.clearRect(0,0,w,h);if(pipelin
 }
 
 // Atmospheric orb and deterministic jagged traces, inspired by live signal monitors.
-function renderSignal(){const {ctx:c,w,h}=signal;c.clearRect(0,0,w,h);const ox=w*.12,oy=h/2,g=c.createRadialGradient(ox,oy,2,ox,oy,h*.4);g.addColorStop(0,'#d6ffff');g.addColorStop(.12,cyan);g.addColorStop(.3,'#70eced33');g.addColorStop(1,'#70eced00');c.fillStyle=g;c.fillRect(0,0,w*.3,h);for(let j=0;j<6;j++){c.beginPath();for(let x=0;x<w*.73;x+=5){const n=x/5,y=h/2+Math.sin(n*1.7+j*2+clock*.5)*(12+j*3)+Math.cos(n*.21+clock+j)*12;const px=w*.27+x;x===0?c.moveTo(px,y):c.lineTo(px,y);}c.strokeStyle=j===0?'#d6eaa5':`rgba(255,75,168,${.1+j*.055})`;c.lineWidth=j===0?1.5:.8;c.stroke();}}
+function renderSignal(){const {ctx:c,w,h}=signal;c.clearRect(0,0,w,h);const ox=w*.12,oy=h/2,g=c.createRadialGradient(ox,oy,2,ox,oy,h*.4);g.addColorStop(0,'#d6ffff');g.addColorStop(.12,cyan);g.addColorStop(.3,'#70eced33');g.addColorStop(1,'#70eced00');c.fillStyle=g;c.fillRect(0,0,w*.3,h);for(let j=0;j<6;j++){c.beginPath();for(let x=0;x<w*.73;x+=5){const n=x/5,y=h/2+Math.sin(n*1.7+j*2+(reduced?0:clock*.5))*(12+j*3)+Math.cos(n*.21+(reduced?0:clock)+j)*12;const px=w*.27+x;x===0?c.moveTo(px,y):c.lineTo(px,y);}c.strokeStyle=j===0?'#d6eaa5':`rgba(255,75,168,${.1+j*.055})`;c.lineWidth=j===0?1.5:.8;c.stroke();}}
 
 // Fake realtime data is updated slowly, independently of frame rate.
 const bars=Array.from({length:24},()=>{const e=document.createElement('i');$('bars').append(e);return e;});
@@ -66,7 +66,7 @@ const events=[['REASON','Evidence weighted · confidence 0.98'],['SYNC','36 spec
 function addLog(event,message){const row=document.createElement('div');row.className='log-line';const time=document.createElement('time');time.textContent=new Date().toLocaleTimeString('en-GB');row.append(time,document.createTextNode(event));const detail=document.createElement('span');detail.textContent=message;row.append(detail);$('logs').prepend(row);while($('logs').children.length>5)$('logs').lastChild.remove();}
 function telemetry(){const health=90+Math.floor(Math.random()*8);$('health').innerHTML=`${health}<span>%</span>`;$('donut').style.background=`conic-gradient(${pink} ${health}%,#28212b 0)`;$('rate').textContent=230+Math.floor(Math.random()*40);counter+=Math.floor(15+Math.random()*70);$('counter').textContent=String(counter).padStart(6,'0').replace(/(\d{3})$/,',$1');bars.forEach(e=>e.style.height=`${20+Math.random()*80}%`);cells.forEach(e=>e.style.opacity=.08+Math.random()*.85);const event=events[Math.floor(Math.random()*events.length)];addLog(...event);}
 for(let i=0;i<4;i++)addLog(...events[i]);telemetry();
-function frame(now){const dt=last?Math.min((now-last)/1000,.05):0;last=now;clock+=dt;if(graph.visible)renderGraph();if(pipe.visible)renderPipeline();if(signal.visible)renderSignal();if(clock-telemetryAt>2.4){telemetryAt=clock;telemetry();}raf=requestAnimationFrame(frame);}
+function frame(now){const dt=last?Math.min((now-last)/1000,.05):0;last=now;clock+=dt;if(graph.visible)renderGraph();if(pipe.visible)renderPipeline();if(signal.visible)renderSignal();if(!reduced&&clock-telemetryAt>2.4){telemetryAt=clock;telemetry();}raf=requestAnimationFrame(frame);}
 document.addEventListener('visibilitychange',()=>{cancelAnimationFrame(raf);last=0;if(!document.hidden)raf=requestAnimationFrame(frame);});
-motion.addEventListener('change',()=>{reduced=motion.matches;});
+motion.addEventListener('change',()=>{reduced=motion.matches;bursts.length=0;});
 raf=requestAnimationFrame(frame);

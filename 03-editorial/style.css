@@ -206,3 +206,6 @@ dialog>p:not(.eyebrow) { font-size:16px; margin-bottom:25px; }
   .marquee-track { transform:none!important; } .footer-brand span { transform:none!important; }
   .art-window, .property-art { transform:none!important; clip-path:none!important; }
 }
+
+/* Stage numbers follow the existing paper-to-ink text morph. */
+.service-number{color:color-mix(in srgb,var(--service-text) 80%,var(--accent))}

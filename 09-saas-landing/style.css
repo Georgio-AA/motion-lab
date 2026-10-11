@@ -332,3 +332,5 @@ input[type=range]:hover::-webkit-slider-thumb{box-shadow:0 0 0 7px #c6ff6320}
 @media(max-width:650px){.site-header .back-to-hub{margin-right:10px;padding:7px 10px;font-size:12px}}
 .site-header{justify-content:flex-start}
 .site-header .brand{margin-right:auto}
+
+.email-field input:focus-visible{outline:2px solid #203410;outline-offset:2px}

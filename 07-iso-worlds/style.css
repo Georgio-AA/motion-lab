@@ -1,6 +1,6 @@
 :root {
   --forest:#243f38;
-  --muted:#67766b;
+  --muted:#5e6d62;
   --cream:#f4f3e9;
   --line:#dce0d5;
   --mint:#c8e5cc;
@@ -455,7 +455,7 @@ h1 {
 .sidebar footer {
   margin-top:auto;
   padding-top:30px;
-  color:#6b7866;
+  color:#697664;
   font-size:12px;
   display:flex;
   align-items:center;

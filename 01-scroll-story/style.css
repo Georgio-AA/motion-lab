@@ -110,7 +110,7 @@ em { font-weight:400; color:#885584; }
 .dropper span { margin-top:44px; }
 .balm { height:80px; background:linear-gradient(90deg,#d1a49299,#fde5d9,#c1978588); }
 .balm span { margin-top:24px; }
-.art-note { position:absolute; bottom:24px; inset-inline:12px; text-align:center; font-size:12px; letter-spacing:.7px; color:#806273; }
+.art-note { position:absolute; bottom:24px; inset-inline:12px; text-align:center; font-size:12px; letter-spacing:.7px; color:#775a6b; }
 .card-glare { position:absolute; inset:0; z-index:4; border-radius:inherit; pointer-events:none; opacity:0; background:radial-gradient(circle at var(--gx,50%) var(--gy,50%),#fff9,transparent 58%); mix-blend-mode:soft-light; transition:opacity .5s; }
 .product:hover .card-glare { opacity:.65; }
 .product-title { display:flex; justify-content:space-between; gap:8px; align-items:center; margin:24px 0 8px; }

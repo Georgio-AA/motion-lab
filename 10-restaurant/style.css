@@ -884,7 +884,7 @@ svg {
 }
 .hours-title>p:last-child {
   font-size:16px;
-  color:#7a6a50
+  color:#716147
 }
 .hours-card {
   position:relative;
@@ -950,7 +950,7 @@ svg {
 .hours-card>p {
   font-size:12px;
   max-width:280px;
-  color:#7a6a50
+  color:#716147
 }
 .hours-decoration {
   position:absolute;
@@ -985,7 +985,7 @@ svg {
 .demo-note {
   font-size:12px!important;
   line-height:1.7;
-  color:#827052
+  color:#796749
 }
 .booking-panel {
   align-self:start;
@@ -1011,7 +1011,7 @@ svg {
   line-height:1
 }
 .form-topline>span:last-child {
-  color:#827052
+  color:#796749
 }
 .form-row {
   display:grid;
@@ -1100,7 +1100,7 @@ svg {
 }
 .time-field legend span {
   float:right;
-  color:#827052;
+  color:#796749;
   font-weight:400;
   font-size:12px
 }
@@ -1158,7 +1158,7 @@ svg {
   padding-top:25px;
   margin:15px 0 20px;
   border-top:1px solid #6c56322b;
-  color:#827052
+  color:#796749
 }
 .booking-submit {
   width:100%;
@@ -1168,7 +1168,7 @@ svg {
 }
 .form-note {
   font-size:12px;
-  color:#827052;
+  color:#796749;
   text-align:center;
   margin-top:14px
 }
@@ -1233,7 +1233,7 @@ svg {
   text-align:center;
   padding:8px;
   font-size:12px;
-  color:#857455
+  color:#6b5a3d
 }
 .map-marker {
   animation:marker-float 3s ease-in-out infinite
@@ -1247,7 +1247,7 @@ svg {
 .location-copy>p:not(.eyebrow) {
   font-size:12px;
   margin:20px 0 28px;
-  color:#857455
+  color:#6b5a3d
 }
 .location-copy .handwritten {
   display:block;
@@ -1426,7 +1426,7 @@ dialog::backdrop {
 }
 .order-item p {
   font-size:13px;
-  color:#827052
+  color:#796749
 }
 .order-stepper {
   display:flex;
@@ -1460,7 +1460,7 @@ dialog::backdrop {
 .order-inner>p:last-child {
   margin-top:20px;
   font-size:12px;
-  color:#827052
+  color:#796749
 }
 /* Progressive reveal: everything stays visible if scripts do not run. */
 .motion-ready .reveal {
@@ -1623,7 +1623,7 @@ dialog::backdrop {
     top:26px;
     font-size:12px;
     letter-spacing:.02em;
-    color:#827052
+    color:#796749
   }
   .wordmark {
     font-size:24px
@@ -2044,3 +2044,6 @@ dialog::backdrop {
     transition:none
   }
 }
+
+/* AA text contrast on the darker hours card; retain the terracotta palette. */
+.hours-card .handwritten,.hours-card dl>div.today { color:#a0462b; }
