@@ -24,7 +24,7 @@ const initials = nameParts[0][0] + (nameParts.length > 1 ? nameParts[nameParts.l
 document.querySelectorAll('[data-owner]').forEach(element => {
   element.textContent = element.dataset.owner === 'initials' ? initials + '.' : OWNER[element.dataset.owner];
 });
-document.title = OWNER.name + ' — Interactive Web Development';
+document.title = OWNER.name + ' — Interactive Web Developer';
 document.querySelector('meta[name="description"]').content =
   OWNER.name + ', ' + OWNER.roleLine.toLowerCase() + '. ' + OWNER.promise + ' Explore ten interactive concept demos.';
 document.querySelectorAll('[data-upwork]').forEach(link => { link.href = OWNER.upworkUrl; link.target = '_blank'; link.rel = 'noopener'; });
