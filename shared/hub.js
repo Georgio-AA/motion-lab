@@ -17,6 +17,52 @@ const chapters = [...document.querySelectorAll('.work-item')];
 const index = document.querySelector('.progress-index');
 const indexLinks = [...index.querySelectorAll('a')];
 let reduced = motionQuery.matches;
+const PALETTES = {
+  intro: ['#d5f591', '#78cfac', '#101411'],
+  '10': ['#e8a54b', '#c4532d', '#1b120c'],
+  '02': ['#c7fc78', '#3f8f3a', '#0a0f0a'],
+  '08': ['#3b6ff5', '#a9c8ff', '#0a1022'],
+  '07': ['#e9cf8f', '#8fb08a', '#14130f'],
+  '09': ['#c6ff63', '#6fe3b0', '#070906'],
+  '11': ['#c8643f', '#d8c9ae', '#15110f'],
+  '04': ['#4fd6c2', '#8ef0ff', '#06201f'],
+  '05': ['#3fa36b', '#b8f0cf', '#0b1a12'],
+  '03': ['#e3b679', '#f1e3cc', '#141414'],
+  '01': ['#f0a6c0', '#7a3d6b', '#160c14'],
+  '06': ['#ff4fb3', '#5be7ff', '#07060b']
+};
+const chapterIndices = new Map(chapters.map((chapter, i) => [chapter, i]));
+const chapterTops = new Float64Array(chapters.length);
+const chapterBottoms = new Float64Array(chapters.length);
+const chapterCenters = new Float64Array(chapters.length);
+const portalCenters = new Float64Array(chapters.length);
+const portalMax = new Float32Array(chapters.length);
+const portalScales = new Float32Array(chapters.length);
+const portalEnergies = new Float32Array(chapters.length);
+portalScales.fill(.86);
+const visuals = chapters.map(chapter => chapter.querySelector('.work-visual'));
+let world = null, paletteKey = 'intro', workTop = 0, workBottom = 0;
+let lastScrollY = scrollY, lastScrollTime = performance.now();
+function applyPalette(key) {
+  if (key === paletteKey) return;
+  paletteKey = key;
+  const palette = PALETTES[key];
+  document.body.style.setProperty('--world-a', palette[0]);
+  document.body.style.setProperty('--world-b', palette[1]);
+  document.body.style.setProperty('--world-deep', palette[2]);
+  document.querySelector('meta[name="theme-color"]').content = palette[2];
+  world?.setPalette(palette);
+}
+function updatePortal(i, scale, energy) {
+  if (Math.abs(portalScales[i] - scale) > .0001) {
+    portalScales[i] = scale;
+    visuals[i].style.setProperty('--portal-scale', scale.toFixed(4));
+  }
+  if (Math.abs(portalEnergies[i] - energy) > .0001) {
+    portalEnergies[i] = energy;
+    visuals[i].style.setProperty('--portal-energy', energy.toFixed(3));
+  }
+}
 
 // Config fills every personal label; fallback HTML stays usable without JavaScript.
 const nameParts = OWNER.name.trim().split(/\s+/);
@@ -76,6 +122,7 @@ if ('IntersectionObserver' in window) {
 motionQuery.addEventListener('change', event => {
   reduced = event.matches;
   if (reduced) document.querySelectorAll('.reveal-ready').forEach(section => section.classList.add('is-visible'));
+  scheduleScrollUpdate();
 });
 
 // Load only near the viewport. Evict before mounting, never exceeding two iframes.
@@ -113,8 +160,7 @@ function syncPreviews() {
   }
   let first = null, second = null, firstDistance = Infinity, secondDistance = Infinity;
   for (const chapter of nearby) {
-    const rect = chapter.getBoundingClientRect();
-    const distance = Math.abs(rect.top + rect.height * .5 - innerHeight * .5);
+    const distance = Math.abs(chapterCenters[chapterIndices.get(chapter)] - scrollY - innerHeight * .5);
     if (distance < firstDistance) {
       second = first; secondDistance = firstDistance;
       first = chapter; firstDistance = distance;
@@ -154,16 +200,44 @@ window.addEventListener('pageshow', syncPreviews);
 // Passive scroll bookkeeping, at most once per animation frame. Scrolling is never intercepted.
 let scrollFrame = 0, activeChapter = -1;
 const work = document.querySelector('#work');
-function updateProgress() {
-  scrollFrame = 0;
+// Measure only on layout changes; scroll frames reuse numeric bounds and scale transforms.
+function measureChapters() {
+  const y = scrollY;
   const workRect = work.getBoundingClientRect();
-  index.classList.toggle('is-active', workRect.top < innerHeight * .7 && workRect.bottom > innerHeight * .3);
-  let nearest = 0, distance = Infinity;
+  workTop = workRect.top + y; workBottom = workRect.bottom + y;
   for (let i = 0; i < chapters.length; i++) {
     const rect = chapters[i].getBoundingClientRect();
-    const d = Math.abs(rect.top + rect.height * .5 - innerHeight * .5);
-    if (d < distance) { nearest = i; distance = d; }
+    const portal = visuals[i].getBoundingClientRect();
+    chapterTops[i] = rect.top + y;
+    chapterBottoms[i] = rect.bottom + y;
+    chapterCenters[i] = rect.top + y + rect.height * .5;
+    portalCenters[i] = portal.top + y + portal.height * .5;
+    portalMax[i] = innerWidth * .9 / visuals[i].offsetWidth;
   }
+  scheduleScrollUpdate();
+}
+function updateProgress() {
+  scrollFrame = 0;
+  const y = scrollY, center = y + innerHeight * .5, now = performance.now();
+  const velocity = (y - lastScrollY) / Math.max(16, now - lastScrollTime) * 1000;
+  lastScrollY = y; lastScrollTime = now;
+  world?.setScrollVelocity(velocity);
+  index.classList.toggle('is-active', workTop - y < innerHeight * .7 && workBottom - y > innerHeight * .3);
+  let nearest = 0, distance = Infinity;
+  for (let i = 0; i < chapters.length; i++) {
+    const d = Math.abs(chapterCenters[i] - center);
+    if (d < distance) { nearest = i; distance = d; }
+    if (reduced || mobileQuery.matches) {
+      updatePortal(i, 1, 0);
+      continue;
+    }
+    const proximity = Math.max(0, 1 - Math.abs(portalCenters[i] - center) / (innerHeight * .85));
+    const eased = proximity * proximity * (3 - 2 * proximity);
+    const scale = .86 + (portalMax[i] - .86) * eased;
+    updatePortal(i, scale, eased);
+  }
+  applyPalette(center >= chapterTops[0] && center <= chapterBottoms[chapters.length - 1]
+    ? chapters[nearest].dataset.demo : 'intro');
   if (nearest !== activeChapter) {
     activeChapter = nearest;
     indexLinks.forEach((link, i) => {
@@ -177,8 +251,11 @@ function scheduleScrollUpdate() {
   if (!scrollFrame) scrollFrame = requestAnimationFrame(updateProgress);
 }
 window.addEventListener('scroll', scheduleScrollUpdate, { passive: true });
-window.addEventListener('resize', scheduleScrollUpdate, { passive: true });
-scheduleScrollUpdate();
+window.addEventListener('resize', measureChapters, { passive: true });
+if ('ResizeObserver' in window) new ResizeObserver(measureChapters).observe(work);
+window.addEventListener('pageshow', measureChapters);
+document.fonts?.ready.then(measureChapters);
+measureChapters();
 
 // Micro-interactions affect the content of targets, keeping the hit areas stable.
 document.querySelectorAll('.magnetic').forEach(button => {
@@ -222,5 +299,7 @@ if ('IntersectionObserver' in window) {
 }
 
 // Visual setup is isolated: a failed effect cannot stop links, previews, or native scroll.
-import('./hub-hero.js').then(({ initHero }) => initHero(document.querySelector('.hero')))
-  .catch(() => { document.querySelector('.hero').classList.remove('canvas-ready'); });
+import('./hub-hero.js').then(({ initHero }) => {
+  world = initHero(document.querySelector('.world-atmosphere'));
+  world?.setPalette(PALETTES[paletteKey], true);
+}).catch(() => { document.querySelector('.world-atmosphere').classList.remove('canvas-ready'); });
