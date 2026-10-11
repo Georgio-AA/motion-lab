@@ -4,7 +4,7 @@ Interactive web experiments by **Georgio Abi Aad** — websites that feel alive.
 
 **Live site:** https://georgio-aa.github.io/motion-lab/
 
-Ten concept demos, each a standalone page:
+Eleven concept demos, each a standalone page:
 
 | # | Demo | What it shows |
 |---|------|---------------|
@@ -18,6 +18,7 @@ Ten concept demos, each a standalone page:
 | 08 | Ops Worlds | Warehouse and airport simulations with real traffic lanes |
 | 09 | SaaS Landing | Client-ready SaaS landing page template |
 | 10 | Restaurant | Cinematic scroll-film restaurant site |
+| 11 | E-commerce | Product page with a 3D product, live finishes and a cart drawer |
 
 Built with plain HTML, CSS and JavaScript, three.js and GSAP. No build step.
 All brands, products and data in the demos are fictional concept work.
