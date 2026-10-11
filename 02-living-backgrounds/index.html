@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aether — Living backgrounds | Motion Lab</title>
+  <meta name="description" content="Four living light experiments: luminous ribbons, sculpted gradients, fluid cursor trails and a blue-gold particle nebula.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23080908'/%3E%3Cpath d='M12 44L32 12l20 32M22 32h20' fill='none' stroke='%23d5ff76' stroke-width='4'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../shared/base.css"><link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="masthead"><a href="#ribbons" aria-label="Aether, first scene">aether<span>®</span></a><span class="edition">EXPERIMENTS IN ATMOSPHERE / VOL. 02</span><span class="live"><i></i> LIVE CANVAS</span></header>
+  <main>
+    <section class="scene ribbons" id="ribbons" aria-labelledby="title-ribbons">
+      <canvas aria-hidden="true"></canvas><div class="shade"></div>
+      <div class="scene-top"><span>01 / LIGHT FIELD</span><span>RIBBONS</span></div>
+      <div class="copy"><p class="eyebrow">A study in invisible forces</p><h1 id="title-ribbons">Follow <br>the <em>current.</em></h1><p class="caption">Light with a life of its own.<br>Move through it. Leave a little gravity behind.</p></div>
+      <div class="scene-bottom"><p><span>HOW IT WORKS</span> Additive light strands bend around your pointer.</p><a href="#gradient">Scroll to explore <b>↓</b></a></div>
+      <div class="specimen">FIG. 01 <span>ENERGY / ORGANIC</span></div>
+    </section>
+    <section class="scene gradient" id="gradient" aria-labelledby="title-gradient">
+      <canvas aria-hidden="true"></canvas><div class="shade"></div><div class="scene-top"><span>02 / CHROMATIC BODY</span><span>SHADER GRADIENT</span></div>
+      <div class="copy"><p class="eyebrow">Nothing stays the same</p><h2 id="title-gradient">Soft form. <br><em>Wild colour.</em></h2><p class="caption">A molten landscape, caught between states.<br>A touch changes the shape of things.</p></div>
+      <div class="scene-bottom"><p><span>HOW IT WORKS</span> Layered noise sculpts a surface; your pointer warps its colour.</p><a href="#fluid">Keep wandering <b>↓</b></a></div><div class="specimen">FIG. 02 <span>VOLUME / CHROMATIC</span></div>
+    </section>
+    <section class="scene fluid" id="fluid" aria-labelledby="title-fluid">
+      <canvas aria-hidden="true"></canvas><div class="shade"></div><div class="scene-top"><span>03 / TEMPORARY MATTER</span><span>CURSOR TRAIL FLUID</span></div>
+      <div class="copy"><p class="eyebrow">Make something that disappears</p><h2 id="title-fluid">Leave <br>an <em>afterglow.</em></h2><p class="caption">Draw in the dark. Watch colour drift.<br>Some beautiful things don’t need to last.</p></div>
+      <div class="scene-bottom"><p><span>HOW IT WORKS</span> Glowing ink follows your movement, curls, then fades.</p><a href="#nebula">Into the distance <b>↓</b></a></div><div class="specimen">FIG. 03 <span>GESTURE / EPHEMERAL</span></div>
+    </section>
+    <section class="scene nebula" id="nebula" aria-labelledby="title-nebula">
+      <canvas aria-hidden="true"></canvas><div class="shade"></div><div class="scene-top"><span>04 / DISTANT SYSTEMS</span><span>PARTICLE NEBULA</span></div>
+      <div class="copy"><p class="eyebrow">A small universe within reach</p><h2 id="title-nebula">Space to <br><em>get lost.</em></h2><p class="caption">Thousands of points. One quiet orbit.<br>Disturb the stars. They’ll find their way home.</p></div>
+      <div class="scene-bottom"><p><span>HOW IT WORKS</span> A rotating point cloud repels, brightens and settles around you.</p><a href="#ribbons">Begin again <b>↑</b></a></div><div class="specimen">FIG. 04 <span>DEPTH / CELESTIAL</span></div>
+    </section>
+  </main>
+  <nav class="switcher" aria-label="Choose background scene"><a href="#ribbons" aria-label="Ribbons" aria-current="true"><span>01</span><i></i></a><a href="#gradient" aria-label="Shader gradient"><span>02</span><i></i></a><a href="#fluid" aria-label="Cursor trail fluid"><span>03</span><i></i></a><a href="#nebula" aria-label="Particle nebula"><span>04</span><i></i></a></nav>
+  <div class="interaction-hint">MOVE OR TOUCH TO INFLUENCE <span>↗</span></div>
+  <script type="module" src="main.js"></script>
+</body>
+</html>

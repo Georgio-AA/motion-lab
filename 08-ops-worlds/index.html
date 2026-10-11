@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Relay — Little worlds. Big moves.</title>
+  <meta name="description" content="One living system, two miniature worlds. Explore a toy-like fulfilment centre and a glowing night airport, and follow every move.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%232b54dc'/%3E%3Cpath d='m13 24 19-10 19 10-19 10ZM13 30v14l19 10V40M51 30v14L32 54' fill='%23f8f4e9'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../shared/base.css">
+  <link rel="stylesheet" href="style.css">
+  <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
+</head>
+<body data-world="warehouse">
+  <a class="back-to-hub" href="../index.html">← All demos</a>
+  <header class="masthead">
+    <a class="brand" href="./index.html" aria-label="Relay home"><span class="brand-symbol" aria-hidden="true">⤨</span> relay<span class="brand-note">SMALL WORLDS / BIG POSSIBILITIES</span></a>
+    <span class="live-pill"><i></i> A SYSTEM IN MOTION</span>
+  </header>
+  <main>
+    <section class="intro" aria-labelledby="page-title">
+      <div><p class="eyebrow">08 / LIVING OPERATIONS</p><h1 id="page-title">Little worlds. <em>Big moves.</em></h1></div>
+      <div class="intro-right"><p>Every little move belongs to a bigger story.<br>Same rhythm. A whole new world.</p></div>
+    </section>
+    <div class="world-picker">
+      <p class="picker-heading">TWO WORLDS. <span>Choose your shift.</span></p>
+      <div class="world-toggle" role="tablist" aria-label="Choose your operations world">
+        <button class="world-card" id="warehouse-tab" role="tab" data-mode="warehouse" aria-selected="true" aria-controls="ops-stage" tabindex="0">
+          <span class="world-thumbnail day-thumbnail" aria-hidden="true"><svg viewBox="0 0 144 104" focusable="false"><ellipse cx="72" cy="88" rx="54" ry="9" fill="#a6b9c5" opacity=".22"/><path d="m15 58 74-25 40 25-75 27Z" fill="#809aaa"/><path d="M15 58v10l39 26V85l75-27v10L54 94" fill="#536c80"/><path d="m21 58 68-22 34 22-69 23Z" fill="#d0dde3"/><path d="m31 58 62-20M41 65l63-20M52 72l63-20" stroke="#91a8b7" stroke-width="4"/><g class="preview-box"><path d="m56 32 23-8 18 12-23 8Z" fill="#f1c47e"/><path d="M56 32v23l18 12V44Z" fill="#c88e4d"/><path d="M74 44v23l23-8V36Z" fill="#dfaa64"/><path d="m65 29 18 12v10" fill="none" stroke="#fff0cc" stroke-width="5"/></g></svg></span>
+          <span class="world-card-copy"><span class="shift-number">01 / DAY SHIFT</span><strong>Warehouse</strong><span class="world-teaser">Day shift · fulfilment</span><span class="world-invitation">Viewing <span aria-hidden="true">✓</span></span></span>
+        </button>
+        <button class="world-card airport-card" id="airport-tab" role="tab" data-mode="airport" aria-selected="false" aria-controls="ops-stage" tabindex="-1">
+          <span class="world-thumbnail night-thumbnail" aria-hidden="true"><svg viewBox="0 0 144 104" focusable="false"><ellipse cx="74" cy="86" rx="53" ry="8" fill="#030b1c" opacity=".5"/><path d="m9 67 87-40 39 27-87 41Z" fill="#253a59"/><path d="m29 73 84-39" stroke="#d6e6ff" stroke-width="2" stroke-dasharray="8 7"/><g class="preview-lights" fill="#9ac8ff"><circle cx="16" cy="66" r="2"/><circle cx="33" cy="58" r="2"/><circle cx="50" cy="50" r="2"/><circle cx="67" cy="42" r="2"/><circle cx="98" cy="66" r="2"/><circle cx="115" cy="58" r="2"/><circle cx="81" cy="74" r="2"/><circle cx="64" cy="82" r="2"/></g><g class="preview-plane"><path d="m35 50 62-25 4 7-61 25Z" fill="#b9cde2"/><path d="m70 39-8-24 8-3 17 20 27 7-6 7-30-1-15 18-8-2 9-20Z" fill="#e6eef7"/><path d="m41 51-9-14 7-3 13 12Z" fill="#f1a38c"/><path d="m43 50-18 4 3 5 23-3Z" fill="#f1a38c"/><circle cx="67" cy="17" r="2" fill="#ffbd9c"/><circle cx="109" cy="42" r="2" fill="#a3edc6"/></g></svg></span>
+          <span class="world-card-copy"><span class="shift-number">02 / NIGHT SHIFT</span><strong>Airport</strong><span class="world-teaser">Night shift · flights</span><span class="world-invitation" id="airport-invitation">See the airport <span aria-hidden="true">↗</span></span><span class="world-countdown" hidden><svg class="countdown-ring" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><circle class="ring-track" cx="16" cy="16" r="13"/><circle class="ring-fill" cx="16" cy="16" r="13" pathLength="100"/></svg><span id="countdown-label">Night shift starts in 5…</span></span></span>
+        </button>
+      </div>
+    </div>
+    <section class="simulation" id="ops-stage" role="tabpanel" aria-labelledby="warehouse-tab">
+      <div class="scene-grid" aria-hidden="true"></div>
+      <div class="coordinate coordinate-a">N 51° 30′ / E 00° 07′</div><div class="coordinate coordinate-b" id="site-coordinate">RELAY FULFILMENT / SITE 001</div>
+      <div id="viewport" tabindex="0" role="region" aria-label="Interactive isometric simulation. Drag with a mouse, or drag with two fingers to pan. Pinch, double-click, or use camera buttons to zoom. Alt and arrow keys pan. Press Enter or select a vehicle to follow; Escape releases it.">
+        <div id="fallback" class="fallback"><div class="fallback-island"><div class="fallback-building"></div><i></i><i></i><i></i></div><p id="load-message">A little world is waking up…</p></div>
+      </div>
+      <div class="transition-label" aria-hidden="true"><span>ONE SYSTEM.</span><em id="transition-name">New possibilities.</em></div>
+      <div id="hover-tag" class="hover-tag" hidden><strong></strong><span></span></div>
+      <div class="panel-deck" tabindex="0" role="region" aria-label="Live operations panels. Swipe horizontally on mobile.">
+        <article class="glass performance-panel"><div class="panel-heading"><h2 id="performance-title">The big picture</h2><span class="live-label"><i></i> LIVE</span></div><div class="main-metric"><span id="throughput">0</span><span class="metric-unit" id="throughput-unit">orders / hour</span><span class="trend">↗ <span id="trend-value">12.8%</span></span></div><svg class="sparkline" viewBox="0 0 240 52" aria-label="Throughput trend rising over the last hour" role="img"><defs><linearGradient id="chart-fill" x1="0" y1="0" x2="0" y2="1"><stop stop-color="currentColor" stop-opacity=".18"/><stop offset="1" stop-color="currentColor" stop-opacity="0"/></linearGradient></defs><path class="chart-area" d="M0 48 0 38 15 36 30 40 45 29 60 32 75 25 90 29 105 17 120 22 135 14 150 19 165 8 180 13 195 6 210 9 225 3 240 5 240 52Z"/><path d="m0 38 15-2 15 4 15-11 15 3 15-7 15 4 15-12 15 5 15-8 15 5 15-11 15 5 15-7 15 3 15-6 15 2"/></svg><div class="secondary-metrics"><div><span id="on-time">0%</span><small>On time</small></div><div><span id="fleet">08<span class="metric-divider"> / 08</span></span><small id="fleet-label">Fleet active</small></div></div><div class="panel-foot"><span>LAST 60 MINUTES</span><span class="healthy">● All systems healthy</span></div></article>
+        <article class="glass dispatch-panel"><div class="panel-heading"><h2 id="dispatch-title">Moving through</h2><span id="dispatch-badge" class="badge">SHIPMENTS</span></div><div class="list-header"><span id="list-column">SHIPMENT / ROUTE</span><span>STATUS</span></div><div id="dispatch-list"></div><div class="panel-foot"><span id="dispatch-footer">INBOUND & OUTBOUND</span><span class="tiny-arrow">↗</span></div></article>
+        <article class="glass route-panel"><div class="panel-heading"><h2 id="route-title">A box’s journey</h2><span class="badge" id="route-badge">R-2048</span></div><div id="route-content" class="route-timeline"><div><i class="done"></i><span>Received<small>09:41</small></span></div><div><i class="done"></i><span>Picked<small>09:43</small></span></div><div><i class="current"></i><span>On the move<small>Just now</small></span></div><div><i></i><span>Delivered<small>Up next</small></span></div></div><div class="radar" id="radar" hidden aria-label="Live radar showing flight positions"><div class="radar-rings"><i></i><i></i><i></i><span class="radar-sweep"></span><b id="radar-dot-0"></b><b id="radar-dot-1"></b><b id="radar-dot-2"></b></div><div><strong>Clear skies.</strong><span>Visibility 10 km<br>Wind 240° / 06 kt</span><small>SECTOR 04 · ACTIVE</small></div></div></article>
+      </div>
+      <article class="glass follow-card" id="follow-card" hidden><button id="release" aria-label="Stop following vehicle">×</button><p class="eyebrow">YOU’RE ALONG FOR THE RIDE</p><h2 id="follow-name">Your next journey</h2><p id="follow-cargo">Select a moving part to explore.</p><div class="follow-status"><span><i></i><span id="follow-status">Ready to follow</span></span><span id="follow-percent">0%</span></div><div class="progress" role="progressbar" aria-label="Route progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span></span></div><p class="follow-hint">Camera following · Esc to release</p></article>
+      <div class="scene-footer"><div class="world-caption"><span class="site-dot"></span><div><strong id="world-caption">THE FULFILMENT ISLAND</strong><span id="world-caption-sub">A thousand tiny journeys. One beautiful flow.</span></div></div><div class="camera-controls" role="group" aria-label="Camera controls"><button id="zoom-out" aria-label="Zoom out">−</button><button id="reset-view" aria-label="Reset camera">⌖</button><button id="zoom-in" aria-label="Zoom in">+</button><button id="pause" aria-pressed="false" aria-label="Pause simulation">Ⅱ</button></div></div>
+      <div class="sheet-pagination" aria-hidden="true"><i class="active"></i><i></i><i></i></div>
+      <button class="stage-switch" id="stage-switch" aria-controls="ops-stage"><span id="stage-switch-label">Switch to Airport</span> <span id="stage-switch-icon" aria-hidden="true">✈</span></button>
+    </section>
+    <section class="below-scene"><p><span class="hint-icon">↔</span> Drag to explore <span>·</span> Double-click to get closer <span>·</span> Tap a vehicle to follow</p><button id="follow-next">Meet the moving parts <span>↗</span></button></section>
+    <footer class="page-footer"><p>Small details.<br><em>Endless possibilities.</em></p><div><span>RELAY / OPERATIONS IN MINIATURE</span><p>A living sketch. Built to be explored.</p></div><span class="edition">01 — 02<br>TWO WORLDS. ONE FORMULA.</span></footer>
+  </main>
+  <div id="announcement" class="sr-only" aria-live="polite"></div>
+  <script type="module" src="main.js"></script>
+</body>
+</html>

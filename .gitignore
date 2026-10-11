@@ -1,0 +1,9 @@
+# Private working material: stays on this PC, never published.
+reference/
+logs/
+prompts/
+tools/
+AGENTS.md
+.claude/
+.qa*/
+**/verification/chrome-profile/

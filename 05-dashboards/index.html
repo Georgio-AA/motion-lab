@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sprig — A little room to do great work</title>
+  <meta name="description" content="An animated project workspace with interactive tasks, team profiles, calendar, reports and personal themes.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='12' fill='%231b6248'/%3E%3Cpath d='M12 28V15l16-5v13l-16 5m0-13 8 5 8-10m-8 10v10' fill='none' stroke='%23fff' stroke-width='2'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../shared/base.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="#overview" aria-label="Sprig overview"><span class="brand-mark">♧</span> sprig<span class="brand-dot">.</span></a>
+    <div class="workspace"><span class="workspace-icon">S</span><div>Studio workspace<small>Pro plan · 6 members</small></div><span>⌄</span></div>
+    <span class="eyebrow nav-caption">WORKSPACE</span>
+    <nav aria-label="Workspace views" id="navigation"></nav>
+    <div class="sidebar-bottom"><div class="promo"><span class="promo-flower">✳</span><h2>Good work grows<br> better together.</h2><p>A little more space for your next big idea.</p><button data-view="settings">Explore Sprig Pro <span>↗</span></button></div><div class="sidebar-foot"><span class="status-dot"></span> All systems blooming <span>↗</span></div></div>
+  </aside>
+  <div class="app">
+    <header class="topbar"><span class="breadcrumb">Studio <span>/</span> <strong id="crumb">Overview</strong></span><button class="search" id="search" aria-haspopup="dialog"><span aria-hidden="true">⌕</span><span class="search-label">Find anything…</span><kbd>⌘ K</kbd></button><div class="online-avatars" aria-label="Noah, Sofia and Maya are online"><button class="avatar mint" data-member="1" aria-label="Noah Chen, online">NC</button><button class="avatar lilac" data-member="2" aria-label="Sofia Rossi, online">SR</button><button class="avatar rose" data-member="4" aria-label="Maya Brooks, online">MB</button><span class="online-dot"></span></div><button id="mode-toggle" class="mode-toggle" aria-label="Switch to dark mode" aria-pressed="false">☾</button><button class="profile avatar peach" data-view="team" aria-label="Open team">AL</button></header>
+    <main id="main" tabindex="-1"></main>
+    <footer class="app-foot"><span>Made for a more mindful Monday.</span><span>SPRIG / STUDIO WORKSPACE</span></footer>
+  </div>
+  <dialog id="member-dialog" aria-labelledby="drawer-name"><div class="drawer-content"></div></dialog>
+  <dialog id="command-dialog" class="command-dialog" aria-labelledby="command-title">
+    <div class="command-header"><span aria-hidden="true">⌕</span><div class="command-field"><label id="command-title" for="command-input">A shortcut to your next thought.</label><input id="command-input" type="search" placeholder="Search views, tasks, people…" autocomplete="off" role="combobox" aria-controls="command-results" aria-expanded="true" aria-autocomplete="list"></div><button id="command-close" aria-label="Close search">Esc</button></div>
+    <p class="command-caption" id="command-caption" aria-live="polite">YOUR WORKSPACE, AT YOUR FINGERTIPS</p>
+    <div id="command-results" role="listbox" aria-label="Search results"></div>
+    <div class="command-footer"><span>↑ ↓ to explore <span>↵ to open</span></span><span>SPRIG / QUICK FIND</span></div>
+  </dialog>
+  <div id="presence-layer" aria-hidden="true"></div>
+  <div class="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="main.js"></script>
+</body>
+</html>

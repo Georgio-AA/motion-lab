@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Elsewhere — A little world at work</title>
+  <meta name="description" content="Meet seven busy robots in a living isometric town. Follow their routines, explore their workshops, and wind down in an interactive smart home.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23213935'/%3E%3Cpath d='M12 28 32 16 52 28 32 40Z' fill='%23bce8c7'/%3E%3Cpath d='M12 28v14l20 12V40M52 28v14L32 54' fill='none' stroke='%23bce8c7' stroke-width='3'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../shared/base.css"><link rel="stylesheet" href="style.css">
+  <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
+</head>
+<body>
+  <a class="back-to-hub" href="../index.html">← All demos</a>
+  <header class="topbar"><a class="brand" href="./index.html"><span class="brand-mark" aria-hidden="true">◇</span> elsewhere<span class="edition">LIVING WORLDS / VOL. 02</span></a><span class="live"><i></i> Small world. Big ideas.</span></header>
+  <main>
+    <section class="workspace" aria-label="Interactive worlds">
+      <div class="intro"><p class="eyebrow">A PLACE FOR POSSIBILITY</p><h1>A little world,<br> at work.</h1><p id="description">Seven curious minds. Every step has a purpose.</p></div>
+      <div class="mode-tabs" role="tablist" aria-label="Choose a world"><button id="town-tab" role="tab" aria-selected="true" aria-controls="town-panel" data-mode="town"><span>01</span> Agent Town</button><button id="home-tab" role="tab" aria-selected="false" aria-controls="home-panel" data-mode="home" tabindex="-1"><span>02</span> Smart Home</button></div>
+      <div id="viewport" tabindex="0" role="region" aria-label="Isometric world. Select a robot to follow it. Drag horizontally to pan. Use camera buttons, pinch, double click, or Shift and wheel to zoom. Alt and arrow keys pan. Escape releases the camera."><div id="loading"><span class="loading-orbit" aria-hidden="true"></span>Waking up the outpost…</div></div>
+      <div id="bubble-layer" aria-hidden="true"></div>
+      <div id="world-tooltip" class="world-tooltip" hidden><strong></strong><span></span></div>
+      <div class="world-caption"><span id="world-name">OUTPOST 01 / THE QUIET DESERT</span><span id="follow-state"><i></i> Live local simulation</span></div>
+      <div class="view-tools" aria-label="Camera controls"><button id="zoom-in" aria-label="Zoom in">+</button><button id="zoom-out" aria-label="Zoom out">−</button><button id="reset" aria-label="Reset camera">↺</button></div>
+      <div class="map-wrap"><div class="map-title">THE NEIGHBOURHOOD <span>↗ N</span></div><canvas id="minimap" width="160" height="100" aria-label="Minimap of the neighbourhood"></canvas></div>
+      <div class="time-control" id="time-control"><div><label for="time">Time of day</label><button id="auto-time" aria-pressed="true">Auto cycle</button></div><input id="time" type="range" min="0" max="3" step="0.01" value="1" aria-label="Time of day; adjusting overrides automatic cycle"><div class="time-ticks"><span>Dawn</span><output id="time-label" for="time">Day · 12:00</output><span>Night</span></div></div>
+      <p class="gesture-hint">DRAG TO EXPLORE <span>·</span> DOUBLE CLICK TO GET CLOSER</p>
+      <article id="agent-card" class="agent-card" hidden aria-label="Selected resident"><button id="close-card" class="close" aria-label="Release follow camera">×</button><p class="eyebrow" id="card-name">Resident</p><p id="card-role" class="card-role"></p><h2 id="card-task">A little work in progress</h2><p class="working"><i></i><span id="card-state">Working</span><span id="card-percent">0%</span></p><div class="progress" id="card-progress" role="progressbar" aria-label="Current activity progress" aria-valuemin="0" aria-valuemax="100"><span></span></div><div class="log-heading">FIELD NOTES <span>LIVE</span></div><ol id="activity-log" class="activity-log" aria-label="Recent activity"></ol><p class="release-hint">Following this resident · Esc to release</p></article>
+      <article id="building-card" class="building-card" hidden aria-label="Selected building"><button id="close-building" class="close" aria-label="Close building details">×</button><p class="eyebrow">AROUND THE NEIGHBOURHOOD</p><h2 id="building-name">The outpost</h2><p id="building-description"></p><p class="eyebrow assigned-label">ASSIGNED RESIDENTS</p><div id="building-agents"></div></article>
+    </section>
+    <aside class="sidebar" aria-label="World controls">
+      <section id="town-panel" role="tabpanel" aria-labelledby="town-tab"><div class="panel-head"><p class="eyebrow">MEET THE NEIGHBOURS</p><h2>Many minds.<br> One world.</h2><p>Click a resident. Follow a story.<br>There’s always something going on.</p></div><div class="panel-meta"><span>RESIDENTS</span><span id="agent-count">07 ONLINE</span></div><div id="agent-list"></div><div class="note"><span aria-hidden="true">✳</span><p>A living sketch of a working team.<br><strong>Routines and logs run right here.</strong></p></div><details class="districts"><summary>Explore the six districts</summary><div id="building-list"></div></details></section>
+      <section id="home-panel" role="tabpanel" aria-labelledby="home-tab" hidden><div class="panel-head"><p class="eyebrow">A HOME THAT LISTENS</p><h2>Set the mood.<br> Room by room.</h2><p>A touch of warmth, exactly where you need it.</p></div><div class="panel-meta"><span>ROOM LIGHTING</span><span id="light-count" aria-live="polite">Lights on 2/6</span></div><div id="room-list"></div><div class="bulk-actions"><button id="all-on">All on</button><button id="all-off">All off</button></div><div class="blinds"><p class="eyebrow">LIVING ROOM BLINDS</p><div><button data-blind="0" aria-label="Raise blinds">↑ Up</button><button data-blind="stop">■ Stop</button><button data-blind="1" aria-label="Lower blinds">↓ Down</button></div><p id="blind-state" aria-live="polite">Fully raised</p></div></section>
+      <footer><span class="footer-mark" aria-hidden="true">◇</span> A place for possibility.<span>ELSEWHERE © 2026</span></footer>
+    </aside>
+  </main>
+  <div id="announcement" class="sr-only" aria-live="polite"></div>
+  <script type="module" src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>VANTA — Agent Operations</title>
+  <meta name="description" content="An interactive AI operations room: 36 specialists, flowing intelligence, and live simulated telemetry.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2308090d'/%3E%3Cpath d='M7 8l9 17 9-17' fill='none' stroke='%23ff4ba8' stroke-width='3'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../shared/base.css"><link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="masthead"><a class="brand" href="#">VANTA<span>/ OPERATIONS</span></a><div class="system"><i></i> SYSTEM NOMINAL <span>EU–01</span></div></header>
+  <main>
+    <section class="intro"><div><p class="eyebrow">AUTONOMOUS INTELLIGENCE / CONTROL ROOM 06</p><h1>Many minds. <br>One frequency.</h1><p class="hero-explanation">The hub is an orchestrator AI, the 36 nodes are specialist agents, and the moving particles are tasks being handed between them.</p></div><p class="intro-copy">A living network of specialists.<br>Watch intelligence move, connect,<br>and become action.</p></section>
+    <section class="network panel" aria-labelledby="network-title">
+      <div class="panel-head"><h2 id="network-title"><span class="index">01</span> Agent constellation</h2><span class="mono"><i class="dot"></i> 37 NODES ONLINE</span></div>
+      <div class="constellation-layout"><div class="graph-wrap"><canvas id="network" role="img" aria-label="Animated radial network of 36 specialist agents connected to the VANTA hub"></canvas><div id="tooltip" class="tooltip" role="status" hidden></div><div id="agent-hint" class="agent-hint" hidden><i aria-hidden="true"></i><span>Click an agent to send it work</span></div><div class="graph-corner mono">ORCHESTRATION LAYER<br><span>LATENCY / 12ms</span></div></div><aside class="legend" aria-label="Constellation legend"><h3>Reading the network</h3><ul><li><span class="legend-symbol agent-dot" aria-hidden="true"></span><span>Colored dot = agent<small>Pink active · grey idle</small></span></li><li><span class="legend-symbol task-particle" aria-hidden="true"></span><span>Particle = task in flight</span></li><li><span class="legend-symbol busy-ring" aria-hidden="true"></span><span>Ring pulse = agent busy</span></li></ul><p>Click a node to dispatch a task.</p></aside></div>
+      <div class="network-footer"><p>Hover to inspect. Click to dispatch.</p><div class="agent-controls"><label class="sr-only" for="agent">Select an agent</label><select id="agent"></select><button id="dispatch">Dispatch ↗</button></div></div>
+      <p id="dispatch-status" class="sr-only" aria-live="polite"></p>
+    </section>
+    <section class="metrics" aria-label="Simulated live metrics">
+      <article class="metric"><p class="eyebrow">NETWORK HEALTH</p><div class="health"><div class="donut" id="donut"><strong id="health">94<span>%</span></strong></div><div><span class="lime">OPTIMAL</span><p>All systems in sync</p></div></div></article>
+      <article class="metric"><p class="eyebrow">TASK THROUGHPUT</p><div class="metric-value"><strong id="rate">248</strong><span>tasks / min</span></div><div id="bars" class="bars" aria-hidden="true"></div></article>
+      <article class="metric"><p class="eyebrow">AGENT ACTIVITY</p><div id="heatmap" class="heatmap" aria-label="Activity heatmap of 60 recent samples"></div><div class="scale mono">IDLE <span>▪ ▪ ▪ ▪ ▪</span> ACTIVE</div></article>
+      <article class="metric"><p class="eyebrow">EVENTS PROCESSED</p><strong id="counter" class="counter">080,432</strong><p class="lime mono">↗ CONTINUOUS STREAM</p><p class="simulation">Simulated realtime data</p></article>
+    </section>
+    <section class="lower"><div class="pipeline panel"><div class="panel-head"><h2><span class="index">02</span> Intelligence pipeline</h2><button id="replay">↻ Replay</button></div><p class="section-copy">From raw signal to a clear decision.</p><div class="stages mono"><div><span>01 / INGEST</span><p>Raw inputs arrive</p></div><div><span>02 / REASON</span><p>AI steps process them</p></div><div><span>03 / ACT</span><p>Results are produced</p></div></div><canvas id="pipeline" role="img" aria-label="A branching pipeline builds from sources through processors to outputs"></canvas><div class="pipeline-bottom mono"><span id="pipeline-status">AWAITING SIGNAL</span><span>12 ROUTES / 3 STAGES</span></div></div>
+    <aside class="log panel"><div class="panel-head"><h2><span class="index">03</span> Event stream</h2><i class="dot"></i></div><div id="logs" role="log" aria-label="Simulated agent event stream" aria-live="off"></div><div class="log-footer mono">CONNECTED <span>● LIVE</span></div></aside></section>
+    <section class="signal panel"><div><p class="eyebrow">THE NETWORK NEVER STANDS STILL</p><h2>Signal. Not noise.</h2><p>Every pulse is a possibility.</p></div><canvas id="signal" role="img" aria-label="Glowing cyan orb and jagged magenta signal traces"></canvas></section>
+    <footer><span>VANTA / INTELLIGENCE IN MOTION</span><span>EXPERIMENT 06 — MOTION LAB</span></footer>
+  </main><script type="module" src="main.js"></script>
+</body></html>

@@ -1,0 +1,307 @@
+/* Seven scenes share a single frame. Without enhancement they are readable stacked scenes. */
+html { scroll-padding-top:110px; }
+.site-header { position:fixed; inset:0 0 auto; background:#f5eddaf0; padding:12px 4% 12px 170px; }
+.site-header .wordmark { font-size:26px; }
+.site-header .wordmark>span { font-size:12px; margin-top:6px; letter-spacing:.12em; }
+.cinema { background:#30261e; }
+.film-stage { position:relative; }
+.film-scene { position:relative; min-height:100svh; overflow:hidden; isolation:isolate; color:var(--paper); }
+.scene-art { position:absolute; inset:0; z-index:-2; pointer-events:none; }
+.scene-art>svg { width:100%; height:100%; max-width:none; }
+.film-meta { position:absolute; z-index:20; top:103px; left:6.2%; right:6.2%; display:flex; justify-content:space-between; gap:30px; color:#f2e3c7; font-size:12px; letter-spacing:.07em; pointer-events:none; }
+.scene-art .street-number { display:none; }
+.scene-art .street-menu-board { display:none; }
+.scene-art .facade-sign { transform-origin:800px 190px; }
+.dusk-veil,.room-vignette,.nightfall,.kitchen-haze { position:absolute; inset:0; z-index:-1; pointer-events:none; }
+.dusk-veil { background:linear-gradient(90deg,#1d211ca3,transparent 78%),linear-gradient(0deg,#29221ebd,transparent 70%); }
+.arrival-copy { position:absolute; left:6.2%; bottom:24%; max-width:700px; }
+.arrival-copy h1 { font-size:clamp(70px,7.4vw,118px); letter-spacing:-.045em; line-height:.95; }
+.headline-line { display:block; }
+.arrival-copy .eyebrow { color:var(--gold); }
+.arrival-subtitle { margin-top:28px; max-width:400px; font-size:16px; }
+.scene-note { position:absolute; bottom:130px; left:6.2%; font-size:12px; letter-spacing:.08em; opacity:.7; }
+.film-scroll-cue { position:absolute; right:6.2%; bottom:130px; display:flex; align-items:center; gap:20px; font-size:12px; }
+.film-scroll-cue span { display:grid; place-items:center; width:45px; height:45px; border:1px solid #dfc49277; border-radius:50%; font-size:22px; }
+.vent-steam { position:absolute; right:15%; top:14%; width:80px; height:140px; opacity:.35; pointer-events:none; }
+.vent-steam span { position:absolute; width:25px; height:100px; bottom:0; left:20px; border-left:2px solid #eed0a4; border-radius:50%; transform:rotate(14deg); }
+.vent-steam span:nth-child(2) { left:45px; bottom:18px; transform:rotate(-12deg); }
+.vent-steam span:nth-child(3) { left:5px; bottom:35px; transform:rotate(22deg); }
+/* Perspective belongs to the HTML door planes; SVG architecture stays at a modest scale. */
+.doorway-facade { opacity:.12; }
+.doorway-interior { transform:scale(1.08); }
+.door-perspective { position:absolute; inset:17% 0 15%; display:grid; place-items:center; perspective:1400px; pointer-events:none; }
+.door-frame { position:relative; width:clamp(285px,29vw,440px); height:min(62vh,510px); border:7px solid #4d3927; border-radius:48% 48% 3px 3px; transform-style:preserve-3d; box-shadow:0 0 0 3px #ae8753; }
+.door-panel { position:absolute; top:0; width:50%; height:100%; background:linear-gradient(135deg,#9b7448,#4d3825); border:5px solid #533e2b; backface-visibility:hidden; transform-style:preserve-3d; }
+.door-panel-left { left:0; transform-origin:0 50%; border-radius:90% 0 0 0; transform:rotateY(-106deg); }
+.door-panel-right { right:0; transform-origin:100% 50%; border-radius:0 90% 0 0; transform:rotateY(106deg); }
+.door-glass { position:absolute; inset:12% 8% 23%; background:linear-gradient(135deg,#e2b87399,#745232bb 48%,#412e2099); border:3px solid #4f3827; }
+.door-panel-left .door-glass { border-radius:90% 0 0 0; }
+.door-panel-right .door-glass { border-radius:0 90% 0 0; }
+.door-glass::after { content:""; position:absolute; top:37%; width:100%; height:5px; background:#594127; }
+.door-panel>span { position:absolute; width:6px; height:49px; top:58%; border-radius:4px; background:#d8b270; }
+.door-panel-left>span { right:9%; }
+.door-panel-right>span { left:9%; }
+.threshold-light { position:absolute; left:20%; right:20%; top:43%; bottom:-18%; background:radial-gradient(ellipse at 50% 0,#f3d18d99,transparent 66%); opacity:.4; pointer-events:none; }
+.board-depth { position:absolute; left:77%; top:42%; width:88px; padding:20px 10px; background:#e7d8b7; border:3px solid #8d6942; color:#76543a; font:19px/1.1 Georgia,serif; text-align:center; transform:rotate(3deg); box-shadow:5px 10px 0 #291e191f; }
+.board-depth b { display:block; font-size:12px; line-height:.8; margin-top:20px; font-weight:400; }
+.threshold-copy { position:absolute; left:6.2%; top:32%; max-width:560px; }
+.threshold-copy h2 { font-size:clamp(60px,6.2vw,98px); }
+.threshold-copy em { color:var(--gold); }
+.threshold-copy>p:last-child { margin-top:25px; max-width:310px; }
+.room-vignette { background:radial-gradient(ellipse at 50% 40%,#211a1433,#211a14a6 95%); }
+.dining-copy { position:absolute; inset:22% 8% 20%; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; color:var(--gold); }
+.gold-title { font-size:clamp(90px,12vw,180px); line-height:.85; letter-spacing:-.045em; }
+.gold-word { display:block; white-space:nowrap; }
+.gold-amp { display:block; font-size:.55em; margin:15px 0; }
+.gold-letter { display:inline-block; }
+.dining-copy>p:last-child { font-size:12px; text-transform:uppercase; letter-spacing:.18em; margin-top:30px; }
+.candle-flame { transform-box:fill-box; transform-origin:50% 100%; animation:candle-breathe 1.6s ease-in-out infinite alternate; }
+@keyframes candle-breathe { to { opacity:.7; transform:scale(.85,1.1); } }
+.kitchen-haze { background:linear-gradient(90deg,#231c18dd 12%,#231c1877 47%,transparent 78%); }
+.kitchen-copy { position:absolute; left:6.2%; top:23%; width:46%; max-width:600px; }
+.kitchen-copy h2 { font-size:clamp(76px,7.5vw,118px); margin-bottom:30px; }
+.kitchen-copy em { color:var(--gold); }
+.kitchen-copy>p:not(.eyebrow) { font-size:15px; max-width:400px; margin-top:14px; line-height:1.65; }
+.kitchen-plate { position:absolute; width:clamp(180px,24vw,340px); right:3%; bottom:12%; transform:rotate(-12deg); pointer-events:none; }
+#embers { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
+/* The cards stay mounted throughout the film. Dietary filters dim, never remove, a plate. */
+.tasting-scene { min-height:auto; padding:140px 6.2% 120px; background:var(--paper); color:var(--ink); }
+.tasting-surface { position:absolute; inset:0; z-index:-1; background:radial-gradient(ellipse at 50% 75%,#dac5a4,transparent 65%),repeating-linear-gradient(90deg,#f1e6cf 0,#f1e6cf 85px,#e8d9bd 86px,#f1e6cf 87px); }
+.tasting-intro { display:flex; align-items:center; justify-content:space-between; gap:20px; margin-bottom:15px; }
+.tasting-intro h2 { font-size:32px; letter-spacing:-.03em; }
+.tasting-intro>span { font-size:12px; letter-spacing:.06em; }
+.tasting-scene .menu-controls { position:sticky; top:90px; background:var(--paper); z-index:12; padding:6px 0; margin-bottom:20px; }
+.tasting-scene .menu-tabs { gap:0; justify-content:space-between; }
+.tasting-scene .menu-tabs button { font-size:18px; padding:8px 20px; min-height:44px; }
+.tasting-scene .diet-filters { margin-top:10px; gap:10px; }
+.tasting-scene .diet-filters legend { font-size:12px; line-height:36px; }
+.tasting-scene .diet-filters label { min-height:36px; padding:7px 12px; }
+.tasting-course { padding:30px 0 55px; }
+.course-heading { display:flex; align-items:center; justify-content:space-between; gap:20px; margin-bottom:16px; }
+.course-heading h3 { font-size:68px; letter-spacing:-.04em; }
+.course-heading h3>span { font:12px var(--sans); letter-spacing:.1em; color:var(--terracotta); }
+.course-heading>p { font-size:15px; color:#776349; max-width:280px; }
+.tasting-scene .menu-grid { min-height:0; gap:24px; }
+.tasting-scene .dish-card-art { height:185px; background:none; border-radius:0; overflow:visible; }
+.tasting-scene .dish-card-art svg { padding:0 10px; }
+.tasting-scene .dish-card:nth-child(even) .dish-card-art { background:none; }
+.tasting-scene .dish-card-body { padding:10px 0 0; }
+.dish-title h4 { font-family:var(--sans); font-size:16px; font-weight:500; line-height:1.3; margin:0; }
+.tasting-scene .dish-card p { font-size:15px; line-height:1.45; min-height:44px; margin:8px 0; }
+.tasting-scene .dish-tags { gap:4px; }
+.tasting-scene .dish-tags span { padding:2px 6px; font-size:12px; }
+.tasting-scene .dish-card { transition:opacity .35s; }
+.tasting-scene .dish-card.is-dimmed { opacity:.26; }
+.tasting-footer { display:flex; align-items:center; justify-content:space-between; gap:20px; padding-top:14px; border-top:1px solid #765b3033; font-size:12px; }
+.tasting-footer .text-link { padding:5px 0; font-size:12px; gap:15px; }
+.gallery-scene { background:#383d2b; padding:140px 0 110px; }
+.film-gallery-heading { display:flex; justify-content:space-between; gap:30px; padding:0 6.2%; margin-bottom:30px; align-items:end; }
+.film-gallery-heading .eyebrow { margin-bottom:20px; }
+.film-gallery-heading h2 { font-size:clamp(48px,5.2vw,80px); }
+.film-gallery-heading em { color:var(--gold); }
+.gallery-window { overflow:hidden; }
+.gallery-scene .gallery-strip { padding-top:5px; padding-bottom:20px; }
+.gallery-scene .gallery-art { height:340px; }
+.gallery-scene .gallery-card.narrow .gallery-art { height:300px; }
+.gallery-scene .gallery-card { flex-basis:52vw; }
+.gallery-scene .gallery-card.narrow { flex-basis:33vw; padding-top:30px; }
+.evening-scene { min-height:100svh; padding:170px 6.2% 150px; }
+.nightfall { background:#151713aa; }
+.evening-layout { display:grid; grid-template-columns:1fr 1fr; align-items:center; gap:12%; max-width:1300px; margin:0 auto; }
+.evening-copy h2 { font-size:clamp(70px,8vw,120px); }
+.evening-copy em { color:var(--gold); }
+.evening-copy>p:not(.eyebrow) { margin-top:25px; font-size:16px; }
+.evening-copy .pill { margin-top:25px; border:1px solid #d6b47777; }
+.evening-layout .hours-card { color:var(--ink); padding:30px 36px; }
+.evening-layout .hours-card-top { margin-bottom:25px; }
+.evening-layout .hours-card>p { font-size:12px; }
+.film-navigation { padding:22px 6.2%; background:#2b261e; color:#e6d3ac; }
+.film-progress { height:2px; background:#d6ba872f; margin-bottom:13px; }
+.film-progress>span { display:block; height:100%; background:#d6ba87; transform:scaleX(0); transform-origin:0 50%; }
+.chapter-current { display:none; font-size:12px; letter-spacing:.08em; }
+.chapter-links { display:flex; justify-content:space-between; gap:10px; }
+.chapter-links a { display:flex; align-items:center; gap:8px; font-size:12px; min-height:34px; opacity:.55; }
+.chapter-links b { font-weight:400; }
+.chapter-links a[aria-current] { opacity:1; }
+.reservation { position:relative; overflow:hidden; }
+.reservation .booking-panel { scroll-margin-top:110px; }
+/* Only successful ScrollTrigger initialization changes the stacked document into a film. */
+.film-ready .film-stage { height:100svh; overflow:hidden; isolation:isolate; }
+.film-ready .film-scene { position:absolute; inset:0; width:100%; height:100%; min-height:0; opacity:0; visibility:hidden; pointer-events:none; }
+.film-ready .film-scene.is-current { pointer-events:auto; }
+.film-ready .film-scene[aria-hidden="true"] * { animation-play-state:paused; }
+.film-ready .arrival-facade .scene-lamp-glow { animation:none; }
+.film-ready .film-navigation { position:absolute; z-index:30; bottom:21px; left:6.2%; right:6.2%; padding:0; background:none; }
+.film-ready .film-stage.is-paper .film-navigation,.film-ready .film-stage.is-paper .film-meta { color:var(--ink); }
+.film-ready .film-stage.is-paper .film-progress { background:#6c563233; }
+.film-ready .film-stage.is-paper .film-progress>span { background:var(--wine); }
+.film-ready .tasting-scene { padding:127px 6.2% 96px; }
+.film-ready .tasting-intro { margin-bottom:8px; }
+.film-ready .tasting-intro h2 { font-size:27px; }
+.film-ready .course-heading { margin-bottom:12px; }
+.film-ready .course-heading h3 { font-size:54px; }
+.film-ready .tasting-scene .dish-card-art { height:155px; }
+.film-ready .tasting-scene .dish-card-body { padding-top:6px; }
+.film-ready .tasting-scene .menu-controls { position:relative; top:auto; background:none; margin-bottom:13px; }
+.film-ready .tasting-courses { position:relative; flex:1; }
+.film-ready .tasting-course { position:absolute; inset:0; padding:0; opacity:0; visibility:hidden; }
+.film-ready .tasting-scene { display:flex; flex-direction:column; }
+.film-ready .tasting-footer { margin-top:auto; }
+.film-ready .gallery-strip { overflow:visible; scroll-snap-type:none; cursor:default; will-change:transform; }
+.film-ready .gallery-scene { padding-top:144px; }
+.film-ready .gallery-scene .gallery-art { height:280px; }
+.film-ready .gallery-scene .gallery-card.narrow .gallery-art { height:250px; }
+.film-ready .evening-scene { display:grid; align-items:center; padding:145px 6.2% 110px; }
+.film-ready .scene-art,.film-ready .door-frame,.film-ready .door-panel { will-change:transform,opacity; }
+@media(max-width:1100px) {
+  .tasting-scene .menu-grid { grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; }
+  .tasting-scene .dish-card-art { height:160px; }
+  .tasting-scene .dish-title { display:block; }
+  .tasting-scene .dish-price { display:block; margin-top:5px; }
+  .evening-layout { gap:6%; }
+  .evening-copy h2 { font-size:80px; }
+  .chapter-links a { gap:5px; }
+  .film-ready .tasting-intro { display:none; }
+  .film-ready .tasting-scene .dish-card-art { height:140px; }
+}
+@media(max-width:760px) {
+  .site-header { padding:56px 20px 10px; }
+  .site-header .wordmark { font-size:24px; }
+  .site-header .wordmark>span { display:none; }
+  .film-meta { position:absolute; top:220px; left:24px; right:24px; flex-direction:column; gap:7px; font-size:12px; }
+  .film-meta>span:last-child { display:none; }
+  .scene-art .facade-sign { transform:scale(.6); }
+  .film-scene { min-height:100svh; }
+  .arrival-copy { left:24px; right:24px; bottom:25%; }
+  .arrival-copy h1 { font-size:clamp(46px,12.4vw,88px); }
+  .arrival-copy .eyebrow { margin-bottom:18px; font-size:12px; }
+  .arrival-subtitle { font-size:15px; max-width:300px; margin-top:22px; }
+  .scene-note { left:24px; bottom:168px; font-size:12px; max-width:260px; }
+  .film-scroll-cue { left:24px; right:auto; bottom:170px; }
+  .arrival-scene .scene-note { display:none; }
+  .vent-steam { display:none; }
+  .threshold-copy { left:24px; right:24px; top:auto; bottom:25%; }
+  .threshold-copy h2 { font-size:54px; }
+  .threshold-copy>p:last-child { font-size:15px; }
+  .door-perspective { inset:22% 0 17%; perspective:950px; }
+  .door-frame { width:265px; height:405px; border-width:5px; }
+  .door-panel { border-width:4px; }
+  .board-depth { display:none; }
+  .dining-copy { inset:25% 20px 24%; }
+  .gold-title { font-size:clamp(81px,21vw,145px); }
+  .dining-copy .eyebrow { font-size:12px; letter-spacing:.08em; }
+  .dining-copy>p:last-child { letter-spacing:.07em; }
+  .kitchen-copy { left:24px; right:24px; top:24%; width:auto; }
+  .kitchen-copy h2 { font-size:60px; margin-bottom:25px; }
+  .kitchen-copy>p:not(.eyebrow) { max-width:300px; font-size:15px; }
+  .kitchen-copy>p:last-child { display:none; }
+  .kitchen-plate { width:180px; right:-45px; bottom:12%; opacity:.65; }
+  .kitchen-haze { background:linear-gradient(90deg,#231c18dd,#231c1888 65%,#231c1811); }
+  .tasting-scene { padding:145px 24px 90px; }
+  .tasting-intro h2 { font-size:27px; }
+  .tasting-intro>span { display:none; }
+  .tasting-scene .menu-controls { top:109px; padding-bottom:10px; }
+  .tasting-scene .menu-tabs button { font-size:15px; padding:6px 0; min-height:44px; }
+  .tasting-scene .diet-filters { gap:6px; margin-top:9px; }
+  .tasting-scene .diet-filters legend { display:none; }
+  .tasting-scene .diet-filters label { min-height:37px; font-size:12px; padding:6px 9px; gap:5px; }
+  .tasting-scene .menu-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+  .course-heading { display:block; }
+  .course-heading h3 { font-size:53px; }
+  .course-heading>p { margin-top:14px; }
+  .tasting-scene .dish-card-art { height:125px; }
+  .tasting-scene .dish-card-art svg { padding:0; }
+  .tasting-scene .dish-card p { font-size:15px; min-height:0; }
+  .dish-title h4 { font-size:15px; }
+  .tasting-scene .dish-price { font-size:15px; }
+  .tasting-scene .dish-tags span { font-size:12px; }
+  .tasting-footer { display:block; }
+  .tasting-footer>.text-link { display:none; }
+  .gallery-scene { padding-top:155px; }
+  .film-gallery-heading { display:block; padding:0 24px; margin-bottom:30px; }
+  .film-gallery-heading h2 { font-size:48px; }
+  .film-gallery-heading .eyebrow { margin-bottom:20px; font-size:12px; letter-spacing:.08em; }
+  .film-gallery-heading .gallery-tools { margin-top:20px; }
+  .gallery-scene .gallery-card { flex-basis:82vw; }
+  .gallery-scene .gallery-card.narrow { flex-basis:68vw; }
+  .gallery-scene .gallery-art { height:295px; }
+  .gallery-scene .gallery-card.narrow .gallery-art { height:265px; }
+  .evening-scene { padding:160px 24px 150px; }
+  .evening-layout { grid-template-columns:1fr; gap:30px; }
+  .evening-copy h2 { font-size:72px; }
+  .evening-copy>p:not(.eyebrow) { font-size:15px; }
+  .evening-layout .hours-card { padding:24px; }
+  .evening-layout .hours-card h3 { font-size:36px; }
+  .evening-layout .hours-card-top { margin-bottom:18px; }
+  .evening-layout .hours-card dl { margin:20px 0; }
+  .evening-layout .hours-card dl>div { font-size:12px; padding:12px 0; }
+  .chapter-links { gap:2px; }
+  .chapter-links a { min-height:40px; min-width:40px; justify-content:center; font-size:12px; }
+  .chapter-links a>span { display:none; }
+  .chapter-current { display:block; text-align:center; margin:0 0 5px; }
+  .film-ready .film-meta { top:calc(25% + 18px); }
+  .film-ready .film-meta>span:first-child { display:none; }
+  .film-ready .film-navigation { left:20px; right:20px; bottom:88px; }
+  .film-ready .film-progress { margin-bottom:8px; }
+  .film-ready .tasting-scene { padding:131px 24px 153px; }
+  .film-ready .tasting-intro { margin-bottom:6px; }
+  .film-ready .tasting-intro { display:flex; }
+  .film-ready .tasting-scene .menu-controls { top:auto; margin-bottom:9px; padding:0; }
+  .film-ready .course-heading { margin-bottom:8px; }
+  .film-ready .course-heading h3 { font-size:49px; }
+  .film-ready .course-heading>p { display:none; }
+  .film-ready .tasting-scene .menu-grid { gap:10px 14px; }
+  .film-ready .tasting-scene .dish-card-art { height:80px; }
+  .film-ready .tasting-scene .dish-card-body { padding-top:3px; }
+  .film-ready .tasting-scene .dish-card p { display:none; }
+  .film-ready .tasting-scene .dish-price { font-size:15px; margin-top:2px; }
+  .film-ready .tasting-scene .dish-tags { gap:2px; margin-top:5px; }
+  .film-ready .tasting-scene .dish-tags span { padding:0 2px; border:0; font-size:12px; }
+  .film-ready .tasting-scene .dish-tags .tag-full { display:none; }
+  .film-ready .tasting-scene .dish-tags .tag-short { display:inline; }
+  .film-ready .tasting-footer { padding-top:8px; font-size:12px; }
+  .film-ready .gallery-scene { padding-top:158px; }
+  .film-ready .gallery-scene .gallery-art { height:clamp(200px,32svh,260px); }
+  .film-ready .gallery-scene .gallery-card.narrow .gallery-art { height:clamp(180px,29svh,235px); }
+  .film-ready .film-gallery-heading .gallery-tools { display:none; }
+  .film-ready .evening-scene { padding:140px 24px 166px; }
+  .film-ready .evening-layout { gap:22px; }
+  .film-ready .evening-copy h2 { font-size:58px; }
+  .film-ready .evening-copy .eyebrow { margin-bottom:16px; }
+  .film-ready .evening-copy>p:not(.eyebrow),.film-ready .evening-copy .pill { display:none; }
+  .film-ready .evening-layout .hours-card { padding:22px 24px; }
+  .film-ready .evening-scene .scene-note,.film-ready .gallery-scene .scene-note { display:none; }
+}
+.tag-short { display:none; }
+.tag-full { font-weight:inherit; }
+.tag-short { text-decoration:none; }
+@media(max-width:760px) and (max-height:740px) {
+  .film-ready .tasting-scene { padding-top:125px; padding-bottom:147px; }
+  .film-ready .tasting-intro { display:none; }
+  .film-ready .course-heading h3 { font-size:34px; }
+  .film-ready .tasting-scene .menu-controls { margin-bottom:5px; }
+  .film-ready .tasting-scene .diet-filters { margin-top:5px; }
+  .film-ready .tasting-scene .dish-card-art { height:44px; }
+  .film-ready .tasting-scene .dish-tags { margin-top:2px; }
+  .film-ready .kitchen-copy h2 { font-size:50px; }
+  .film-ready .arrival-copy { bottom:27%; }
+  .film-ready .arrival-subtitle { margin-top:14px; }
+  .film-ready .gallery-scene { padding-top:135px; }
+  .film-ready .film-gallery-heading h2 { font-size:40px; }
+  .film-ready .film-gallery-heading { margin-bottom:20px; }
+  .film-ready .gallery-scene .gallery-art { height:180px; }
+  .film-ready .gallery-scene .gallery-card.narrow .gallery-art { height:160px; }
+  .film-ready .evening-scene { padding:125px 24px 154px; }
+  .film-ready .evening-copy h2 { font-size:38px; }
+  .film-ready .evening-layout { gap:16px; }
+  .film-ready .evening-layout .hours-card { padding:14px 24px; }
+  .film-ready .evening-layout .hours-card-top { margin-bottom:12px; }
+  .film-ready .evening-layout .hours-card dl { margin:14px 0; }
+  .film-ready .evening-layout .hours-card dl>div { padding:7px 0; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .film-scene,.tasting-course { opacity:1!important; visibility:visible!important; transform:none!important; }
+  .scene-art,.room-table,.gold-letter,.headline-line { transform:none!important; opacity:1!important; }
+  .candle-flame { animation:none; }
+  .door-perspective,.threshold-light,.vent-steam,#embers { display:none; }
+}
