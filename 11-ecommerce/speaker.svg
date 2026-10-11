@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 540" role="img" aria-label="Onda One sculptural clay speaker">
+  <defs>
+    <linearGradient id="body" x2="1"><stop stop-color="#843d2b"/><stop offset=".2" stop-color="#b95d40"/><stop offset=".5" stop-color="#d58662"/><stop offset=".8" stop-color="#bd6548"/><stop offset="1" stop-color="#7f3a28"/></linearGradient>
+    <linearGradient id="fabric" x2="1"><stop stop-color="#302b26"/><stop offset=".45" stop-color="#5e5143"/><stop offset="1" stop-color="#28241f"/></linearGradient>
+    <radialGradient id="shadow"><stop stop-color="#30271c" stop-opacity=".25"/><stop offset="1" stop-color="#30271c" stop-opacity="0"/></radialGradient>
+    <pattern id="weave" width="5" height="5" patternUnits="userSpaceOnUse"><path d="M0 0h5M0 2.5h5M0 0v5M2.5 0v5" stroke="#bda992" stroke-opacity=".2" stroke-width=".7"/></pattern>
+    <pattern id="ribs" width="9" height="200" patternUnits="userSpaceOnUse"><path d="M1 0v200" stroke="#713422" stroke-width="2" opacity=".24"/><path d="M4 0v200" stroke="#e2a27c" stroke-width="1.6" opacity=".28"/></pattern>
+  </defs>
+  <ellipse cx="231" cy="474" rx="196" ry="45" fill="url(#shadow)"/>
+  <path d="M116 398v36c0 39 229 39 229 0v-36Z" fill="#3d322a"/>
+  <path d="M110 282v145c0 57 240 57 240 0V282Z" fill="url(#body)"/>
+  <path d="M110 282v145c0 57 240 57 240 0V282Z" fill="url(#ribs)"/>
+  <ellipse cx="230" cy="284" rx="120" ry="34" fill="#c27c58"/>
+  <path d="M110 127v159c0 54 240 54 240 0V127Z" fill="url(#fabric)"/>
+  <path d="M110 127v159c0 54 240 54 240 0V127Z" fill="url(#weave)"/>
+  <path d="M110 119v21c0 52 240 52 240 0v-21Z" fill="url(#body)"/>
+  <ellipse cx="230" cy="119" rx="120" ry="39" fill="#ca8260"/>
+  <ellipse cx="230" cy="115" rx="111" ry="33" fill="#bc7657"/>
+  <path d="M201 101v14c0 13 58 13 58 0v-14Z" fill="#bda18a"/>
+  <ellipse cx="230" cy="100" rx="29" ry="10" fill="#e6d3b8"/>
+  <path d="M230 91v7" stroke="#725845" stroke-width="2"/>
+  <circle cx="269" cy="124" r="2" fill="#eddbb4"/>
+  <text x="230" y="404" font-family="Arial,sans-serif" font-size="17" letter-spacing="3" fill="#efc0a1" text-anchor="middle">ora</text>
+</svg>
