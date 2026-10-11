@@ -4,7 +4,7 @@ const OWNER = {
   roleLine: 'Software engineer · Interactive web development',
   promise: 'Websites that feel alive.',
   intro: 'I build expressive websites with thoughtful design, purposeful motion, and care in every detail.',
-  upworkUrl: '#',
+  upworkUrl: 'https://www.upwork.com/freelancers/~01d09e8e7c1f809bab',
   email: 'georgioabiaad@gmail.com',
   closing: 'Let’s make something worth feeling.',
   contactNote: 'Have a landing page, a product experience, or a bigger idea in mind? Let’s build it.'
@@ -27,7 +27,7 @@ document.querySelectorAll('[data-owner]').forEach(element => {
 document.title = OWNER.name + ' — Interactive Web Development';
 document.querySelector('meta[name="description"]').content =
   OWNER.name + ', ' + OWNER.roleLine.toLowerCase() + '. ' + OWNER.promise + ' Explore ten interactive concept demos.';
-document.querySelectorAll('[data-upwork]').forEach(link => { link.href = OWNER.upworkUrl; });
+document.querySelectorAll('[data-upwork]').forEach(link => { link.href = OWNER.upworkUrl; link.target = '_blank'; link.rel = 'noopener'; });
 document.querySelectorAll('[data-email]').forEach(link => {
   link.href = 'mailto:' + OWNER.email + '?subject=' + encodeURIComponent('Project inquiry from your portfolio');
   link.setAttribute('aria-label', 'Email ' + OWNER.name + ' at ' + OWNER.email);
