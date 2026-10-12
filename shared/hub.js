@@ -1,4 +1,6 @@
-﻿// Edit all owner details here. Replace the two contact placeholders before publishing.
+import { initTilt } from './hub-tilt.js';
+
+// Edit owner details here; all personal labels and links share this configuration.
 const OWNER = {
   name: 'Georgio Abi Aad',
   roleLine: 'Software engineer · Interactive web development',
@@ -36,11 +38,12 @@ const chapterTops = new Float64Array(chapters.length);
 const chapterBottoms = new Float64Array(chapters.length);
 const chapterCenters = new Float64Array(chapters.length);
 const portalCenters = new Float64Array(chapters.length);
-const portalMax = new Float32Array(chapters.length);
 const portalScales = new Float32Array(chapters.length);
-const portalEnergies = new Float32Array(chapters.length);
-portalScales.fill(.86);
-const visuals = chapters.map(chapter => chapter.querySelector('.work-visual'));
+const portalTops = new Float64Array(chapters.length);
+const portalBottoms = new Float64Array(chapters.length);
+portalScales.fill(.94);
+const portals = chapters.map(chapter => chapter.querySelector('.portal-motion'));
+const tilt = initTilt(portals, portalScales, scheduleScrollUpdate, motionQuery, finePointer);
 let world = null, paletteKey = 'intro', workTop = 0, workBottom = 0;
 let lastScrollY = scrollY, lastScrollTime = performance.now();
 function applyPalette(key) {
@@ -53,14 +56,11 @@ function applyPalette(key) {
   document.querySelector('meta[name="theme-color"]').content = palette[2];
   world?.setPalette(palette);
 }
-function updatePortal(i, scale, energy) {
+function updatePortal(i, scale, active) {
+  portals[i].classList.toggle('is-active', active);
   if (Math.abs(portalScales[i] - scale) > .0001) {
     portalScales[i] = scale;
-    visuals[i].style.setProperty('--portal-scale', scale.toFixed(4));
-  }
-  if (Math.abs(portalEnergies[i] - energy) > .0001) {
-    portalEnergies[i] = energy;
-    visuals[i].style.setProperty('--portal-energy', energy.toFixed(3));
+    portals[i].style.transform = 'scale(' + scale.toFixed(4) + ')';
   }
 }
 
@@ -122,119 +122,166 @@ if ('IntersectionObserver' in window) {
 motionQuery.addEventListener('change', event => {
   reduced = event.matches;
   if (reduced) document.querySelectorAll('.reveal-ready').forEach(section => section.classList.add('is-visible'));
+  if (reduced) for (let i = 0; i < videos.length; i++) showPoster(i);
+  else blockedVideos.fill(0);
   scheduleScrollUpdate();
 });
 
-// Load only near the viewport. Evict before mounting, never exceeding two iframes.
-const nearby = new Set();
-const livePreviews = new Map();
-function removePreview(chapter) {
-  const iframe = livePreviews.get(chapter);
-  if (!iframe) return;
-  iframe.remove();
-  livePreviews.delete(chapter);
-  chapter.querySelector('[data-preview]').classList.remove('is-loaded');
+// Posters are immediate; video sources are attached only near the viewport.
+// Pause deselected films before starting replacements, including pending play requests.
+const videos = chapters.map(chapter => chapter.querySelector('.preview-video'));
+const nearVideos = new Uint8Array(chapters.length);
+const visibleVideos = new Uint8Array(chapters.length);
+const wantedVideos = new Uint8Array(chapters.length);
+const blockedVideos = new Uint8Array(chapters.length);
+const playVersions = new Uint32Array(chapters.length);
+let pageAway = false;
+function pauseVideo(i) {
+  if (wantedVideos[i] || !videos[i].paused) {
+    wantedVideos[i] = 0;
+    playVersions[i]++;
+    videos[i].pause();
+  }
 }
-function mountPreview(chapter) {
-  if (!chapter || livePreviews.has(chapter)) return;
-  const viewport = chapter.querySelector('[data-preview]');
-  viewport.style.setProperty('--preview-scale', viewport.clientWidth / 1440);
-  const iframe = document.createElement('iframe');
-  iframe.title = chapter.querySelector('h2').textContent + ' — live concept preview';
-  iframe.tabIndex = -1;
-  iframe.inert = true;
-  iframe.setAttribute('aria-hidden', 'true');
-  iframe.setAttribute('scrolling', 'no');
-  iframe.loading = 'eager'; // IntersectionObserver already owns the lazy-loading policy.
-  iframe.addEventListener('load', () => {
-    if (livePreviews.get(chapter) === iframe) viewport.classList.add('is-loaded');
-  }, { once: true });
-  livePreviews.set(chapter, iframe);
-  iframe.src = chapter.querySelector('.device-frame').href;
-  viewport.append(iframe);
+function showPoster(i) {
+  pauseVideo(i);
+  if (videos[i].hasAttribute('src')) {
+    videos[i].removeAttribute('src');
+    videos[i].load();
+  }
 }
-function syncPreviews() {
-  if (mobileQuery.matches || document.hidden) {
-    for (const chapter of livePreviews.keys()) removePreview(chapter);
+function startVideo(i) {
+  if (i < 0 || wantedVideos[i] || blockedVideos[i]) return;
+  const video = videos[i];
+  wantedVideos[i] = 1;
+  const version = ++playVersions[i];
+  const request = video.play();
+  request?.then(() => {
+    if (version !== playVersions[i]) return;
+    if (!wantedVideos[i] || reduced || document.hidden || pageAway) pauseVideo(i);
+  }).catch(error => {
+    if (version !== playVersions[i]) return;
+    wantedVideos[i] = 0;
+    // Autoplay denial or an unavailable film leaves a useful, clickable poster.
+    if (error.name !== 'AbortError') {
+      blockedVideos[i] = 1;
+      showPoster(i);
+    }
+  });
+}
+function syncVideos(y) {
+  if (reduced || document.hidden || pageAway) {
+    for (let i = 0; i < videos.length; i++) {
+      if (reduced) showPoster(i);
+      else pauseVideo(i);
+    }
     return;
   }
-  let first = null, second = null, firstDistance = Infinity, secondDistance = Infinity;
-  for (const chapter of nearby) {
-    const distance = Math.abs(chapterCenters[chapterIndices.get(chapter)] - scrollY - innerHeight * .5);
+  let first = -1, second = -1, firstDistance = Infinity, secondDistance = Infinity;
+  const center = y + innerHeight * .5;
+  for (let i = 0; i < videos.length; i++) {
+    if (nearVideos[i] && !blockedVideos[i] && !videos[i].hasAttribute('src')) {
+      videos[i].src = videos[i].dataset.src;
+    }
+    if (!visibleVideos[i] || !nearVideos[i] || blockedVideos[i]) continue;
+    const distance = Math.abs(portalCenters[i] - center);
     if (distance < firstDistance) {
       second = first; secondDistance = firstDistance;
-      first = chapter; firstDistance = distance;
+      first = i; firstDistance = distance;
     } else if (distance < secondDistance) {
-      second = chapter; secondDistance = distance;
+      second = i; secondDistance = distance;
     }
   }
-  for (const chapter of livePreviews.keys()) {
-    if (chapter !== first && chapter !== second) removePreview(chapter);
+  if (mobileQuery.matches) second = -1;
+  for (let i = 0; i < videos.length; i++) {
+    if (i !== first && i !== second) pauseVideo(i);
   }
-  mountPreview(first);
-  mountPreview(second);
+  startVideo(first);
+  startVideo(second);
 }
-if ('IntersectionObserver' in window) {
-  const previewObserver = new IntersectionObserver(entries => {
-    for (const entry of entries) {
-      if (entry.isIntersecting) nearby.add(entry.target);
-      else nearby.delete(entry.target);
-    }
-    syncPreviews();
-  }, { rootMargin: '280px 0px', threshold: 0 });
-  chapters.forEach(chapter => previewObserver.observe(chapter));
-}
-if ('ResizeObserver' in window) {
-  const previewResize = new ResizeObserver(entries => {
-    for (const entry of entries) entry.target.style.setProperty('--preview-scale', entry.contentRect.width / 1440);
+videos.forEach((video, i) => {
+  video.muted = true;
+  video.addEventListener('error', () => {
+    blockedVideos[i] = 1;
+    showPoster(i);
   });
-  document.querySelectorAll('[data-preview]').forEach(viewport => previewResize.observe(viewport));
-}
-mobileQuery.addEventListener('change', () => { syncPreviews(); scheduleScrollUpdate(); });
-document.addEventListener('visibilitychange', syncPreviews);
-window.addEventListener('pagehide', () => {
-  for (const chapter of livePreviews.keys()) removePreview(chapter);
 });
-window.addEventListener('pageshow', syncPreviews);
-
+if ('IntersectionObserver' in window) {
+  const nearObserver = new IntersectionObserver(entries => {
+    for (const entry of entries) nearVideos[chapterIndices.get(entry.target)] = Number(entry.isIntersecting);
+    scheduleScrollUpdate();
+  }, { rootMargin: '200px 0px', threshold: 0 });
+  const visibleObserver = new IntersectionObserver(entries => {
+    for (const entry of entries) {
+      const i = chapterIndices.get(entry.target.closest('.work-item'));
+      visibleVideos[i] = Number(entry.isIntersecting);
+      if (!entry.isIntersecting) pauseVideo(i);
+    }
+    scheduleScrollUpdate();
+  }, { threshold: 0 });
+  chapters.forEach(chapter => nearObserver.observe(chapter));
+  portals.forEach(portal => visibleObserver.observe(portal));
+}
+mobileQuery.addEventListener('change', scheduleScrollUpdate);
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) for (let i = 0; i < videos.length; i++) pauseVideo(i);
+  else scheduleScrollUpdate();
+});
+window.addEventListener('pagehide', () => {
+  pageAway = true;
+  for (let i = 0; i < videos.length; i++) pauseVideo(i);
+});
+window.addEventListener('pageshow', () => {
+  pageAway = false;
+  scheduleScrollUpdate();
+});
 // Passive scroll bookkeeping, at most once per animation frame. Scrolling is never intercepted.
 let scrollFrame = 0, activeChapter = -1;
 const work = document.querySelector('#work');
-// Measure only on layout changes; scroll frames reuse numeric bounds and scale transforms.
+// Initial measurement and resize are the only geometry reads in the scroll system.
 function measureChapters() {
   const y = scrollY;
   const workRect = work.getBoundingClientRect();
   workTop = workRect.top + y; workBottom = workRect.bottom + y;
   for (let i = 0; i < chapters.length; i++) {
     const rect = chapters[i].getBoundingClientRect();
-    const portal = visuals[i].getBoundingClientRect();
+    const portal = portals[i].getBoundingClientRect();
+    tilt.measure(i, portal, y);
     chapterTops[i] = rect.top + y;
     chapterBottoms[i] = rect.bottom + y;
     chapterCenters[i] = rect.top + y + rect.height * .5;
     portalCenters[i] = portal.top + y + portal.height * .5;
-    portalMax[i] = innerWidth * .9 / visuals[i].offsetWidth;
+    portalTops[i] = portal.top + y;
+    portalBottoms[i] = portal.bottom + y;
   }
   scheduleScrollUpdate();
 }
 function updateProgress() {
   scrollFrame = 0;
   const y = scrollY, center = y + innerHeight * .5, now = performance.now();
-  const velocity = (y - lastScrollY) / Math.max(16, now - lastScrollTime) * 1000;
-  lastScrollY = y; lastScrollTime = now;
-  world?.setScrollVelocity(velocity);
+  if (y !== lastScrollY) {
+    const velocity = (y - lastScrollY) / Math.max(16, now - lastScrollTime) * 1000;
+    lastScrollY = y; lastScrollTime = now;
+    world?.setScrollVelocity(velocity);
+  }
   index.classList.toggle('is-active', workTop - y < innerHeight * .7 && workBottom - y > innerHeight * .3);
   let nearest = 0, distance = Infinity;
   for (let i = 0; i < chapters.length; i++) {
     const d = Math.abs(chapterCenters[i] - center);
     if (d < distance) { nearest = i; distance = d; }
+    if (!('IntersectionObserver' in window)) {
+      nearVideos[i] = Number(chapterBottoms[i] > y - 200 && chapterTops[i] < y + innerHeight + 200);
+      visibleVideos[i] = Number(portalBottoms[i] > y && portalTops[i] < y + innerHeight);
+    }
     if (reduced || mobileQuery.matches) {
-      updatePortal(i, 1, 0);
+      updatePortal(i, 1, false);
       continue;
     }
     const proximity = Math.max(0, 1 - Math.abs(portalCenters[i] - center) / (innerHeight * .85));
     const eased = proximity * proximity * (3 - 2 * proximity);
-    const scale = .86 + (portalMax[i] - .86) * eased;
-    updatePortal(i, scale, eased);
+    const scale = .94 + .095 * eased;
+    const active = portalBottoms[i] > y - 200 && portalTops[i] < y + innerHeight + 200;
+    updatePortal(i, scale, active);
   }
   applyPalette(center >= chapterTops[0] && center <= chapterBottoms[chapters.length - 1]
     ? chapters[nearest].dataset.demo : 'intro');
@@ -245,16 +292,15 @@ function updateProgress() {
       else link.removeAttribute('aria-current');
     });
   }
-  syncPreviews();
+  syncVideos(y);
+  if (tilt.update(now)) scheduleScrollUpdate();
 }
 function scheduleScrollUpdate() {
   if (!scrollFrame) scrollFrame = requestAnimationFrame(updateProgress);
 }
 window.addEventListener('scroll', scheduleScrollUpdate, { passive: true });
 window.addEventListener('resize', measureChapters, { passive: true });
-if ('ResizeObserver' in window) new ResizeObserver(measureChapters).observe(work);
 window.addEventListener('pageshow', measureChapters);
-document.fonts?.ready.then(measureChapters);
 measureChapters();
 
 // Micro-interactions affect the content of targets, keeping the hit areas stable.
@@ -270,19 +316,6 @@ document.querySelectorAll('.magnetic').forEach(button => {
     button.style.setProperty('--my', '0px');
   });
 });
-document.querySelectorAll('.device-frame').forEach(frame => {
-  frame.addEventListener('pointermove', event => {
-    if (reduced || !finePointer.matches || event.pointerType !== 'mouse') return;
-    const rect = frame.getBoundingClientRect();
-    frame.style.setProperty('--rx', (-(event.clientY - rect.top - rect.height / 2) / rect.height * 3) + 'deg');
-    frame.style.setProperty('--ry', ((event.clientX - rect.left - rect.width / 2) / rect.width * 3) + 'deg');
-  });
-  frame.addEventListener('pointerleave', () => {
-    frame.style.setProperty('--rx', '0deg');
-    frame.style.setProperty('--ry', '0deg');
-  });
-});
-
 // Motion can be paused explicitly, and the marquee sleeps when off screen.
 const stack = document.querySelector('.stack');
 const marqueeToggle = document.querySelector('.marquee-toggle');

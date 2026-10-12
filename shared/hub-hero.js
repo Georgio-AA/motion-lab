@@ -84,7 +84,7 @@ export function initHero(atmosphere) {
     gl.deleteShader(vertex); gl.deleteShader(fragment);
     if (!gl.getProgramParameter(program,gl.LINK_STATUS)) throw new Error('Ribbon program unavailable');
     gl.useProgram(program);
-    const segments=160, strands=32;
+    const segments=112, strands=22;
     count=segments*strands*6;
     const vertices=new Float32Array(count*3);
     let offset=0;
