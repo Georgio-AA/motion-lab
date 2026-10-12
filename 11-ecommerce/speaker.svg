@@ -1,24 +1,27 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 540" role="img" aria-label="Onda One sculptural clay speaker">
-  <defs>
-    <linearGradient id="body" x2="1"><stop stop-color="#843d2b"/><stop offset=".2" stop-color="#b95d40"/><stop offset=".5" stop-color="#d58662"/><stop offset=".8" stop-color="#bd6548"/><stop offset="1" stop-color="#7f3a28"/></linearGradient>
-    <linearGradient id="fabric" x2="1"><stop stop-color="#302b26"/><stop offset=".45" stop-color="#5e5143"/><stop offset="1" stop-color="#28241f"/></linearGradient>
-    <radialGradient id="shadow"><stop stop-color="#30271c" stop-opacity=".25"/><stop offset="1" stop-color="#30271c" stop-opacity="0"/></radialGradient>
-    <pattern id="weave" width="5" height="5" patternUnits="userSpaceOnUse"><path d="M0 0h5M0 2.5h5M0 0v5M2.5 0v5" stroke="#bda992" stroke-opacity=".2" stroke-width=".7"/></pattern>
-    <pattern id="ribs" width="9" height="200" patternUnits="userSpaceOnUse"><path d="M1 0v200" stroke="#713422" stroke-width="2" opacity=".24"/><path d="M4 0v200" stroke="#e2a27c" stroke-width="1.6" opacity=".28"/></pattern>
-  </defs>
-  <ellipse cx="231" cy="474" rx="196" ry="45" fill="url(#shadow)"/>
-  <path d="M116 398v36c0 39 229 39 229 0v-36Z" fill="#3d322a"/>
-  <path d="M110 282v145c0 57 240 57 240 0V282Z" fill="url(#body)"/>
-  <path d="M110 282v145c0 57 240 57 240 0V282Z" fill="url(#ribs)"/>
-  <ellipse cx="230" cy="284" rx="120" ry="34" fill="#c27c58"/>
-  <path d="M110 127v159c0 54 240 54 240 0V127Z" fill="url(#fabric)"/>
-  <path d="M110 127v159c0 54 240 54 240 0V127Z" fill="url(#weave)"/>
-  <path d="M110 119v21c0 52 240 52 240 0v-21Z" fill="url(#body)"/>
-  <ellipse cx="230" cy="119" rx="120" ry="39" fill="#ca8260"/>
-  <ellipse cx="230" cy="115" rx="111" ry="33" fill="#bc7657"/>
-  <path d="M201 101v14c0 13 58 13 58 0v-14Z" fill="#bda18a"/>
-  <ellipse cx="230" cy="100" rx="29" ry="10" fill="#e6d3b8"/>
-  <path d="M230 91v7" stroke="#725845" stroke-width="2"/>
-  <circle cx="269" cy="124" r="2" fill="#eddbb4"/>
-  <text x="230" y="404" font-family="Arial,sans-serif" font-size="17" letter-spacing="3" fill="#efc0a1" text-anchor="middle">ora</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 680" role="img" aria-label="Onda One: curved ceramic shoulders, acoustic knit and a machined aluminium dial">
+ <defs>
+  <linearGradient id="ceramic" x1="0" x2="1"><stop stop-color="#713c2c"/><stop offset=".16" stop-color="#c67350"/><stop offset=".36" stop-color="#f3b28c"/><stop offset=".55" stop-color="#dd825c"/><stop offset=".8" stop-color="#b35d3e"/><stop offset="1" stop-color="#743724"/></linearGradient>
+  <linearGradient id="top" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#ffd7b4"/><stop offset=".45" stop-color="#e9966e"/><stop offset="1" stop-color="#9b4d32"/></linearGradient>
+  <linearGradient id="fabric" x2="1"><stop stop-color="#352a24"/><stop offset=".32" stop-color="#82654f"/><stop offset=".62" stop-color="#694c39"/><stop offset="1" stop-color="#2c231f"/></linearGradient>
+  <linearGradient id="metal" x2="1"><stop stop-color="#65645b"/><stop offset=".28" stop-color="#e6e1d2"/><stop offset=".5" stop-color="#8a887d"/><stop offset=".8" stop-color="#ccc7b9"/><stop offset="1" stop-color="#686a60"/></linearGradient>
+  <radialGradient id="shadow"><stop stop-color="#000" stop-opacity=".5"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+  <pattern id="knit" width="7" height="9" patternUnits="userSpaceOnUse"><path d="m1 0 2 4-2 5m4-9-2 4 2 5" fill="none" stroke="#e0c4a1" stroke-opacity=".25" stroke-width=".8"/><path d="M0 5h7" stroke="#140e09" stroke-opacity=".3" stroke-width="1.2"/></pattern>
+  <pattern id="grain" width="4" height="20" patternUnits="userSpaceOnUse"><path d="M1 0v20" stroke="#282b26" stroke-opacity=".45" stroke-width=".6"/></pattern>
+ </defs>
+ <ellipse cx="310" cy="588" rx="220" ry="52" fill="url(#shadow)"/>
+ <g transform="rotate(-5 300 340)">
+  <path d="M177 468c-11 45 10 86 47 99 42 16 120 17 160 1 42-16 55-64 39-100Z" fill="url(#ceramic)"/>
+  <path d="M207 547c50 24 144 26 184 0" stroke="#ffdfb9" stroke-width="2" opacity=".4" fill="none"/>
+  <path d="M181 230c-4 50 20 92 18 138-2 44-19 91-18 120 40 40 197 43 240-1 1-31-15-75-18-119-3-47 19-90 18-138Z" fill="url(#fabric)"/>
+  <path d="M181 230c-4 50 20 92 18 138-2 44-19 91-18 120 40 40 197 43 240-1 1-31-15-75-18-119-3-47 19-90 18-138Z" fill="url(#knit)"/>
+  <path d="M181 233c37 37 195 40 240 0" stroke="#ffcba3" stroke-width="5" fill="none"/>
+  <path d="M173 215c-7-44 16-81 59-91 45-11 109-11 144 2 37 14 57 55 53 90-21 61-235 60-256-1Z" fill="url(#ceramic)"/>
+  <ellipse cx="302" cy="169" rx="121" ry="48" fill="url(#top)"/>
+  <path d="M194 184c7-42 52-58 93-57" fill="none" stroke="#ffe7d1" stroke-width="5" opacity=".55"/>
+  <path d="M265 137v23c2 21 74 21 76 0v-23" fill="url(#metal)"/>
+  <path d="M265 137v23c2 21 74 21 76 0v-23" fill="url(#grain)"/>
+  <ellipse cx="303" cy="137" rx="38" ry="13" fill="#d4d2c3"/><ellipse cx="303" cy="137" rx="32" ry="10" fill="none" stroke="#999d91" stroke-width=".6"/><ellipse cx="303" cy="137" rx="25" ry="8" fill="none" stroke="#999d91" stroke-width=".5"/>
+  <path d="m303 127 0 5" stroke="#33372d" stroke-width="2"/>
+  <text x="305" y="550" fill="#f7d9ba" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" letter-spacing="1">ora</text>
+ </g>
 </svg>

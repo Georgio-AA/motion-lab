@@ -1,584 +1,107 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#efede6">
-    <title>ORA — Onda One. Sound takes shape.</title>
-    <meta name="description" content="Meet Onda One, a sculptural ceramic wireless speaker. Explore its construction, choose your finish, and try the interactive ORA concept store.">
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='32' fill='%23b8593b'/%3E%3Ccircle cx='32' cy='32' r='17' fill='none' stroke='%23f5eee2' stroke-width='5'/%3E%3C/svg%3E">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../shared/base.css">
-    <link rel="stylesheet" href="style.css">
-    <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js"}}</script>
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Georgio Abi Aad · Motion Lab">
-    <meta property="og:title" content="ORA — Onda One. Sound takes shape.">
-    <meta property="og:description" content="A premium DTC concept store with a sculptural 3D speaker, an exploded product story, and an interactive shopping experience.">
-    <meta property="og:url" content="https://georgio-aa.github.io/motion-lab/11-ecommerce/">
-    <meta property="og:image" content="https://georgio-aa.github.io/motion-lab/og/11-ecommerce.jpg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="ORA — Onda One. Sound takes shape.">
-    <meta name="twitter:description" content="Explore a sculptural speaker in an interactive premium concept store.">
-    <meta name="twitter:image" content="https://georgio-aa.github.io/motion-lab/og/11-ecommerce.jpg">
-  <link rel="stylesheet" href="../shared/transition.css">
-<script type="module" src="../shared/transition.js"></script>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#171715">
+  <title>ORA — Onda One. Sound, with feeling.</title>
+  <meta name="description" content="Sound, with feeling. Meet Onda One: ceramic, knitted sound, and a little light. An interactive ORA product launch and concept store.">
+  <link rel="canonical" href="https://georgio-aa.github.io/motion-lab/11-ecommerce/">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='32' fill='%23171715'/%3E%3Ccircle cx='32' cy='32' r='18' fill='none' stroke='%23f49166' stroke-width='3'/%3E%3C/svg%3E">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Georgio Abi Aad · Motion Lab">
+  <meta property="og:title" content="ORA — Onda One. Sound, with feeling.">
+  <meta property="og:description" content="A sculpted speaker. A living soundscape. An original interactive product launch and concept store.">
+  <meta property="og:url" content="https://georgio-aa.github.io/motion-lab/11-ecommerce/">
+  <meta property="og:image" content="https://georgio-aa.github.io/motion-lab/og/11-ecommerce.jpg">
+  <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ORA — Onda One. Sound, with feeling.">
+  <meta name="twitter:description" content="An original sculptural speaker and interactive concept store.">
+  <meta name="twitter:image" content="https://georgio-aa.github.io/motion-lab/og/11-ecommerce.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/base.css"><link rel="stylesheet" href="../shared/transition.css"><link rel="stylesheet" href="style.css">
+  <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"}}</script>
+  <script type="module" src="../shared/transition.js"></script>
 </head>
-  <body>
-    <div class="announcement">Objects for listening. Made for living. <span>Concept store · No real orders</span>
-    </div>
-    <header class="site-header">
-      <a class="back-to-hub header-back" href="../index.html" aria-label="Back to all demos">← All demos</a>
-      <a class="wordmark" href="#product" aria-label="ORA home">ora<span>®</span>
-      </a>
-      <nav aria-label="Main navigation">
-        <a href="#product">The speaker</a>
-        <a href="#craft">The thinking</a>
-        <a href="#collection">The collection</a>
-      </nav>
-      <div class="header-actions">
-        <button class="icon-button" id="open-search" aria-label="Search the collection" aria-haspopup="dialog">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <circle cx="10.5" cy="10.5" r="6.5"/>
-            <path d="m16 16 5 5"/>
-          </svg>
-        </button>
-        <button class="icon-button cart-trigger" id="open-cart" aria-label="Open bag, 0 items" aria-haspopup="dialog">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M5 7h14l1 14H4L5 7Z"/>
-            <path d="M8 8V6a4 4 0 0 1 8 0v2"/>
-          </svg>
-          <span id="cart-count">0</span>
-        </button>
+<body data-finish="clay" class="webgl-fallback">
+  <a class="skip-link" href="#craft">Skip to product details</a>
+  <header class="site-header">
+    <div class="header-brand"><a class="back-to-hub header-back" href="../index.html">← All demos</a><a class="wordmark" href="#product" aria-label="ORA home">ora<span>®</span></a></div>
+    <nav aria-label="Main navigation"><a href="#craft">The thinking</a><a href="#details">The details</a><a href="#finish">Make it yours</a></nav>
+    <button class="bag-button" id="open-bag" aria-label="Open bag, 0 items" aria-haspopup="dialog"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l1 13H4L5 8Z"/><path d="M8 8V6a4 4 0 0 1 8 0v2"/></svg><span id="bag-count">0</span></button>
+  </header>
+  <main>
+    <section class="hero" id="product" aria-labelledby="hero-title">
+      <div class="stage-light" aria-hidden="true"></div>
+      <div class="hero-topline"><span>ORA / LISTENING OBJECTS</span><span>ONDA ONE — 001</span><span class="concept-tag">Concept store · No real orders</span></div>
+      <h1 id="hero-title"><span class="headline-back"><span>Sound,</span></span> <span class="headline-front"><span>with feeling.</span></span></h1>
+      <div class="visual-rig" id="visual-rig" aria-hidden="true"><div class="static-product"><img src="speaker.svg" alt="" width="600" height="680"></div><canvas id="product-canvas"></canvas></div>
+      <div class="drag-surface" id="hero-drag" role="group" tabindex="0" aria-label="Onda One 3D view. Drag horizontally or use left and right arrow keys to rotate."></div>
+      <div class="hero-side"><span class="tiny-cross">+</span><p>Not another device.<br>A reason to listen.</p><span class="side-rule"></span><span>DESIGNED TO BE FELT.</span></div>
+      <div class="hero-bottom">
+        <div class="hero-description"><span class="eyebrow">MEET ONDA ONE</span><p>Room-filling sound.<br>A form worth making room for.</p><span class="rotation-note">↔ Drag the object to explore</span></div>
+        <fieldset class="finish-picker hero-finishes"><legend>Finish / <span data-finish-name>Clay</span></legend><div class="swatches">
+          <button class="swatch selected" data-finish="clay" style="--swatch:#df825d" aria-label="Clay finish" aria-pressed="true"></button>
+          <button class="swatch" data-finish="moss" style="--swatch:#85977b" aria-label="Moss finish" aria-pressed="false"></button>
+          <button class="swatch" data-finish="bone" style="--swatch:#e5dfd1" aria-label="Bone finish" aria-pressed="false"></button>
+          <button class="swatch" data-finish="ink" style="--swatch:#545d6a" aria-label="Ink finish" aria-pressed="false"></button>
+        </div></fieldset>
+        <div class="hero-actions"><button class="sample-button magnetic" id="sample-button" aria-pressed="false"><span class="play-symbol" aria-hidden="true">▶</span><span id="sample-label">Play a sample</span><span class="equalizer" aria-hidden="true"><i></i><i></i><i></i><i></i></span></button><div class="hero-buy"><span>$289 <small>USD</small></span><button class="text-button" data-add>Add to bag <span aria-hidden="true">↗</span></button></div><span class="audio-note" id="audio-note" role="status">An original soundscape. Best with headphones.</span></div>
       </div>
-    </header>
-    <main>
-      <section class="product-hero" id="product" aria-labelledby="product-name">
-        <div class="gallery">
-          <div class="gallery-top">
-            <p class="eyebrow">THE LISTENING COLLECTION / 001</p>
-            <span class="edition">Designed to be different.</span>
-          </div>
-          <h1 class="hero-headline">Sound takes<br> <em>shape.</em>
-          </h1>
-          <div class="product-stage" id="hero-stage" tabindex="0" role="group" aria-label="Interactive Onda One speaker. Drag or swipe horizontally to rotate. Use left and right arrow keys to rotate." aria-describedby="rotate-hint">
-            <div class="static-product" aria-hidden="true">
-              <img src="speaker.svg" alt="" width="460" height="540">
-            </div>
-            <canvas id="hero-canvas" aria-hidden="true">
-            </canvas>
-            <span class="stage-ring" aria-hidden="true">
-            </span>
-          </div>
-          <div class="gallery-bottom">
-            <span class="finish-stamp">
-              <span class="live-dot">
-              </span> <span id="gallery-finish">CLAY / 01</span>
-            </span>
-            <div class="view-controls" aria-label="Product views">
-              <button class="view-button active" data-view="0" aria-label="Three-quarter view" aria-pressed="true">01</button>
-              <button class="view-button" data-view="1" aria-label="Front view" aria-pressed="false">02</button>
-              <button class="view-button" data-view="2" aria-label="Rear view" aria-pressed="false">03</button>
-            </div>
-            <span class="rotate-hint" id="rotate-hint">↔ Drag to explore</span>
-          </div>
+      <a class="scroll-cue" href="#craft"><span>SCROLL TO FEEL IT</span><span aria-hidden="true">↓</span></a>
+    </section>
+    <div class="manifesto-strip"><span>A little less noise.</span><span class="strip-star" aria-hidden="true">✳</span><span>A lot more presence.</span><span class="strip-star" aria-hidden="true">✳</span><span>Sound is a feeling.</span></div>
+    <section class="craft" id="craft" aria-labelledby="craft-title">
+      <div class="story-viewport" id="story-viewport">
+        <div class="story-light" aria-hidden="true"></div>
+        <div class="story-top"><span class="eyebrow">01 / THE ANATOMY OF FEELING</span><span class="story-chapter" id="story-chapter">01 — Every layer matters</span></div>
+        <div class="story-copy assembly-copy"><h2 id="craft-title">Nothing here<br> <em>by accident.</em></h2><p>Six considered parts.<br>One beautifully simple idea.</p></div>
+        <div class="story-copy room-copy"><span class="eyebrow">02 / A PLACE IN YOUR EVERYDAY</span><h2>Your room.<br> <em>Its rhythm.</em></h2><p>From the first light to the last track.<br>Always the right kind of company.</p></div>
+        <div id="story-slot"></div>
+        <svg class="callout-lines" id="callout-lines" aria-hidden="true"><g><path/><path/><path/><path/><path/><path/></g></svg>
+        <div class="callouts" id="callouts">
+          <div class="callout" data-part="dial"><span>01</span><div><h3>A ritual, machined.</h3><p>Knurled aluminium dial</p></div></div>
+          <div class="callout" data-part="shell"><span>02</span><div><h3>Made to be touched.</h3><p>Glazed ceramic shoulders</p></div></div>
+          <div class="callout" data-part="fabric"><span>03</span><div><h3>Soft on the outside.</h3><p>Seamless acoustic knit</p></div></div>
+          <div class="callout" data-part="driver"><span>04</span><div><h3>Power at its heart.</h3><p>Full-range cone + magnet</p></div></div>
+          <div class="callout" data-part="radiator"><span>05</span><div><h3>Depth without size.</h3><p>Suspended passive radiator</p></div></div>
+          <div class="callout" data-part="battery"><span>06</span><div><h3>Leave the cable behind.</h3><p>Rechargeable battery pack</p></div></div>
         </div>
-        <div class="product-info">
-          <p class="breadcrumb">Objects / Wireless speakers / Onda One</p>
-          <div class="product-heading">
-            <p class="eyebrow">A LITTLE LESS NOISE. A LOT MORE SOUND.</p>
-            <h2 id="product-name">Onda One.</h2>
-            <p class="subtitle">A speaker. An object. A feeling.</p>
-          </div>
-          <a href="#reviews" class="rating-link">
-            <span class="stars" aria-label="4.8 out of 5 stars">★★★★★</span>
-            <strong>4.8</strong>
-            <span>48 illustrative reviews</span>
-          </a>
-          <div class="price-line">
-            <span id="product-price">$289</span>
-            <s id="compare-price">$349</s>
-            <span class="price-note">A quieter kind of upgrade</span>
-          </div>
-          <p class="product-description">Room-filling sound in a form worth making room for. A tactile ceramic shell, a beautifully simple dial, and nothing between you and the music.</p>
-          <fieldset class="finish-options">
-            <legend>Finish <span id="finish-label">Clay</span>
-            </legend>
-            <div class="swatches">
-              <button class="swatch selected" data-color="clay" style="--swatch:#b8593b" aria-label="Clay finish" aria-pressed="true">
-              </button>
-              <button class="swatch" data-color="chalk" style="--swatch:#d3c9b6" aria-label="Chalk finish" aria-pressed="false">
-              </button>
-              <button class="swatch" data-color="moss" style="--swatch:#626955" aria-label="Moss finish" aria-pressed="false">
-              </button>
-              <span>Three shades. Your space.</span>
-            </div>
-          </fieldset>
-          <fieldset class="variant-options">
-            <legend>Your setup</legend>
-            <div class="variant-buttons">
-              <button class="variant selected" data-variant="single" aria-pressed="true">
-                <strong>One speaker</strong>
-                <span>The everyday essential</span>
-              </button>
-              <button class="variant" data-variant="pair" aria-pressed="false">
-                <strong>Stereo pair <span class="save-tag">SAVE $49</span>
-                </strong>
-                <span>A little more atmosphere</span>
-              </button>
-            </div>
-          </fieldset>
-          <div class="purchase-row">
-            <div class="stepper" aria-label="Product quantity">
-              <button id="quantity-minus" aria-label="Decrease quantity" disabled>−</button>
-              <output id="quantity" aria-live="polite">1</output>
-              <button id="quantity-plus" aria-label="Increase quantity">+</button>
-            </div>
-            <button class="primary-button add-button" id="add-to-cart">Add to bag <span>↗</span>
-            </button>
-          </div>
-          <p class="availability">
-            <span class="live-dot">
-            </span> Ready for your space <span>· Demo availability</span>
-          </p>
-          <div class="purchase-promises">
-            <span>↗ Free shipping over $350</span>
-            <span>↺ 30-day returns</span>
-            <span>◇ 2-year warranty</span>
-          </div>
-          <p class="demo-note">An original product concept. Prices, specifications, reviews, and store policies are illustrative.</p>
-        </div>
-      </section>
-      <div class="benefit-strip">
-        <span>
-          <b>360°</b> Sound that surrounds</span>
-        <span>
-          <b>24h</b> Uninterrupted listening</span>
-        <span>
-          <b>01</b> Dial. Zero distractions.</span>
-        <span>
-          <b>∞</b> A place in your everyday</span>
+        <div class="time-display"><span id="room-time">07:00</span><span id="room-period">MORNING LIGHT</span><div class="time-track"><i id="time-progress"></i></div><span>SCROLL THROUGH THE DAY</span></div>
+        <div class="story-bottom"><span>ONDA ONE / A STUDY IN SOUND</span><div class="story-progress"><i id="story-progress"></i></div><span id="story-phase">SCROLL TO OPEN</span></div>
       </div>
-      <section class="craft-story" id="craft" aria-labelledby="craft-heading">
-        <div class="craft-sticky">
-          <div class="craft-heading">
-            <p class="eyebrow">01 / NOTHING HERE BY ACCIDENT</p>
-            <h2 id="craft-heading">Beautiful outside.<br> <em>Considered inside.</em>
-            </h2>
-            <p>Scroll to see what makes Onda, Onda.</p>
-          </div>
-          <div class="exploded-stage" id="story-stage">
-            <div class="story-fallback" aria-hidden="true">
-              <img src="speaker.svg" alt="" width="460" height="540">
-            </div>
-            <canvas id="story-canvas" aria-hidden="true">
-            </canvas>
-          </div>
-          <div class="callout callout-top">
-            <span class="callout-number">01</span>
-            <div>
-              <h3>A satisfying little ritual.</h3>
-              <p>One tactile aluminum dial. Turn up,<br> slow down, find your frequency.</p>
-            </div>
-          </div>
-          <div class="callout callout-middle">
-            <span class="callout-number">02</span>
-            <div>
-              <h3>Sound without a sweet spot.</h3>
-              <p>A full-range acoustic core disperses<br> warm, balanced sound in every direction.</p>
-            </div>
-          </div>
-          <div class="callout callout-bottom">
-            <span class="callout-number">03</span>
-            <div>
-              <h3>Made to feel something.</h3>
-              <p>Fluted ceramic. A weighted base.<br> Texture you can hear with your hands.</p>
-            </div>
-          </div>
-          <div class="story-footer">
-            <span>THE ART OF PAYING ATTENTION</span>
-            <div class="story-progress">
-              <span id="story-progress">
-              </span>
-            </div>
-            <span id="story-state">01 — The whole</span>
-          </div>
-        </div>
-      </section>
-      <section class="specs-section section-pad" id="details" aria-labelledby="details-heading">
-        <div class="section-title">
-          <p class="eyebrow">02 / THE FINER DETAILS</p>
-          <h2 id="details-heading">Small details.<br> <em>Big difference.</em>
-          </h2>
-          <p>Everything you need to know.<br>Nothing you don’t.</p>
-        </div>
-        <div class="specs-content">
-          <div class="tabs" role="tablist" aria-label="Product information">
-            <button id="tab-details" role="tab" aria-selected="true" aria-controls="panel-details" tabindex="0">Details</button>
-            <button id="tab-materials" role="tab" aria-selected="false" aria-controls="panel-materials" tabindex="-1">Materials</button>
-            <button id="tab-shipping" role="tab" aria-selected="false" aria-controls="panel-shipping" tabindex="-1">Shipping &amp; returns</button>
-          </div>
-          <div id="panel-details" role="tabpanel" aria-labelledby="tab-details" tabindex="0">
-            <table>
-              <caption class="sr-only">Illustrative Onda One specifications</caption>
-              <tbody>
-                <tr>
-                  <th scope="row">Dimensions</th>
-                  <td>Ø 160 × 230 mm</td>
-                </tr>
-                <tr>
-                  <th scope="row">Weight</th>
-                  <td>1.8 kg · reassuringly substantial</td>
-                </tr>
-                <tr>
-                  <th scope="row">Sound</th>
-                  <td>360° full-range · 40 W output</td>
-                </tr>
-                <tr>
-                  <th scope="row">Connectivity</th>
-                  <td>Bluetooth 5.3 · USB-C audio</td>
-                </tr>
-                <tr>
-                  <th scope="row">Battery</th>
-                  <td>Up to 24 hours · USB-C charging</td>
-                </tr>
-                <tr>
-                  <th scope="row">In the box</th>
-                  <td>Onda One, USB-C cable, quick guide</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div id="panel-materials" role="tabpanel" aria-labelledby="tab-materials" tabindex="0" hidden>
-            <table>
-              <caption class="sr-only">Illustrative product materials</caption>
-              <tbody>
-                <tr>
-                  <th scope="row">Shell</th>
-                  <td>Slip-cast ceramic with a matte glaze</td>
-                </tr>
-                <tr>
-                  <th scope="row">Grille</th>
-                  <td>Woven acoustic textile</td>
-                </tr>
-                <tr>
-                  <th scope="row">Control dial</th>
-                  <td>Brushed, anodized aluminum</td>
-                </tr>
-                <tr>
-                  <th scope="row">Base</th>
-                  <td>Weighted aluminum · silicone foot</td>
-                </tr>
-                <tr>
-                  <th scope="row">Packaging</th>
-                  <td>Paperboard and molded paper pulp</td>
-                </tr>
-                <tr>
-                  <th scope="row">Care</th>
-                  <td>Wipe with a soft, dry cloth</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div id="panel-shipping" role="tabpanel" aria-labelledby="tab-shipping" tabindex="0" hidden>
-            <table>
-              <caption class="sr-only">Illustrative store policies</caption>
-              <tbody>
-                <tr>
-                  <th scope="row">Dispatch</th>
-                  <td>Within 2 business days</td>
-                </tr>
-                <tr>
-                  <th scope="row">Delivery</th>
-                  <td>3–5 business days · US delivery</td>
-                </tr>
-                <tr>
-                  <th scope="row">Shipping</th>
-                  <td>$12 · free on orders over $350</td>
-                </tr>
-                <tr>
-                  <th scope="row">Returns</th>
-                  <td>30 days, in original condition</td>
-                </tr>
-                <tr>
-                  <th scope="row">Warranty</th>
-                  <td>2 years for manufacturing defects</td>
-                </tr>
-                <tr>
-                  <th scope="row">Concept store</th>
-                  <td>No payments or shipments are processed</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-      <section class="reviews-section section-pad" id="reviews" aria-labelledby="reviews-heading">
-        <div class="reviews-header">
-          <div>
-            <p class="eyebrow">03 / GOOD COMPANY</p>
-            <h2 id="reviews-heading">A few words.<br> <em>A lot of feeling.</em>
-            </h2>
-          </div>
-          <button class="outline-button" id="write-review" aria-haspopup="dialog">Write a review <span>↗</span>
-          </button>
-        </div>
-        <p class="fiction-note">Sample reviews by fictional customers, created to demonstrate this template.</p>
-        <div class="reviews-grid">
-          <div class="rating-summary">
-            <div class="rating-big">4.8<span>/ 5</span>
-            </div>
-            <span class="stars" aria-hidden="true">★★★★★</span>
-            <p>Based on 48 illustrative reviews</p>
-            <div class="rating-bars">
-              <div>
-                <span>5</span>
-                <meter min="0" max="48" value="39" aria-label="39 five-star reviews">
-                </meter>
-                <span>39</span>
-              </div>
-              <div>
-                <span>4</span>
-                <meter min="0" max="48" value="8" aria-label="8 four-star reviews">
-                </meter>
-                <span>8</span>
-              </div>
-              <div>
-                <span>3</span>
-                <meter min="0" max="48" value="1" aria-label="1 three-star review">
-                </meter>
-                <span>1</span>
-              </div>
-              <div>
-                <span>2</span>
-                <meter min="0" max="48" value="0" aria-label="0 two-star reviews">
-                </meter>
-                <span>0</span>
-              </div>
-              <div>
-                <span>1</span>
-                <meter min="0" max="48" value="0" aria-label="0 one-star reviews">
-                </meter>
-                <span>0</span>
-              </div>
-            </div>
-          </div>
-          <article class="review-card">
-            <span class="stars" aria-label="5 out of 5 stars">★★★★★</span>
-            <h3>Finally, something that belongs.</h3>
-            <p>“Most speakers look like technology. This looks like it was always meant to sit on my shelf. And the sound? A very happy surprise.”</p>
-            <div class="review-person">
-              <span class="avatar">EL</span>
-              <div>
-                <strong>Ellis Lane</strong>
-                <span>Fictional customer · Clay</span>
-              </div>
-            </div>
-          </article>
-          <article class="review-card">
-            <span class="stars" aria-label="5 out of 5 stars">★★★★★</span>
-            <h3>My new morning ritual.</h3>
-            <p>“Coffee on. Music on. Phone away. There’s something lovely about just turning a dial and letting the room do its thing.”</p>
-            <div class="review-person">
-              <span class="avatar">MR</span>
-              <div>
-                <strong>Mika Reed</strong>
-                <span>Fictional customer · Chalk</span>
-              </div>
-            </div>
-          </article>
-          <article class="review-card">
-            <span class="stars" aria-label="4 out of 5 stars">★★★★☆</span>
-            <h3>The details make it.</h3>
-            <p>“The texture, the weight, that little click of the dial. I’d love a longer cable, but everything else feels so thoughtfully put together.”</p>
-            <div class="review-person">
-              <span class="avatar">JV</span>
-              <div>
-                <strong>Jules Vale</strong>
-                <span>Fictional customer · Moss</span>
-              </div>
-            </div>
-          </article>
-        </div>
-      </section>
-      <section class="collection-section section-pad" id="collection" aria-labelledby="collection-heading">
-        <div class="collection-header">
-          <div>
-            <p class="eyebrow">04 / BETTER TOGETHER</p>
-            <h2 id="collection-heading">Complete <em>the set.</em>
-            </h2>
-          </div>
-          <div class="carousel-controls">
-            <button class="icon-button" id="carousel-prev" aria-label="Previous related products">←</button>
-            <button class="icon-button" id="carousel-next" aria-label="Next related products">→</button>
-          </div>
-        </div>
-        <div class="product-carousel" id="product-carousel" tabindex="0" role="region" aria-label="Related products. Swipe or use arrow buttons.">
-          <article class="related-card">
-            <div class="related-art dock-art" aria-hidden="true">
-              <div class="dock-object">
-              </div>
-              <span>ALWAYS READY.</span>
-            </div>
-            <div class="related-meta">
-              <div>
-                <h3>The resting place.</h3>
-                <p>Onda charging dock · Clay</p>
-              </div>
-              <strong>$59</strong>
-            </div>
-            <button class="quick-add" data-add="dock">Quick add <span>+</span>
-            </button>
-          </article>
-          <article class="related-card">
-            <div class="related-art stand-art" aria-hidden="true">
-              <div class="stand-object">
-                <i>
-                </i>
-              </div>
-              <span>A LITTLE ELEVATION.</span>
-            </div>
-            <div class="related-meta">
-              <div>
-                <h3>A place of its own.</h3>
-                <p>Solid oak speaker stand</p>
-              </div>
-              <strong>$89</strong>
-            </div>
-            <button class="quick-add" data-add="stand">Quick add <span>+</span>
-            </button>
-          </article>
-          <article class="related-card">
-            <div class="related-art pouch-art" aria-hidden="true">
-              <div class="pouch-object">
-                <i>
-                </i>
-              </div>
-              <span>TAKE THE FEELING.</span>
-            </div>
-            <div class="related-meta">
-              <div>
-                <h3>Room to roam.</h3>
-                <p>Woven travel sleeve · Natural</p>
-              </div>
-              <strong>$39</strong>
-            </div>
-            <button class="quick-add" data-add="sleeve">Quick add <span>+</span>
-            </button>
-          </article>
-        </div>
-      </section>
-    </main>
-    <footer class="site-footer">
-      <div class="newsletter-copy">
-        <p class="eyebrow">LET’S STAY IN TUNE.</p>
-        <h2>Good things.<br> <em>Once in a while.</em>
-        </h2>
-        <p>New objects, fresh playlists, and a little inspiration.</p>
-        <form id="newsletter-form">
-          <label class="sr-only" for="newsletter-email">Your email address</label>
-          <input id="newsletter-email" type="email" placeholder="Your email address" autocomplete="email" required maxlength="254">
-          <button type="submit" aria-label="Subscribe to the demo newsletter">↗</button>
-        </form>
-        <p class="newsletter-note">Demo form. Your email stays in this browser and is never sent.</p>
+    </section>
+    <section class="specs" id="details" aria-labelledby="specs-title">
+      <div class="section-heading"><span class="eyebrow">03 / LESS, BUT BETTER</span><h2 id="specs-title">Small object.<br> <em>Big atmosphere.</em></h2><p>The numbers tell part of the story.<br>Your ears tell the rest.</p></div>
+      <div class="spec-grid">
+        <div class="spec"><div><span class="count" data-count="360">360</span><sup>°</sup></div><h3>No wrong seat.</h3><p>Full-range sound in every direction.</p><span class="spec-drawing radial-drawing" aria-hidden="true"></span></div>
+        <div class="spec"><div><span class="count" data-count="24">24</span><sup>h</sup></div><h3>Stay a little longer.</h3><p>Listening that outlasts your playlist.</p><span class="spec-drawing battery-drawing" aria-hidden="true"><i></i><i></i><i></i><i></i></span></div>
+        <div class="spec"><div><span class="count" data-count="40">40</span><sup>W</sup></div><h3>Quietly powerful.</h3><p>A rich low end. Beautifully clear highs.</p><span class="spec-drawing wave-drawing" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
       </div>
-      <div class="footer-brand">
-        <a class="wordmark" href="#product" aria-label="ORA back to product">ora<span>®</span>
-        </a>
-        <p>Objects for listening.<br> Made for living.</p>
-      </div>
-      <div class="footer-bottom">
-        <span>© ORA · An original Motion Lab concept</span>
-        <a href="#details">Shipping &amp; returns</a>
-        <span>No real orders. Just good design.</span>
-      </div>
-    </footer>
-    <div class="mobile-buy">
-      <div>
-        <strong>Onda One</strong>
-        <span id="mobile-summary">Clay · $289</span>
-      </div>
-      <button class="primary-button" id="mobile-add">Add to bag <span>↗</span>
-      </button>
-    </div>
-    <dialog class="cart-drawer" id="cart-dialog" aria-labelledby="cart-heading">
-      <div class="drawer-inner">
-        <div class="drawer-header">
-          <h2 id="cart-heading">Your bag <span id="drawer-count">0</span>
-          </h2>
-          <button class="icon-button" data-close aria-label="Close shopping bag">×</button>
-        </div>
-        <div class="shipping-status">
-          <p id="shipping-message">Your next favorite is waiting.</p>
-          <div class="shipping-track" role="progressbar" aria-label="Progress toward free shipping" aria-valuemin="0" aria-valuemax="350" aria-valuenow="0">
-            <span id="shipping-progress">
-            </span>
-          </div>
-        </div>
-        <div id="cart-items" class="cart-items">
-        </div>
-        <div class="cart-bottom">
-          <div class="subtotal-line">
-            <span>Subtotal</span>
-            <strong id="cart-subtotal">$0</strong>
-          </div>
-          <p>Shipping calculated at checkout. All prices in USD.</p>
-          <button class="primary-button" id="checkout" disabled>Checkout <span>↗</span>
-          </button>
-          <button class="continue-shopping" data-close>Continue exploring</button>
-          <p class="demo-note">Concept store · Checkout is a demonstration.</p>
-        </div>
-      </div>
-    </dialog>
-    <dialog class="modal" id="review-dialog" aria-labelledby="review-heading">
-      <button class="icon-button modal-close" data-close aria-label="Close review form">×</button>
-      <p class="eyebrow">YOUR TAKE, YOUR WORDS.</p>
-      <h2 id="review-heading">How does it <em>feel?</em>
-      </h2>
-      <p>A demo review. It stays on this page and is not published.</p>
-      <form id="review-form">
-        <label for="review-name">Display name</label>
-        <input id="review-name" name="name" required minlength="2" maxlength="50" autocomplete="nickname" placeholder="Your name">
-        <label for="review-rating">Your rating</label>
-        <select id="review-rating" name="rating" required>
-          <option value="">Choose a rating</option>
-          <option value="5">5 — Love it</option>
-          <option value="4">4 — Really good</option>
-          <option value="3">3 — It's okay</option>
-          <option value="2">2 — Could be better</option>
-          <option value="1">1 — Not for me</option>
-        </select>
-        <label for="review-title">Review title</label>
-        <input id="review-title" name="title" required minlength="3" maxlength="80" placeholder="A few words to sum it up">
-        <label for="review-text">Your review</label>
-        <textarea id="review-text" name="text" required minlength="15" maxlength="600" rows="3" placeholder="Tell us more (at least 15 characters)">
-        </textarea>
-        <button class="primary-button" type="submit">Preview my review <span>↗</span>
-        </button>
-      </form>
-    </dialog>
-    <dialog class="modal search-modal" id="search-dialog" aria-labelledby="search-heading">
-      <button class="icon-button modal-close" data-close aria-label="Close search">×</button>
-      <p class="eyebrow">FIND YOUR FREQUENCY</p>
-      <h2 id="search-heading">Looking for <em>something?</em>
-      </h2>
-      <label class="sr-only" for="search-input">Search products</label>
-      <input id="search-input" type="search" placeholder="Try “speaker” or “oak”…" autocomplete="off">
-      <div id="search-results" aria-live="polite">
-      </div>
-    </dialog>
-    <div class="toast" id="toast" role="status" aria-live="polite">
-    </div>
-    <div class="sr-only" id="cart-announcement" role="status" aria-live="polite">
-    </div>
-    <noscript>
-      <p class="noscript-note">Explore the product and specifications below. Enable JavaScript for the interactive model, bag, tabs, and demo forms.</p>
-    </noscript>
-    <script type="module" src="main.js">
-    </script>
-  </body>
+      <div class="detail-row"><span>Bluetooth 5.3 + USB-C audio</span><span>Ø 160 × 210 mm</span><span>1.8 kg of considered design</span><span>All specifications are illustrative.</span></div>
+    </section>
+    <section class="finish-section" id="finish" aria-labelledby="finish-title">
+      <div class="finish-art" aria-hidden="true"><span class="finish-orbit"></span><img src="speaker.svg" alt="" width="600" height="680"><span class="finish-art-label">ONDA ONE<br><b data-finish-name>Clay</b> / 001</span></div>
+      <div class="finish-content"><span class="eyebrow">04 / YOUR KIND OF QUIET</span><h2 id="finish-title">Find your<br> <em>frequency.</em></h2><p>Four finishes. Four moods.<br>One object that feels like you.</p><fieldset class="finish-picker large-picker"><legend>Selected finish / <span data-finish-name>Clay</span></legend><div class="swatches">
+        <button class="swatch selected" data-finish="clay" style="--swatch:#df825d" aria-label="Clay finish" aria-pressed="true"><span>Clay</span></button>
+        <button class="swatch" data-finish="moss" style="--swatch:#85977b" aria-label="Moss finish" aria-pressed="false"><span>Moss</span></button>
+        <button class="swatch" data-finish="bone" style="--swatch:#e5dfd1" aria-label="Bone finish" aria-pressed="false"><span>Bone</span></button>
+        <button class="swatch" data-finish="ink" style="--swatch:#545d6a" aria-label="Ink finish" aria-pressed="false"><span>Ink</span></button>
+      </div></fieldset><button class="primary-button magnetic" data-add>Make room for Onda <span>$289 ↗</span></button><span class="store-note">Concept store. No real orders or payments.</span><div class="rating"><span>★★★★★</span><strong>4.8 / 5</strong><span>48 illustrative reviews</span></div></div>
+    </section>
+    <section class="closing"><span class="eyebrow">THE ART OF PAYING ATTENTION</span><p>Turn it up.<br><em>Slow it down.</em></p><a class="text-button" href="#product">Listen again <span aria-hidden="true">↗</span></a></section>
+  </main>
+  <footer><a class="wordmark" href="#product">ora<span>®</span></a><p>An original product concept by Motion Lab.<br>Prices, reviews, specifications and store policies are illustrative.</p><span>OBJECTS FOR LISTENING.<br>MADE FOR LIVING.</span></footer>
+  <div class="sticky-buy" id="sticky-buy" aria-label="Quick purchase"><div><i class="finish-dot"></i><strong>Onda One</strong><span data-finish-name>Clay</span></div><div><span>$289</span><button class="primary-button" data-add>Add to bag <span aria-hidden="true">↗</span></button></div></div>
+  <dialog id="bag-drawer" aria-labelledby="bag-title">
+    <div class="drawer-head"><span class="eyebrow">GOOD THINGS, CONSIDERED.</span><button class="close-button" id="close-bag" aria-label="Close bag">×</button></div><h2 id="bag-title">Your bag<span>.</span></h2>
+    <div id="bag-empty"><p>A little room for something good.</p><button class="text-button" data-close>Explore Onda One ↗</button></div>
+    <div id="bag-filled" hidden><p class="shipping-message" id="shipping-message"></p><div class="shipping-track"><i id="shipping-progress"></i></div><div id="bag-items"></div><div class="upsell"><div class="upsell-art" aria-hidden="true"></div><div><span class="eyebrow">A PLACE OF ITS OWN</span><h3>The Onda plinth</h3><p>Solid oak. A perfect little stage.</p><button class="text-button" id="add-plinth">Add plinth · $69 +</button></div></div><div class="subtotal"><span>Subtotal</span><strong id="bag-total">$289</strong></div><button class="primary-button checkout" disabled>Checkout disabled <span aria-hidden="true">↗</span></button><p class="store-note">Concept store, checkout disabled.<br>No payments, orders, or personal details collected.</p><button class="text-button" data-close>Keep exploring ↗</button></div>
+  </dialog>
+  <div class="sr-only" id="bag-status" role="status" aria-live="polite"></div><div class="cursor-ring" id="cursor-ring" aria-hidden="true"><span>DRAG</span></div>
+  <noscript><p class="noscript-note">This is a concept store. Enable JavaScript to explore the model, play the soundscape, change finishes and try the demo bag.</p></noscript>
+  <script type="module" src="main.js"></script>
+</body>
 </html>
