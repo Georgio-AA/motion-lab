@@ -1,14 +1,21 @@
-// Timeline units are viewport lengths. Rest poses leave room to read every course.
-export const chapterNames = ['Arrival','The doors','The dining room','The fire','The tasting table','Little moments','The evening'];
-export const courseNames = ['Starters','Mains','Desserts','Drinks'];
-export function filmLayout(mobile = false) {
-  const lengths = mobile ? [.8,1,.9,.7,3,.8,.7] : [1.6,2.2,1.9,1.6,6,1.6,1.3];
-  const starts = [];
-  let total = 0;
-  for (const length of lengths) { starts.push(total); total += length; }
-  const courseLength = lengths[4]/4;
-  const courseRests = courseNames.map((_,index)=>starts[4]+(index+.66)*courseLength);
-  const rests = starts.map((start,index)=>start+lengths[index]*.66);
-  rests[4] = courseRests[0];
-  return {lengths,starts,total,rests,courseLength,courseRests,snapPoints:[0,...rests,...courseRests.slice(1),total].sort((a,b)=>a-b).map(time=>time/total)};
+// A four-course absolute timeline. Nothing depends on previous animation state.
+export const courseLength = 1;
+export const totalLength = 4;
+export const clamp = (v, min=0, max=1) => Math.max(min,Math.min(max,v));
+export const ease = v => { const x=clamp(v); return 1-Math.pow(1-x,3); };
+export function coursePose(time, course, plate, pose = {}) {
+  // Serve before changing the label; clear only after the next course is served.
+  // Each active course is fully opaque and settled for its entire [n, n+1) range.
+  pose.enter = ease((time-course+.29-plate*.045)/.17);
+  pose.leave = course===3 ? 0 : ease((time-course-1)/.22);
+  pose.alpha = pose.enter*(1-pose.leave);
+  return pose;
 }
+export function activeCourse(time) { return Math.min(3,Math.floor(clamp(time,0,3.999))); }
+// Normalized, overlapping flat-lay. Plate rims stay inside at every aspect ratio.
+export const tablePlates = [
+  {x:.35,y:.31,size:.79,angle:-.16,dx:-1,dy:-.2},
+  {x:.69,y:.48,size:.73,angle:.2,dx:1,dy:0},
+  {x:.40,y:.69,size:.79,angle:-.12,dx:-.2,dy:1}
+];
+export function tableUnit(width,height){return Math.min(width,height*.95);}

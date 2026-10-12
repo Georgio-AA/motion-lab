@@ -1,146 +1,100 @@
-import { prefersReducedMotion } from '../shared/base.js';
-import { food } from './illustrations.js';
-import { dishes, localDateKey, parseLocalDate, kitchenHours, isOpen, timeLabel, availableSlots } from './menu-data.js';
-import { initTastingMenu, initFilm } from './film.js';
+import '../shared/base.js';
+import {courses,dishes,tagLabels,filterMenu,nextSevenDays,bookingSlots} from './menu-data.js';
+import {paintDish} from './illustrations.js';
+import {initFire} from './fire.js';
+import {initTable} from './film.js';
 
-const $ = (selector, root = document) => root.querySelector(selector);
-const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
-let reducedMotion = prefersReducedMotion();
-matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', event => { reducedMotion = event.matches; });
-const money = value => '$' + value;
+const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+const touch=matchMedia('(hover: none), (pointer: coarse)');
+const mobile=matchMedia('(max-width: 760px)');
+const root=document.documentElement;
 
-function initHours() {
-  function update() {
-    const now=new Date(),hours=kitchenHours(now.getDay()),open=isOpen(now);
-    const status=$('#open-status');status.textContent=open?'Open now':'Closed';status.classList.toggle('is-open',open);
-    $$('.hours-card [data-days]').forEach(row=>row.classList.toggle('today',row.dataset.days.split(',').includes(String(now.getDay()))));
-    $('#hours-note').textContent=`${open?`Kitchen closes at ${timeLabel(hours.closes)}.`:now.getHours()<hours.opens?`The light comes on at ${timeLabel(hours.opens)}.`:'See you tomorrow.'} Status uses your device’s local time.`;
+// Controls initialize before any effect, keeping the page usable on weak GPUs.
+function initBooking(){
+  const dates=nextSevenDays(),dayButtons=[],dateGroup=document.querySelector('#date-chips'),slotGroup=document.querySelector('#time-slots');
+  const form=document.querySelector('#booking-form'),confirmation=document.querySelector('.confirmation');
+  const minus=document.querySelector('#party-minus'),plus=document.querySelector('#party-plus'),count=document.querySelector('#party-count');
+  const dayFormat=new Intl.DateTimeFormat('en-US',{weekday:'short'}),fullFormat=new Intl.DateTimeFormat('en-US',{weekday:'long',month:'long',day:'numeric'});
+  let party=2,selectedDay=0,time='6:30 pm';
+  function updateParty(){count.value=`${party} ${party===1?'guest':'guests'}`;minus.disabled=party===1;plus.disabled=party===8;}
+  minus.addEventListener('click',()=>{party=Math.max(1,party-1);updateParty();});plus.addEventListener('click',()=>{party=Math.min(8,party+1);updateParty();});updateParty();
+  function renderSlots(){
+    const slots=bookingSlots(dates[selectedDay].getDay());if(!slots.includes(time))time=slots[0];
+    slotGroup.replaceChildren();
+    for(const value of slots){const b=document.createElement('button');b.type='button';b.textContent=value;b.setAttribute('aria-pressed',String(time===value));b.addEventListener('click',()=>{time=value;for(const child of slotGroup.children)child.setAttribute('aria-pressed',String(child===b));});slotGroup.append(b);}
   }
-  update();setInterval(update,30000);
+  dates.forEach((date,index)=>{const b=document.createElement('button');b.type='button';b.innerHTML=`${dayFormat.format(date)}<strong>${date.getDate()}</strong>`;b.setAttribute('aria-label',fullFormat.format(date));b.setAttribute('aria-pressed',String(index===0));b.addEventListener('click',()=>{selectedDay=index;dayButtons.forEach((button,i)=>button.setAttribute('aria-pressed',String(index===i)));renderSlots();});dayButtons.push(b);dateGroup.append(b);});renderSlots();
+  form.addEventListener('submit',event=>{event.preventDefault();document.querySelector('#confirmation-details').textContent=`${party} ${party===1?'guest':'guests'} · ${fullFormat.format(dates[selectedDay])} · ${time}`;form.hidden=true;confirmation.hidden=false;confirmation.focus({preventScroll:true});});
+  document.querySelector('#book-again').addEventListener('click',()=>{confirmation.hidden=true;form.hidden=false;plus.focus({preventScroll:true});});
 }
 
-function initBooking() {
-  const form=$('#reservation-form'),dateInput=$('#booking-date'),slots=$('#time-slots');
-  const minus=$('#party-minus'),plus=$('#party-plus'),confirmation=$('#confirmation');
-  let party=2,selectedTime='',renderedSlotsKey='';
-  const limits=()=>{
-    const now=new Date(),last=new Date(now);last.setDate(last.getDate()+90);
-    dateInput.min=localDateKey(now);dateInput.max=localDateKey(last);
-  };
-  limits();const tomorrow=new Date();tomorrow.setDate(tomorrow.getDate()+1);dateInput.value=localDateKey(tomorrow);
-  function renderSlots() {
-    const available=availableSlots(dateInput.value,party);
-    if(!available.some(slot=>slot.value===selectedTime&&!slot.disabled)) selectedTime='';
-    const slotsKey=dateInput.value+available.map(slot=>`${slot.value}:${slot.full}:${slot.past}`).join('|');
-    if(slotsKey===renderedSlotsKey) return;
-    renderedSlotsKey=slotsKey;
-    slots.innerHTML=available.map(slot=>`<label><input type="radio" name="time" value="${slot.value}" ${slot.disabled?'disabled':''} ${slot.value===selectedTime?'checked':''} aria-describedby="time-error"><span>${slot.label}${slot.disabled?`<small>${slot.past?'Passed':'Full'}</small>`:''}</span></label>`).join('');
-    if(!available.length) slots.innerHTML='<p class="demo-note">Choose a valid date to see times.</p>';
-    else if(available.every(slot=>slot.disabled)) slots.insertAdjacentHTML('beforeend','<p class="demo-note">No tables left for this date. Try another evening.</p>');
+function initMenu(){
+  const tabs=[...document.querySelectorAll('[role=tab]')],filters=[...document.querySelectorAll('[data-filter]')];
+  const list=document.querySelector('#menu-list'),empty=document.querySelector('.menu-empty'),status=document.querySelector('#menu-status');
+  const preview=document.querySelector('#menu-plate'),hover=document.querySelector('#hover-plate'),floating=document.querySelector('.floating-plate');
+  const inline=[],rows=[],animations=new Map();let category='Starters',activeDish='',revision=0;
+  function showDish(dish,row,pointer=false){
+    if(activeDish!==dish.id){activeDish=dish.id;paintDish(preview,dish.id);paintDish(hover,dish.id);preview.setAttribute('aria-label',`Detailed illustration of ${dish.name}`);document.querySelector('#plate-caption').textContent=dish.name;floating.querySelector('span').textContent=dish.name;}
+    if(touch.matches||mobile.matches){for(const c of inline)c.hidden=true;const c=row.querySelector('canvas');if(c){paintDish(c,dish.id);c.hidden=false;}}
+    else {floating.classList.add('visible');if(!pointer){const b=row.getBoundingClientRect();pointerX=Math.min(innerWidth-280,b.right+20);pointerY=b.top+40;}}
   }
-  function changeParty(delta) {
-    party=Math.max(1,Math.min(8,party+delta));
-    $('#party-count').textContent=`${party} ${party===1?'guest':'guests'}`;
-    minus.disabled=party===1;plus.disabled=party===8;renderSlots();
-    $('#time-error').textContent='';
+  for(const dish of dishes){const row=document.createElement('button');row.type='button';row.className='dish';row.dataset.id=dish.id;row.hidden=dish.category!==category;row.innerHTML=`<span class="dish-top"><span class="dish-name">${dish.name}</span><span class="dish-leader" aria-hidden="true"></span><span class="dish-price">$${dish.price}</span></span><span class="dish-description">${dish.description}</span><span class="dish-tags">${dish.tags.map(t=>tagLabels[t]).join(' · ')}</span>`;
+    const c=document.createElement('canvas');c.className='dish-inline';c.hidden=true;c.setAttribute('role','img');c.setAttribute('aria-label',`Detailed illustration of ${dish.name}`);inline.push(c);row.append(c);
+    row.addEventListener('pointerenter',()=>showDish(dish,row,true));row.addEventListener('focus',()=>showDish(dish,row));row.addEventListener('click',()=>{showDish(dish,row);if(touch.matches||mobile.matches)row.setAttribute('aria-expanded','true');});
+    row.addEventListener('pointerleave',()=>{if(document.activeElement!==row)floating.classList.remove('visible');});row.addEventListener('blur',()=>floating.classList.remove('visible'));rows.push(row);list.append(row);
   }
-  minus.addEventListener('click',()=>changeParty(-1));plus.addEventListener('click',()=>changeParty(1));
-  dateInput.addEventListener('change',()=>{renderSlots();$('#date-error').textContent='';dateInput.removeAttribute('aria-invalid');$('#time-error').textContent='';});
-  slots.addEventListener('change',event=>{selectedTime=event.target.value;$('#time-error').textContent='';});
-  function validate() {
-    limits();
-    const name=$('#guest-name'),phone=$('#guest-phone'),email=$('#guest-email');
-    const date=parseLocalDate(dateInput.value);
-    const dateValid=date && dateInput.value>=dateInput.min && dateInput.value<=dateInput.max;
-    const timeValid=availableSlots(dateInput.value,party).some(slot=>slot.value===selectedTime&&!slot.disabled);
-    const errors=[
-      [dateInput,'date-error',dateValid?'':'Choose a date within the next 90 days.'],
-      [name,'name-error',name.value.trim().length>=2?'':'Please enter your name (at least 2 characters).'],
-      [phone,'phone-error',/^[+()\d\s.\-]+$/.test(phone.value.trim()) && phone.value.replace(/\D/g,'').length>=7 && phone.value.replace(/\D/g,'').length<=15 ?'':'Enter a phone number with 7–15 digits.'],
-      [email,'email-error',email.value.trim() && email.validity.valid?'':'Enter a valid email address.']
-    ];
-    errors.forEach(([input,id,message])=>{document.getElementById(id).textContent=message;input.setAttribute('aria-invalid',String(Boolean(message)));});
-    $('#time-error').textContent=timeValid?'':'Choose an available time for your table.';
-    const first=errors.find(([, ,message])=>message);
-    if(first) first[0].focus();else if(!timeValid) slots.querySelector('input:not(:disabled)')?.focus();
-    return !first&&timeValid;
+  function render(){
+    const selected=filters.filter(b=>b.getAttribute('aria-pressed')==='true').map(b=>b.dataset.filter),matches=filterMenu(category,selected),ids=new Set(matches.map(d=>d.id)),current=++revision;
+    list.setAttribute('aria-labelledby',tabs[courses.indexOf(category)].id);empty.hidden=matches.length>0;floating.classList.remove('visible');
+    for(const row of rows){animations.get(row)?.cancel();animations.delete(row);const show=ids.has(row.dataset.id);
+      if(show){row.hidden=false;row.inert=false;row.classList.remove('enter');if(!reduced.matches){const animation=row.animate([{opacity:0,transform:'translateY(10px)'},{opacity:1,transform:'none'}],{duration:320,easing:'cubic-bezier(.22,1,.36,1)'});animations.set(row,animation);}}
+      else if(!row.hidden&&!reduced.matches){row.inert=true;const animation=row.animate([{opacity:1},{opacity:0,transform:'translateY(-8px)'}],{duration:160});animations.set(row,animation);animation.onfinish=()=>{if(current===revision)row.hidden=true;};}
+      else {row.hidden=true;row.inert=true;}
+    }
+    for(const c of inline)c.hidden=true;
+    if(matches.length){const first=matches[0];activeDish='';const row=rows.find(r=>r.dataset.id===first.id);showDish(first,row);floating.classList.remove('visible');}
+    else {preview.hidden=true;document.querySelector('#plate-caption').textContent='A little room for something else.';}
+    preview.hidden=!matches.length;status.textContent=`${matches.length} ${matches.length===1?'dish':'dishes'} in ${category}${selected.length?', filtered by '+selected.map(t=>tagLabels[t]).join(', '):''}.`;
   }
-  form.addEventListener('submit',event=>{
-    event.preventDefault();if(!validate()) return;
-    const date=parseLocalDate(dateInput.value);
-    const friendlyDate=date.toLocaleDateString(undefined,{weekday:'long',month:'short',day:'numeric'});
-    const hour=Number(selectedTime.split(':')[0]);
-    $('#confirmation-name').textContent=`We’ll imagine a lovely evening for you, ${$('#guest-name').value.trim()}.`;
-    $('#confirmation-details').replaceChildren();
-    [['Date',friendlyDate],['Time',timeLabel(hour)],['Company',`${party} ${party===1?'guest':'guests'}`]].forEach(([title,value])=>{
-      const row=document.createElement('div'),dt=document.createElement('dt'),dd=document.createElement('dd');
-      dt.textContent=title;dd.textContent=value;row.append(dt,dd);$('#confirmation-details').append(row);
-    });
-    form.hidden=true;confirmation.hidden=false;confirmation.focus({preventScroll:true});
-    confirmation.scrollIntoView({behavior:reducedMotion?'instant':'smooth',block:'center'});
-    if(!reducedMotion){confirmation.animate([{opacity:0,transform:'translateY(25px) rotate(-3deg)'},{opacity:1,transform:'translateY(0) rotate(0)'}],{duration:750,easing:'cubic-bezier(.22,1,.36,1)'});$('.confirmation-star').animate([{transform:'rotate(-80deg) scale(.3)'},{transform:'rotate(0) scale(1)'}],{duration:1000,easing:'cubic-bezier(.22,1,.36,1)'});}
-  });
-  $$('input',form).forEach(input=>input.addEventListener('input',()=>{if(input.id.startsWith('guest-')){input.removeAttribute('aria-invalid');document.getElementById(`${input.name}-error`).textContent='';}}));
-  $('#book-again').addEventListener('click',()=>{confirmation.hidden=true;form.hidden=false;form.reset();const nextDay=new Date();nextDay.setDate(nextDay.getDate()+1);dateInput.value=localDateKey(nextDay);selectedTime='';renderedSlotsKey='';party=2;changeParty(0);dateInput.focus();});
-  form.addEventListener('focusin',()=>{limits();});
-  renderSlots();
-  // Recheck same-day times when the tab resumes or a clock boundary passes.
-  document.addEventListener('visibilitychange',()=>{if(!document.hidden){limits();renderSlots();}});
-  setInterval(()=>{if(!form.hidden){limits();renderSlots();}},60000);
-  if('IntersectionObserver' in window) {
-    const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>$('.mobile-book').classList.toggle('is-hidden',entry.isIntersecting));},{threshold:.08});
-    observer.observe($('.booking-panel'));
+  function selectTab(index){category=courses[index];tabs.forEach((tab,i)=>{tab.setAttribute('aria-selected',String(i===index));tab.tabIndex=i===index?0:-1;});render();}
+  tabs.forEach((tab,index)=>{tab.addEventListener('click',()=>selectTab(index));tab.addEventListener('keydown',event=>{let target=index;if(event.key==='ArrowRight')target=(index+1)%4;else if(event.key==='ArrowLeft')target=(index+3)%4;else if(event.key==='Home')target=0;else if(event.key==='End')target=3;else return;event.preventDefault();selectTab(target);tabs[target].focus();});});
+  for(const b of filters)b.addEventListener('click',()=>{b.setAttribute('aria-pressed',String(b.getAttribute('aria-pressed')!=='true'));render();});
+  touch.addEventListener('change',render);mobile.addEventListener('change',render);reduced.addEventListener('change',render);render();
+  document.querySelector('[data-order]').addEventListener('click',()=>{const note=document.querySelector('#order-note');note.hidden=false;setTimeout(()=>note.focus({preventScroll:true}),0);});
+  return floating;
+}
+
+let pointerX=innerWidth*.5,pointerY=innerHeight*.5,lightX=pointerX,lightY=pointerY,plateX=pointerX,plateY=pointerY;
+window.addEventListener('pointermove',event=>{pointerX=event.clientX;pointerY=event.clientY;},{passive:true});
+initBooking();
+const floating=initMenu();
+
+// Split lines are authored with real spaces. Observers reveal without blocking input.
+if(!reduced.matches)root.classList.add('js-motion');
+else document.querySelectorAll('.course-panel').forEach(p=>{p.inert=false;});
+const revealObserver=new IntersectionObserver(entries=>{for(const entry of entries)if(entry.isIntersecting){entry.target.classList.add('visible');revealObserver.unobserve(entry.target);}},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
+reduced.addEventListener('change',()=>{root.classList.toggle('js-motion',!reduced.matches);});
+
+const effects=[];
+for(const canvas of document.querySelectorAll('[data-fire]')){const effect=initFire(canvas,reduced);if(effect)effects.push(effect);}
+try {const table=initTable(reduced);if(table)effects.push(table);else throw new Error('Canvas unavailable');}catch {document.querySelector('.table-film').classList.add('table-fallback');document.querySelectorAll('.course-panel').forEach(p=>{p.inert=false;});}
+// Bread painting is a static cached asset; CSS adds only a restrained puff.
+const bread=document.querySelector('#bread-canvas');paintDish(bread,'bread');
+
+let previousFrame=0,raf=0;
+function frame(ms){
+  if(!document.hidden){
+    for(let i=0;i<effects.length;i++)effects[i].render(ms);
+    const delta=Math.min((ms-previousFrame)||16,50);previousFrame=ms;
+    if(!reduced.matches){
+      if(touch.matches){pointerX=innerWidth*(.5+Math.sin(ms*.00012)*.3);pointerY=innerHeight*(.5+Math.cos(ms*.00009)*.25);}
+      const smoothing=1-Math.pow(.88,delta/16);lightX+=(pointerX-lightX)*smoothing;lightY+=(pointerY-lightY)*smoothing;
+      root.style.setProperty('--light-x',`${lightX.toFixed(1)}px`);root.style.setProperty('--light-y',`${lightY.toFixed(1)}px`);
+    }
+    if(floating.classList.contains('visible')&&!touch.matches){const targetX=Math.max(8,Math.min(innerWidth-272,pointerX+28)),targetY=Math.max(8,Math.min(innerHeight-302,pointerY-110));const s=reduced.matches?1:.2;plateX+=(targetX-plateX)*s;plateY+=(targetY-plateY)*s;floating.style.transform=`translate3d(${plateX.toFixed(1)}px,${plateY.toFixed(1)}px,0)`;}
   }
+  raf=requestAnimationFrame(frame);
 }
-
-function initOrdering() {
-  const dialog=$('#order-dialog'),items=$('#order-items'),status=$('#order-status');
-  const favorites=['hummus','aubergine','cake'].map(id=>dishes.find(dish=>dish.id===id));
-  const quantities=new Map(favorites.map(dish=>[dish.id,0]));
-  let returnFocus=null;
-  items.innerHTML=favorites.map(dish=>`<div class="order-item"><div class="order-item-art" aria-hidden="true">${food(dish.art, 'order-art')}</div><div><h3>${dish.name}</h3><p>${money(dish.price)}</p></div><div class="order-stepper"><button type="button" data-dish="${dish.id}" data-delta="-1" aria-label="Remove one ${dish.name}" disabled>−</button><output aria-label="${dish.name} quantity" aria-live="polite" id="quantity-${dish.id}">0</output><button type="button" data-dish="${dish.id}" data-delta="1" aria-label="Add one ${dish.name}">+</button></div></div>`).join('');
-  items.addEventListener('click',event=>{
-    const button=event.target.closest('[data-delta]');if(!button)return;
-    const id=button.dataset.dish,value=Math.min(8,Math.max(0,quantities.get(id)+Number(button.dataset.delta)));
-    quantities.set(id,value);$(`#quantity-${id}`).textContent=value;
-    items.querySelector(`[data-dish="${id}"][data-delta="-1"]`).disabled=value===0;
-    items.querySelector(`[data-dish="${id}"][data-delta="1"]`).disabled=value===8;
-    $('#order-total').textContent=money(favorites.reduce((sum,dish)=>sum+dish.price*quantities.get(dish.id),0));
-    status.textContent='Choose a few favorites. Nothing is sent to a kitchen.';
-  });
-  $$('[data-open-order]').forEach(button=>button.addEventListener('click',()=>{returnFocus=button;dialog.showModal();}));
-  $('.dialog-close').addEventListener('click',()=>dialog.close());
-  dialog.addEventListener('click',event=>{if(event.target===dialog){const rect=dialog.getBoundingClientRect();if(event.clientX<rect.left||event.clientX>rect.right||event.clientY<rect.top||event.clientY>rect.bottom)dialog.close();}});
-  dialog.addEventListener('close',()=>returnFocus?.focus({preventScroll:true}));
-  $('#order-preview').addEventListener('click',()=>{
-    const count=[...quantities.values()].reduce((sum,value)=>sum+value,0);
-    status.textContent=count?`Looks delicious: ${count} ${count===1?'dish':'dishes'}, ${$('#order-total').textContent}. This is a demo; no order has been placed.`:'Add at least one dish to preview your order.';
-    if(!reducedMotion) status.animate([{opacity:0,transform:'translateY(8px)'},{opacity:1,transform:'translateY(0)'}],{duration:350});
-  });
-}
-
-function initFooter() {
-  $('#year').textContent=new Date().getFullYear();
-  $('#newsletter-form').addEventListener('submit',event=>{event.preventDefault();$('#newsletter-status').textContent='A taste of what’s possible. Demo signup complete — no email was stored or subscribed.';$('#newsletter-email').value='';});
-  $$('[data-social]').forEach(button=>button.addEventListener('click',()=>{$('#social-status').textContent=`${button.dataset.social} is an illustrative social preview. Connect your restaurant’s profile here.`;}));
-}
-
-// Small magnetic responses only on precise pointers; touch targets stay stationary.
-function initButtons() {
-  if(!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-  $$('.pill').forEach(button=>{
-    button.addEventListener('pointermove',event=>{
-      if(reducedMotion)return;
-      const rect=button.getBoundingClientRect();
-      button.style.translate=`${(event.clientX-rect.left-rect.width/2)*.05}px ${(event.clientY-rect.top-rect.height/2)*.1}px`;
-    });
-    button.addEventListener('pointerleave',()=>{button.style.translate='0 0';});
-  });
-}
-
-
-// Forms work immediately, independently of the optional CDN-powered film.
-for (const initialize of [initTastingMenu, initHours, initBooking, initOrdering, initFooter, initButtons]) {
-  try { initialize(); } catch { /* Optional failures never interrupt native scrolling. */ }
-}
-initFilm().catch(()=>{ /* A failed enhancement leaves the static document usable. */ });
+raf=requestAnimationFrame(frame);
+document.addEventListener('visibilitychange',()=>{cancelAnimationFrame(raf);if(!document.hidden){previousFrame=0;raf=requestAnimationFrame(frame);}});
