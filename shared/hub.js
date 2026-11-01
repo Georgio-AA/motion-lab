@@ -3,13 +3,13 @@ import { initTilt } from './hub-tilt.js';
 // Edit owner details here; all personal labels and links share this configuration.
 const OWNER = {
   name: 'Georgio Abi Aad',
-  roleLine: 'Software engineer · Interactive web development',
-  promise: 'Websites that feel alive.',
-  intro: 'I build expressive websites with thoughtful design, purposeful motion, and care in every detail.',
+  roleLine: 'Full-stack software engineer · Web, .NET & cloud',
+  promise: 'Software that feels alive.',
+  intro: 'Web apps, .NET and desktop systems, APIs and the infrastructure behind them, finished with interfaces people remember.',
   upworkUrl: 'https://www.upwork.com/freelancers/~01d09e8e7c1f809bab',
   email: 'georgioabiaad@gmail.com',
   closing: 'Let’s make something worth feeling.',
-  contactNote: 'Have a landing page, a product experience, or a bigger idea in mind? Let’s build it.'
+  contactNote: 'A web app, a .NET project, a backend, or a website that needs to stand out? Let’s build it.'
 };
 
 const motionQuery = matchMedia('(prefers-reduced-motion: reduce)');
@@ -70,9 +70,9 @@ const initials = nameParts[0][0] + (nameParts.length > 1 ? nameParts[nameParts.l
 document.querySelectorAll('[data-owner]').forEach(element => {
   element.textContent = element.dataset.owner === 'initials' ? initials + '.' : OWNER[element.dataset.owner];
 });
-document.title = OWNER.name + ' — Interactive Web Developer';
+document.title = OWNER.name + ' — Full-Stack Software Engineer';
 document.querySelector('meta[name="description"]').content =
-  OWNER.name + ', ' + OWNER.roleLine.toLowerCase() + '. ' + OWNER.promise + ' Explore eleven interactive concept demos.';
+  OWNER.name + ', full-stack software engineer: web apps, .NET systems, APIs and cloud delivery. Explore eleven interactive concept demos.';
 document.querySelectorAll('[data-upwork]').forEach(link => { link.href = OWNER.upworkUrl; link.target = '_blank'; link.rel = 'noopener'; });
 document.querySelectorAll('[data-email]').forEach(link => {
   link.href = 'mailto:' + OWNER.email + '?subject=' + encodeURIComponent('Project inquiry from your portfolio');
