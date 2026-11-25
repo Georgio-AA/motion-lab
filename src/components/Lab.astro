@@ -27,6 +27,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
             <ul class="chips" aria-label="Techniques">{d.tags.map(t => <li>{t}</li>)}</ul>
             <p class="lab-tech">{d.tech}</p>
           </div>
+          <span class="lab-glare" aria-hidden="true"></span>
         </a>
       </li>
     ))}
@@ -37,7 +38,10 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
   .lab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 20px; list-style: none; padding: 0; }
   .lab-grid > li { display: flex; }
   .lab-card {
+    position: relative;
     display: flex; flex-direction: column; width: 100%; overflow: hidden;
+    /* Cursor tilt (src/scripts/tilt.js) drives these variables; translate stays free for the hover lift. */
+    transform: perspective(1100px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
     border-radius: var(--radius); border: 1px solid var(--line);
     background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 7%, #0d130f), #0b100df0);
     transition: border-color .35s, translate .45s var(--ease-out), box-shadow .45s;
@@ -46,6 +50,12 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
     border-color: color-mix(in srgb, var(--accent) 55%, transparent);
     translate: 0 -6px;
     box-shadow: 0 24px 60px -24px color-mix(in srgb, var(--accent) 45%, transparent);
+  }
+  .lab-card.is-tilting { will-change: transform; }
+  .lab-glare {
+    position: absolute; inset: 0; z-index: 2; pointer-events: none; border-radius: inherit;
+    background: radial-gradient(circle at var(--glare-x, 50%) var(--glare-y, 50%), #ffffff26, transparent 55%);
+    opacity: var(--glare-o, 0);
   }
   .lab-media { position: relative; aspect-ratio: 16 / 9; background: var(--base); overflow: hidden; }
   .lab-media img, .lab-media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }

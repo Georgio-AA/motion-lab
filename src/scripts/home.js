@@ -1,4 +1,5 @@
 import { initHero } from './ribbons.js';
+import { initTilt } from './tilt.js';
 
 const DEFAULT_PALETTE = ['#d5f591', '#78cfac'];
 
@@ -45,6 +46,9 @@ export function initHome() {
     card.addEventListener('pointerleave', leave);
     card.addEventListener('blur', leave);
   });
+
+  // Cards lean toward the cursor, as on the original site.
+  initTilt(cards);
 
   // Pause any running film when the tab is hidden.
   document.addEventListener('visibilitychange', () => {
