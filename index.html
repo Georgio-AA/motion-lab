@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -7,6 +7,11 @@
   <title>Georgio Abi Aad — Full-Stack Software Engineer</title>
   <meta name="description" content="Full-stack software engineer: web apps, .NET and desktop systems, APIs and cloud delivery, plus eleven interactive web concepts.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23101411'/%3E%3Cpath d='M32 9v46M9 32h46M16 16l32 32M16 48l32-32' stroke='%23d5f591' stroke-width='5'/%3E%3C/svg%3E">
+  <link rel="canonical" href="https://georgio-aa.github.io/motion-lab/">
+  <!-- Manrope is the display face used throughout hub.css; without this every visitor saw Arial. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400..700&display=swap">
   <link rel="stylesheet" href="shared/hub.css">
   <link rel="stylesheet" href="shared/transition.css">
   <script type="module" src="shared/transition.js"></script>
@@ -22,6 +27,36 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://georgio-aa.github.io/motion-lab/og/home.jpg">
+
+<!-- Structured data: tells search engines who this site belongs to and what is on offer. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://georgio-aa.github.io/motion-lab/#person",
+      "name": "Georgio Abi Aad",
+      "jobTitle": "Full-Stack Software Engineer",
+      "url": "https://georgio-aa.github.io/motion-lab/",
+      "image": "https://georgio-aa.github.io/motion-lab/og/home.jpg",
+      "sameAs": ["https://www.upwork.com/freelancers/~01d09e8e7c1f809bab"],
+      "knowsAbout": ["Web development", "JavaScript", "Node.js", "three.js", "WebGL", "GSAP", "C#", ".NET", "WPF", "C/C++", "REST APIs", "MySQL", "MongoDB", "Docker", "Kubernetes", "Azure DevOps"]
+    },
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://georgio-aa.github.io/motion-lab/#service",
+      "name": "Georgio Abi Aad — Independent Software Engineering",
+      "url": "https://georgio-aa.github.io/motion-lab/",
+      "image": "https://georgio-aa.github.io/motion-lab/og/home.jpg",
+      "description": "Full-stack web apps, .NET and desktop systems, APIs and cloud delivery, with interactive front-ends.",
+      "founder": { "@id": "https://georgio-aa.github.io/motion-lab/#person" },
+      "areaServed": "Worldwide",
+      "serviceType": ["Web application development", ".NET and desktop software", "Backend and API development", "DevOps and CI/CD", "Interactive and 3D websites"]
+    }
+  ]
+}
+</script>
 </head>
 <body data-hub>
   <div class="world-atmosphere" aria-hidden="true">
@@ -36,11 +71,11 @@
         <nav class="header-nav" aria-label="Main navigation"><a href="#services">Services</a><a href="#work">Work <sup>11</sup></a><a href="#approach">Approach</a><a href="#contact">Let’s talk <span aria-hidden="true">&nearr;</span></a></nav>
       </header>
       <div class="hero-content">
-        <p class="eyebrow hero-role" data-owner="roleLine">Full-stack software engineer.</p>
-        <h1 id="hero-title">Creative web development.</h1>
+        <p class="eyebrow hero-role" data-owner="roleLine">Full-stack software engineer · Web, .NET &amp; cloud</p>
+        <h1 id="hero-title">Georgio Abi Aad</h1>
         <div class="hero-aside" aria-hidden="true"><span class="asterisk">✳</span><span>SOLID ENGINEERING.<br>GOOD DESIGN.<br>A LOT OF FEELING.</span></div>
         <div class="hero-bottom">
-          <div><p class="hero-promise" data-owner="promise">Software that feels alive.</p><p class="hero-intro" data-owner="intro">Web apps, .NET systems, APIs and cloud delivery. Built to work beautifully.</p></div>
+          <div><p class="hero-promise" data-owner="promise">Software that feels alive.</p><p class="hero-intro" data-owner="intro">Web apps, .NET and desktop systems, APIs and the infrastructure behind them, finished with interfaces people remember.</p></div>
           <div class="hero-actions"><a class="button button-light magnetic" href="#work"><span>See the work <b aria-hidden="true">&darr;</b></span></a><a class="button button-outline magnetic" href="#" data-upwork><span>Hire me on Upwork <b aria-hidden="true">&nearr;</b></span></a></div>
         </div>
       </div>
@@ -61,7 +96,7 @@
       <div class="work-heading reveal-section"><div><p class="eyebrow">THE FRONT-END SHOWREEL / ELEVEN POSSIBILITIES</p><h2 id="work-title" data-split>Follow the feeling.</h2></div><p>The part you see. Eleven live concepts,<br>each one ready to sit on a real backend.</p></div>
       <article class="work-item theme-restaurant" id="work-10" data-demo="10" aria-labelledby="title-10">
         <div class="work-copy">
-          <p class="work-kicker"><span>10</span> / A TASTE OF YOUR BUSINESS</p>
+          <p class="work-kicker"><span>01</span> / A TASTE OF YOUR BUSINESS</p>
           <h2 id="title-10" data-split>Restaurant</h2>
           <p class="benefit">Bring your atmosphere online and make planning a visit effortless.</p>
           <ul class="tech-tags" aria-label="Techniques"><li>Cinematic scroll film</li><li>Menu presentation</li><li>Table reservation</li></ul>
@@ -103,7 +138,7 @@
       </article>
       <article class="work-item theme-ops" id="work-08" data-demo="08" aria-labelledby="title-08">
         <div class="work-copy">
-          <p class="work-kicker"><span>08</span> / SYSTEMS, MADE TANGIBLE</p>
+          <p class="work-kicker"><span>03</span> / SYSTEMS, MADE TANGIBLE</p>
           <h2 id="title-08" data-split>Ops Worlds</h2>
           <p class="benefit">Explain complex operations through a world people can explore.</p>
           <ul class="tech-tags" aria-label="Techniques"><li>3D simulation</li><li>Process animation</li><li>Live controls</li></ul>
@@ -124,7 +159,7 @@
       </article>
       <article class="work-item theme-iso" id="work-07" data-demo="07" aria-labelledby="title-07">
         <div class="work-copy">
-          <p class="work-kicker"><span>07</span> / A WORLD WORTH EXPLORING</p>
+          <p class="work-kicker"><span>04</span> / A WORLD WORTH EXPLORING</p>
           <h2 id="title-07" data-split>Iso Worlds</h2>
           <p class="benefit">Give visitors a hands-on way to explore your space or service.</p>
           <ul class="tech-tags" aria-label="Techniques"><li>Isometric 3D</li><li>Interactive maps</li><li>Spatial interfaces</li></ul>
@@ -145,7 +180,7 @@
       </article>
       <article class="work-item theme-saas" id="work-09" data-demo="09" aria-labelledby="title-09">
         <div class="work-copy">
-          <p class="work-kicker"><span>09</span> / FROM PRODUCT TO PROMISE</p>
+          <p class="work-kicker"><span>05</span> / FROM PRODUCT TO PROMISE</p>
           <h2 id="title-09" data-split>SaaS Landing</h2>
           <p class="benefit">Explain your product clearly and guide visitors toward a trial.</p>
           <ul class="tech-tags" aria-label="Techniques"><li>Landing page design</li><li>Motion systems</li><li>Responsive layout</li></ul>
@@ -166,7 +201,7 @@
       </article>
       <article class="work-item theme-ecommerce" id="work-11" data-demo="11" aria-labelledby="title-11">
         <div class="work-copy">
-          <p class="work-kicker"><span>11</span> / FROM DISCOVERY TO DESIRE</p>
+          <p class="work-kicker"><span>06</span> / FROM DISCOVERY TO DESIRE</p>
           <h2 id="title-11" data-split>E-commerce Product Page</h2>
           <p class="benefit">Product pages that make people want to buy</p>
           <ul class="tech-tags" aria-label="Techniques"><li>3D product</li><li>Cart drawer</li><li>Checkout flow</li></ul>
@@ -187,7 +222,7 @@
       </article>
       <article class="work-item theme-auth" id="work-04" data-demo="04" aria-labelledby="title-04">
         <div class="work-copy">
-          <p class="work-kicker"><span>04</span> / SMALL MOMENTS, BIG FEELING</p>
+          <p class="work-kicker"><span>07</span> / SMALL MOMENTS, BIG FEELING</p>
           <h2 id="title-04" data-split>Playful Auth</h2>
           <p class="benefit">Give everyday sign-ins a little personality and clear feedback.</p>
           <ul class="tech-tags" aria-label="Techniques"><li>Form interactions</li><li>Micro-animation</li><li>Input feedback</li></ul>
@@ -208,7 +243,7 @@
       </article>
       <article class="work-item theme-dashboard" id="work-05" data-demo="05" aria-labelledby="title-05">
         <div class="work-copy">
-          <p class="work-kicker"><span>05</span> / DATA WITH DIRECTION</p>
+          <p class="work-kicker"><span>08</span> / DATA WITH DIRECTION</p>
           <h2 id="title-05" data-split>Dashboards</h2>
           <p class="benefit">Make complex information easier to understand and act on.</p>
           <ul class="tech-tags" aria-label="Techniques"><li>Data visualization</li><li>Animated charts</li><li>UI transitions</li></ul>
@@ -229,7 +264,7 @@
       </article>
       <article class="work-item theme-editorial" id="work-03" data-demo="03" aria-labelledby="title-03">
         <div class="work-copy">
-          <p class="work-kicker"><span>03</span> / CONTENT &amp; CHARACTER</p>
+          <p class="work-kicker"><span>09</span> / CONTENT &amp; CHARACTER</p>
           <h2 id="title-03" data-split>Editorial</h2>
           <p class="benefit">Turn your brand’s story into a page people want to read.</p>
           <ul class="tech-tags" aria-label="Techniques"><li>Expressive typography</li><li>Scroll reveals</li><li>Art direction</li></ul>
@@ -250,7 +285,7 @@
       </article>
       <article class="work-item theme-story" id="work-01" data-demo="01" aria-labelledby="title-01">
         <div class="work-copy">
-          <p class="work-kicker"><span>01</span> / SCROLL &amp; STORY</p>
+          <p class="work-kicker"><span>10</span> / SCROLL &amp; STORY</p>
           <h2 id="title-01" data-split>Scroll Story</h2>
           <p class="benefit">Product launches that tell a story as you scroll.</p>
           <ul class="tech-tags" aria-label="Techniques"><li>3D scenes</li><li>Scroll choreography</li><li>Camera motion</li></ul>
@@ -271,7 +306,7 @@
       </article>
       <article class="work-item theme-network" id="work-06" data-demo="06" aria-labelledby="title-06">
         <div class="work-copy">
-          <p class="work-kicker"><span>06</span> / MAKE CONNECTIONS VISIBLE</p>
+          <p class="work-kicker"><span>11</span> / MAKE CONNECTIONS VISIBLE</p>
           <h2 id="title-06" data-split>Node Networks</h2>
           <p class="benefit">Show how your product, people or ideas connect at a glance.</p>
           <ul class="tech-tags" aria-label="Techniques"><li>Particle systems</li><li>Canvas rendering</li><li>Interactive graphs</li></ul>
@@ -339,8 +374,8 @@
       <div class="contact-bottom"><p data-owner="contactNote">A web app, a .NET project, a backend, or a website that needs to stand out.</p><div class="contact-actions"><a class="button button-light magnetic" href="#" data-upwork><span>Hire me on Upwork <b aria-hidden="true">&nearr;</b></span></a><a class="button button-outline magnetic" href="#contact" data-email><span>Email me <b aria-hidden="true">&nearr;</b></span></a></div></div>
     </section>
   </main>
-  <footer class="footer"><a href="#top" data-owner="name">Independent software engineering</a><span>WEB · .NET · CLOUD / BUILT TO LAST</span><a href="#top">BACK TO TOP &uarr;</a></footer>
-  <nav class="progress-index" aria-label="Jump to a demo"><span class="index-caption" aria-hidden="true">WORK</span><a href="#work-10" aria-label="01 of 11: Restaurant, concept 10">01<i aria-hidden="true"></i></a><a href="#work-02" aria-label="02 of 11: Living Backgrounds, concept 02">02<i aria-hidden="true"></i></a><a href="#work-08" aria-label="03 of 11: Ops Worlds, concept 08">03<i aria-hidden="true"></i></a><a href="#work-07" aria-label="04 of 11: Iso Worlds, concept 07">04<i aria-hidden="true"></i></a><a href="#work-09" aria-label="05 of 11: SaaS Landing, concept 09">05<i aria-hidden="true"></i></a><a href="#work-11" aria-label="06 of 11: E-commerce Product Page, concept 11">06<i aria-hidden="true"></i></a><a href="#work-04" aria-label="07 of 11: Playful Auth, concept 04">07<i aria-hidden="true"></i></a><a href="#work-05" aria-label="08 of 11: Dashboards, concept 05">08<i aria-hidden="true"></i></a><a href="#work-03" aria-label="09 of 11: Editorial, concept 03">09<i aria-hidden="true"></i></a><a href="#work-01" aria-label="10 of 11: Scroll Story, concept 01">10<i aria-hidden="true"></i></a><a href="#work-06" aria-label="11 of 11: Node Networks, concept 06">11<i aria-hidden="true"></i></a></nav>
+  <footer class="footer"><a href="#top" data-owner="name">Georgio Abi Aad</a><span>WEB · .NET · CLOUD / BUILT TO LAST</span><a href="#top">BACK TO TOP &uarr;</a></footer>
+  <nav class="progress-index" aria-label="Jump to a demo"><span class="index-caption" aria-hidden="true">WORK</span><a href="#work-10" aria-label="01 of 11: Restaurant">01<i aria-hidden="true"></i></a><a href="#work-02" aria-label="02 of 11: Living Backgrounds">02<i aria-hidden="true"></i></a><a href="#work-08" aria-label="03 of 11: Ops Worlds">03<i aria-hidden="true"></i></a><a href="#work-07" aria-label="04 of 11: Iso Worlds">04<i aria-hidden="true"></i></a><a href="#work-09" aria-label="05 of 11: SaaS Landing">05<i aria-hidden="true"></i></a><a href="#work-11" aria-label="06 of 11: E-commerce Product Page">06<i aria-hidden="true"></i></a><a href="#work-04" aria-label="07 of 11: Playful Auth">07<i aria-hidden="true"></i></a><a href="#work-05" aria-label="08 of 11: Dashboards">08<i aria-hidden="true"></i></a><a href="#work-03" aria-label="09 of 11: Editorial">09<i aria-hidden="true"></i></a><a href="#work-01" aria-label="10 of 11: Scroll Story">10<i aria-hidden="true"></i></a><a href="#work-06" aria-label="11 of 11: Node Networks">11<i aria-hidden="true"></i></a></nav>
   <noscript><p class="no-script">All demos open directly. Enable JavaScript for the living ribbons and preview films.</p></noscript>
   <script type="module" src="shared/hub.js"></script>
 </body>

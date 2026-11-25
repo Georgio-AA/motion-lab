@@ -62,8 +62,10 @@ body[data-effect-active="false"] .asterisk { animation-play-state:paused; }
 .button b { font-size:20px; font-weight:400; }
 .button-light { background:var(--hub-lime); color:var(--hub-dark); }
 .button-light:hover { background:#e5ffb4; box-shadow:0 0 32px #d5f5911c; }
-.button-outline { border-color:#e4e9da60; color:var(--hub-paper); }
-.button-outline:hover { background:#e4e9da13; border-color:var(--hub-lime); }
+/* A dark, blurred backing keeps outline labels legible where the ribbons cross them. */
+.button-outline { border-color:#e4e9da60; color:var(--hub-paper); background:#0a0f0cb8; -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); }
+.button-outline:hover { background:#1a2119d9; border-color:var(--hub-lime); }
+.hero-intro,.hero-promise,.contact-bottom > p { text-shadow:0 1px 14px #050808, 0 0 2px #050808; }
 .hero-foot { padding:22px var(--hub-pad); border-top:1px solid #ffffff1c; display:flex; align-items:center; justify-content:space-between; gap:24px; font-size:12px; letter-spacing:.07em; }
 .hero-foot > span:first-child { color:#a1ab96; }
 .hero-foot a { display:flex; align-items:center; gap:20px; min-height:44px; }
