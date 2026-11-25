@@ -1,0 +1,65 @@
+---
+import { owner, steps } from '../data/site.js';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const stack = ['C# / .NET', 'WPF', 'C / C++', 'Node.js', 'JavaScript', 'Python', 'MySQL / MongoDB', 'Docker', 'Kubernetes / Helm', 'Azure DevOps CI/CD', 'three.js / WebGL', 'GSAP'];
+---
+<section class="section" id="process" aria-labelledby="process-title">
+  <div class="section-head reveal">
+    <div>
+      <span class="eyebrow">How I work</span>
+      <h2 id="process-title">A clear path to production.</h2>
+    </div>
+  </div>
+  <ol class="steps" role="list">
+    {steps.map((s, i) => (
+      <li class="step reveal">
+        <span class="step-num">{String(i + 1).padStart(2, '0')}</span>
+        <h3>{s.title}</h3>
+        <p>{s.text}</p>
+      </li>
+    ))}
+  </ol>
+</section>
+
+<section class="section section--band" id="about" aria-labelledby="about-title">
+  <div class="about reveal">
+    <figure class="about-photo">
+      {owner.photo
+        ? <img src={`${base}${owner.photo}`} alt={owner.name} width="480" height="600" loading="lazy">
+        : <div class="about-placeholder" role="img" aria-label={`${owner.name} monogram`}><span>{owner.initials}</span></div>}
+    </figure>
+    <div class="about-copy">
+      <span class="eyebrow">About</span>
+      <h2 id="about-title">Hi, I’m {owner.first}.</h2>
+      <p class="about-lead">I’m a full-stack software engineer who cares about two things: software that keeps working, and interfaces people actually enjoy using.</p>
+      <p>My day job is production C#/.NET software that configures and tests hardware on engineering and production lines, including the bridges between .NET and native C/C++ libraries. Independently, I build web apps, backends and interactive websites, and I designed and shipped Crewbay, a desktop product, end to end.</p>
+      <p>That mix means you get one person who can design the interface, build the backend behind it, and set up the pipeline that deploys it.</p>
+      <ul class="chips about-stack" aria-label="Technology I use">{stack.map(s => <li>{s}</li>)}</ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+  .step { padding-top: 24px; border-top: 1px solid var(--line-strong); }
+  .step-num { display: block; font-size: 13px; font-weight: 600; color: var(--lime); margin-bottom: 22px; }
+  .step h3 { font-size: var(--step-1); letter-spacing: -.03em; margin-bottom: 12px; }
+  .step p { color: var(--muted); font-size: 15px; }
+
+  .about { display: grid; grid-template-columns: minmax(220px, 360px) minmax(0, 1fr); gap: clamp(32px, 6vw, 96px); align-items: center; }
+  .about-photo { margin: 0; }
+  .about-photo img, .about-placeholder { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 28px; border: 1px solid var(--line-strong); }
+  .about-placeholder { display: grid; place-items: center; background: radial-gradient(circle at 70% 80%, #78cfac2e, transparent 55%), linear-gradient(200deg, #18211a, #0b100d); }
+  .about-placeholder span { font-size: clamp(72px, 9vw, 132px); font-weight: 700; letter-spacing: -.08em; color: var(--lime); }
+  .about-copy h2 { font-size: var(--step-3); margin-bottom: 22px; }
+  .about-copy p { color: var(--muted); max-width: 620px; }
+  .about-copy p + p { margin-top: 14px; }
+  .about-lead { font-size: var(--step-1); color: var(--ink) !important; line-height: 1.45; }
+  .about-stack { margin-top: 28px; }
+
+  @media (max-width: 860px) {
+    .steps { grid-template-columns: 1fr; gap: 20px; }
+    .about { grid-template-columns: 1fr; }
+    .about-photo { max-width: 220px; }
+  }
+</style>

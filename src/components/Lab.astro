@@ -1,0 +1,70 @@
+---
+import { demos } from '../data/site.js';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<section class="section" id="lab" aria-labelledby="lab-title">
+  <div class="section-head reveal">
+    <div>
+      <span class="eyebrow">Interactive lab · {demos.length} live concepts</span>
+      <h2 id="lab-title">Follow the feeling.</h2>
+    </div>
+    <p>The part you see. Each concept is a working page you can open and play with, and each one is ready to sit on a real backend.</p>
+  </div>
+
+  <ul class="lab-grid" role="list">
+    {demos.map((d, i) => (
+      <li class="reveal" style={`--accent:${d.light};--base:${d.base}`}>
+        <a class="lab-card" href={`${base}${d.slug}/index.html`} data-palette={`${d.light},${d.base}`}>
+          <div class="lab-media">
+            <img src={`${base}og/${d.slug}.jpg`} alt="" width="1200" height="630" loading="lazy" decoding="async">
+            <video muted loop playsinline preload="none" data-src={`${base}previews/${d.slug}.mp4`} aria-hidden="true" tabindex="-1"></video>
+            <span class="lab-open" aria-hidden="true">&nearr;</span>
+          </div>
+          <div class="lab-copy">
+            <p class="lab-meta"><span>{String(i + 1).padStart(2, '0')}</span> {d.label}</p>
+            <h3>{d.title}</h3>
+            <p class="lab-benefit">{d.benefit}</p>
+            <ul class="chips" aria-label="Techniques">{d.tags.map(t => <li>{t}</li>)}</ul>
+            <p class="lab-tech">{d.tech}</p>
+          </div>
+        </a>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .lab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 20px; list-style: none; padding: 0; }
+  .lab-grid > li { display: flex; }
+  .lab-card {
+    display: flex; flex-direction: column; width: 100%; overflow: hidden;
+    border-radius: var(--radius); border: 1px solid var(--line);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 7%, #0d130f), #0b100df0);
+    transition: border-color .35s, translate .45s var(--ease-out), box-shadow .45s;
+  }
+  .lab-card:hover, .lab-card:focus-visible {
+    border-color: color-mix(in srgb, var(--accent) 55%, transparent);
+    translate: 0 -6px;
+    box-shadow: 0 24px 60px -24px color-mix(in srgb, var(--accent) 45%, transparent);
+  }
+  .lab-media { position: relative; aspect-ratio: 16 / 9; background: var(--base); overflow: hidden; }
+  .lab-media img, .lab-media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .lab-media img { transition: scale .6s var(--ease-out); }
+  .lab-card:hover .lab-media img { scale: 1.04; }
+  .lab-media video { opacity: 0; transition: opacity .4s; }
+  .lab-media video.is-playing { opacity: 1; }
+  .lab-open {
+    position: absolute; right: 14px; top: 14px; display: grid; place-items: center; width: 40px; height: 40px;
+    border-radius: 50%; background: var(--accent); color: #080b0e; font-size: 20px;
+    scale: .7; opacity: 0; transition: scale .35s var(--ease-out), opacity .35s;
+  }
+  .lab-card:hover .lab-open, .lab-card:focus-visible .lab-open { scale: 1; opacity: 1; }
+  .lab-copy { display: flex; flex-direction: column; gap: 10px; padding: 22px 22px 24px; flex: 1; }
+  .lab-meta { font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .lab-meta span { color: var(--accent); margin-right: 6px; }
+  .lab-copy h3 { font-size: var(--step-2); }
+  .lab-benefit { color: #cfd6cb; font-size: 15px; }
+  .lab-copy .chips { margin-top: 4px; }
+  .lab-tech { margin-top: auto; padding-top: 10px; font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--faint); }
+  @media (hover: none) { .lab-open { scale: 1; opacity: 1; } }
+</style>

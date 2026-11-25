@@ -1,0 +1,85 @@
+---
+import { owner, faq } from '../data/site.js';
+const mailto = `mailto:${owner.email}?subject=${encodeURIComponent('Project inquiry from your portfolio')}`;
+const year = new Date().getFullYear();
+---
+<section class="section section--band" id="faq" aria-labelledby="faq-title">
+  <div class="faq-layout">
+    <div class="section-head faq-head reveal">
+      <div>
+        <span class="eyebrow">Questions</span>
+        <h2 id="faq-title">Before you ask.</h2>
+      </div>
+    </div>
+    <!-- Native exclusive accordion: the shared name attribute keeps one answer open at a time. -->
+    <div class="faq-list reveal">
+      {faq.map((f, i) => (
+        <details name="faq" open={i === 0}>
+          <summary>{f.q}<span aria-hidden="true"></span></summary>
+          <p>{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="section contact" id="contact" aria-labelledby="contact-title">
+  <div class="reveal">
+    <span class="eyebrow">Your next project starts with a conversation</span>
+    <h2 id="contact-title">Let’s make something worth feeling.</h2>
+    <div class="contact-bottom">
+      <p>A web app, a .NET project, a backend, or a website that needs to stand out? Tell me what you want to build and I’ll reply with questions, a plan and a quote.</p>
+      <div class="contact-actions">
+        <a class="btn btn--primary" href={owner.upworkUrl} target="_blank" rel="noopener">Hire me on Upwork <b aria-hidden="true">&nearr;</b></a>
+        <a class="btn btn--ghost" href={mailto} aria-label={`Email ${owner.name} at ${owner.email}`}>Email me <b aria-hidden="true">&nearr;</b></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <span>© {year} {owner.name}</span>
+  <span>Web · .NET · Cloud / Built to last</span>
+  <a href="#top">Back to top &uarr;</a>
+</footer>
+
+<style>
+  .faq-layout { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: clamp(24px, 6vw, 96px); align-items: start; }
+  .faq-head { margin-bottom: 0; }
+  .faq-list { border-top: 1px solid var(--line-strong); }
+  details { border-bottom: 1px solid var(--line-strong); }
+  summary {
+    display: flex; justify-content: space-between; align-items: center; gap: 24px;
+    padding: 22px 0; cursor: pointer; list-style: none;
+    font-size: var(--step-1); font-weight: 500; letter-spacing: -.02em;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary span { position: relative; flex: none; width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--line-strong); }
+  summary span::before, summary span::after { content: ''; position: absolute; left: 50%; top: 50%; width: 12px; height: 1.5px; background: var(--lime); translate: -50% -50%; transition: rotate .3s var(--ease-out); }
+  summary span::after { rotate: 90deg; }
+  details[open] summary span::after { rotate: 0deg; }
+  details p { padding: 0 48px 24px 0; color: var(--muted); }
+  /* Smooth open/close where the browser supports animating to auto height. */
+  @supports (interpolate-size: allow-keywords) {
+    :root { interpolate-size: allow-keywords; }
+    details::details-content { block-size: 0; overflow: hidden; transition: block-size .35s var(--ease-out), content-visibility .35s allow-discrete; }
+    details[open]::details-content { block-size: auto; }
+  }
+
+  .contact { position: relative; overflow: hidden; }
+  .contact h2 { font-size: clamp(2.8rem, 1.6rem + 6vw, 8.2rem); line-height: 1.02; letter-spacing: -.065em; max-width: 1100px; }
+  .contact-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 28px 48px; margin-top: clamp(32px, 5vw, 56px); }
+  .contact-bottom p { max-width: 440px; color: #c9d0c4; text-shadow: 0 1px 14px #050808; }
+  .contact-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+  .site-footer { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px 24px; padding: 22px var(--pad); border-top: 1px solid var(--line); background: #080d0bdc; font-size: 13px; color: var(--muted); }
+  .site-footer a { min-height: 44px; display: flex; align-items: center; }
+
+  @media (max-width: 860px) {
+    .faq-layout { grid-template-columns: 1fr; }
+    details p { padding-right: 0; }
+  }
+  @media (max-width: 520px) {
+    .contact-actions .btn { flex: 1 1 100%; }
+  }
+</style>

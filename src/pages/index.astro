@@ -1,0 +1,32 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Cases from '../components/Cases.astro';
+import Lab from '../components/Lab.astro';
+import Services from '../components/Services.astro';
+import About from '../components/About.astro';
+import Contact from '../components/Contact.astro';
+---
+<Base>
+  <a class="skip-link" href="#work">Skip to the work</a>
+  <Header />
+  <main>
+    <Hero />
+    <Cases />
+    <Lab />
+    <Services />
+    <About />
+    <Contact />
+  </main>
+</Base>
+
+<script>
+  import { initHome } from '../scripts/home.js';
+  initHome();
+</script>
+
+<style>
+  .skip-link { position: fixed; z-index: 100; top: 12px; left: 12px; padding: 12px 20px; border-radius: 99px; background: var(--lime); color: var(--bg); font-weight: 600; translate: 0 -200%; }
+  .skip-link:focus { translate: 0 0; }
+</style>

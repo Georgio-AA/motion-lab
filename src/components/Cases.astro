@@ -1,0 +1,71 @@
+---
+import { cases } from '../data/site.js';
+---
+<section class="section section--band" id="work" aria-labelledby="work-title">
+  <div class="section-head reveal">
+    <div>
+      <span class="eyebrow">Selected work · Shipped</span>
+      <h2 id="work-title">Built to run.</h2>
+    </div>
+    <p>Real software, not concepts: products and systems I have designed, built, tested and shipped.</p>
+  </div>
+
+  <div class="case-grid">
+    {cases.map((c, i) => (
+      <article class:list={['case reveal', { 'case--featured': i === 0 }]} style={`--accent:${c.accent}`} aria-labelledby={`case-${c.id}`}>
+       <div class="case-inner">
+        <header class="case-head">
+          <span class="case-kicker">{c.kicker}</span>
+          <h3 id={`case-${c.id}`}>{c.title}</h3>
+          <p class="case-summary">{c.summary}</p>
+          <p class="case-role"><span>Role</span> {c.role}</p>
+        </header>
+        <div class="case-body">
+          <h4 class="visually-hidden">What I built</h4>
+          <ul class="case-points" role="list">
+            {c.points.map(p => <li>{p}</li>)}
+          </ul>
+          <ul class="chips" aria-label="Stack">
+            {c.stack.map(s => <li>{s}</li>)}
+          </ul>
+        </div>
+       </div>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+  .case-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+  .case {
+    container-type: inline-size;
+    position: relative; overflow: hidden;
+    padding: clamp(26px, 3vw, 40px); border-radius: var(--radius);
+    border: 1px solid color-mix(in srgb, var(--accent) 26%, transparent);
+    background: linear-gradient(150deg, color-mix(in srgb, var(--accent) 9%, #0d130f), #0b100dee 60%);
+  }
+  .case::before { content: ''; position: absolute; width: 380px; height: 380px; right: -140px; top: -170px; border-radius: 50%; background: radial-gradient(circle, color-mix(in srgb, var(--accent) 22%, transparent), transparent 70%); pointer-events: none; }
+  .case--featured { grid-column: 1 / -1; }
+  .case-kicker { font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
+  .case h3 { font-size: var(--step-3); margin: 10px 0 14px; }
+  .case:not(.case--featured) h3 { font-size: var(--step-2); }
+  .case-summary { color: #d3d9cf; max-width: 560px; }
+  .case-role { margin-top: 14px; font-size: 14px; color: var(--muted); }
+  .case-role span { display: inline-block; margin-right: 8px; padding: 2px 9px; border-radius: 99px; background: color-mix(in srgb, var(--accent) 16%, transparent); color: var(--accent); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+  .case-points { display: grid; gap: 12px; margin-bottom: 22px; }
+  .case-points li { position: relative; padding-left: 26px; color: #dfe5d9; font-size: 15px; }
+  .case-points li::before { content: '✳'; position: absolute; left: 0; top: 0; color: var(--accent); font-size: 13px; }
+
+  .case-inner { position: relative; display: grid; gap: 28px; }
+  .case-head, .case-body { min-width: 0; }
+
+  /* Container query: any case card splits into two columns only when the card itself has room. */
+  @container (min-width: 760px) {
+    .case-inner { grid-template-columns: 1fr 1fr; align-items: start; gap: 56px; }
+    .case-body { padding-top: 34px; }
+  }
+
+  @media (max-width: 860px) {
+    .case-grid { grid-template-columns: 1fr; }
+  }
+</style>

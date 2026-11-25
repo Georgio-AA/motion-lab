@@ -1,0 +1,92 @@
+---
+import { owner } from '../data/site.js';
+const links = [
+  { href: '#work', label: 'Work' },
+  { href: '#lab', label: 'Lab' },
+  { href: '#services', label: 'Services' },
+  { href: '#about', label: 'About' },
+  { href: '#faq', label: 'FAQ' },
+];
+---
+<header class="site-header">
+  <a class="brand" href="#top" aria-label={`${owner.name}, back to top`}>
+    <span class="brand-mark">{owner.initials}.</span>
+    <span class="brand-text">Independent<br>software engineering</span>
+  </a>
+
+  <nav class="nav" aria-label="Main">
+    {links.map(l => <a href={l.href}>{l.label}</a>)}
+  </nav>
+
+  <a class="btn btn--primary header-cta" href="#contact">Let’s talk <b aria-hidden="true">&nearr;</b></a>
+
+  <!-- Native Popover API: opens, closes on Escape/outside click and traps nothing. No menu JS. -->
+  <button class="menu-button" popovertarget="mobile-menu" aria-label="Open menu">
+    <span aria-hidden="true"></span><span aria-hidden="true"></span>
+  </button>
+  <div id="mobile-menu" class="mobile-menu" popover>
+    <button class="menu-close" popovertarget="mobile-menu" popovertargetaction="hide" aria-label="Close menu">&times;</button>
+    <nav aria-label="Mobile">
+      {links.map(l => <a href={l.href}>{l.label}</a>)}
+      <a class="btn btn--primary" href="#contact">Let’s talk <b aria-hidden="true">&nearr;</b></a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  // Popover links: close the menu, then follow the in-page anchor.
+  document.querySelectorAll<HTMLAnchorElement>('#mobile-menu a').forEach(a =>
+    a.addEventListener('click', () => document.getElementById('mobile-menu')?.hidePopover()));
+  // Header gains a backdrop once the page scrolls.
+  const header = document.querySelector('.site-header');
+  const onScroll = () => header?.classList.toggle('is-scrolled', scrollY > 24);
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+</script>
+
+<style>
+  .site-header {
+    position: fixed; inset: 0 0 auto; z-index: 50;
+    display: flex; align-items: center; gap: 32px;
+    padding: 16px var(--pad);
+    transition: background .3s, border-color .3s, padding .3s;
+    border-bottom: 1px solid transparent;
+  }
+  .site-header.is-scrolled {
+    background: #0b100dcc; border-color: var(--line);
+    -webkit-backdrop-filter: blur(14px) saturate(1.2); backdrop-filter: blur(14px) saturate(1.2);
+    padding-block: 10px;
+  }
+  .brand { display: flex; align-items: center; gap: 14px; min-height: 44px; }
+  .brand-mark { font-size: 30px; font-weight: 700; letter-spacing: -.08em; color: var(--lime); line-height: 1; }
+  .brand-text { font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; line-height: 1.35; color: var(--muted); }
+  .nav { display: flex; gap: 30px; margin-left: auto; font-size: 15px; font-weight: 500; }
+  .nav a { position: relative; display: flex; align-items: center; min-height: 44px; color: #dfe5d9; }
+  .nav a::after { content: ''; position: absolute; inset: auto 0 9px; height: 1px; background: var(--lime); scale: 0 1; transform-origin: left; transition: scale .3s var(--ease-out); }
+  .nav a:hover { color: var(--ink); }
+  .nav a:hover::after { scale: 1 1; }
+  .header-cta { min-height: 44px; padding: 0 20px; }
+
+  .menu-button { display: none; width: 46px; height: 46px; margin-left: auto; border-radius: 50%; border: 1px solid var(--line-strong); background: #0a0f0cb8; place-content: center; gap: 6px; }
+  .menu-button span { display: block; width: 18px; height: 1.5px; background: var(--ink); }
+
+  .mobile-menu {
+    inset: 0; width: 100%; height: 100dvh; max-width: none; max-height: none; margin: 0;
+    border: 0; padding: 96px var(--pad) 40px; background: #0b100df2; color: var(--ink);
+    -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+    opacity: 0; translate: 0 -12px;
+    transition: opacity .3s, translate .3s var(--ease-out), display .3s allow-discrete, overlay .3s allow-discrete;
+  }
+  .mobile-menu:popover-open { opacity: 1; translate: 0 0; }
+  @starting-style { .mobile-menu:popover-open { opacity: 0; translate: 0 -12px; } }
+  .menu-close { position: absolute; top: 16px; right: var(--pad); width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--line-strong); font-size: 26px; line-height: 1; }
+  .mobile-menu nav { display: grid; gap: 6px; }
+  .mobile-menu nav a:not(.btn) { font-size: 34px; font-weight: 500; letter-spacing: -.04em; padding: 6px 0; border-bottom: 1px solid var(--line); }
+  .mobile-menu .btn { margin-top: 24px; justify-self: start; }
+
+  @media (max-width: 860px) {
+    .nav, .header-cta { display: none; }
+    .menu-button { display: grid; }
+    .brand-text { display: none; }
+  }
+</style>

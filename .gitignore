@@ -9,3 +9,8 @@ AGENTS.md
 **/verification/chrome-profile/
 videos/
 AUDIT.md
+
+# Build output and dependencies
+node_modules/
+dist/
+.astro/

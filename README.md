@@ -20,7 +20,24 @@ Eleven concept demos, each a standalone page:
 | 10 | Restaurant | Cinematic scroll-film restaurant site |
 | 11 | E-commerce | Product page with a 3D product, live finishes and a cart drawer |
 
-Built with plain HTML, CSS and JavaScript, three.js and GSAP. No build step.
+The home page is built with [Astro](https://astro.build) (static output, self-hosted Manrope, native
+scroll-driven animations, Popover API menu). The eleven demos are plain HTML, CSS and JavaScript with
+three.js and GSAP; they live untouched in `public/` and need no build.
 All brands, products and data in the demos are fictional concept work.
 
-Run locally: `python -m http.server 5173` in this folder, then open http://localhost:5173.
+## Develop
+
+```bash
+npm install
+npm run dev      # http://localhost:4321/motion-lab/
+npm run build    # static site in dist/
+```
+
+Home page copy lives in `src/data/site.js`. To add a photo, put it in `public/img/` and set `owner.photo`.
+
+## Deploy
+
+Pushing to `main` runs `.github/workflows/deploy.yml`, which builds the site and publishes `dist/`
+to the `gh-pages` branch that GitHub Pages serves.
+
+To move to a custom domain, change `SITE` and `BASE` in `astro.config.mjs`.

@@ -1,0 +1,83 @@
+---
+import '@fontsource-variable/manrope';
+import '../styles/global.css';
+import { owner } from '../data/site.js';
+
+interface Props {
+  title?: string;
+  description?: string;
+  noindex?: boolean;
+}
+const {
+  title = `${owner.name} — Full-Stack Software Engineer`,
+  description = `${owner.name}, full-stack software engineer: web apps, .NET and desktop systems, APIs and cloud delivery, plus eleven interactive web concepts.`,
+  noindex = false,
+} = Astro.props;
+
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const home = new URL(base, Astro.site).href;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL(`${base}og/home.jpg`, Astro.site).href;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Person',
+      '@id': `${home}#person`,
+      name: owner.name,
+      jobTitle: 'Full-Stack Software Engineer',
+      url: home,
+      image: ogImage,
+      sameAs: [owner.upworkUrl],
+      knowsAbout: ['Web development', 'JavaScript', 'Node.js', 'three.js', 'WebGL', 'GSAP', 'C#', '.NET', 'WPF', 'C/C++', 'REST APIs', 'MySQL', 'MongoDB', 'Docker', 'Kubernetes', 'Azure DevOps'],
+    },
+    {
+      '@type': 'ProfessionalService',
+      '@id': `${home}#service`,
+      name: `${owner.name} — Independent Software Engineering`,
+      url: home,
+      image: ogImage,
+      description: 'Full-stack web apps, .NET and desktop systems, APIs and cloud delivery, with interactive front-ends.',
+      founder: { '@id': `${home}#person` },
+      areaServed: 'Worldwide',
+      serviceType: ['Web application development', '.NET and desktop software', 'Backend and API development', 'DevOps and CI/CD', 'Interactive and 3D websites'],
+    },
+  ],
+};
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark">
+    <meta name="theme-color" content="#101411">
+    <title>{title}</title>
+    <meta name="description" content={description}>
+    {noindex ? <meta name="robots" content="noindex"> : <link rel="canonical" href={canonical}>}
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23101411'/%3E%3Cpath d='M32 9v46M9 32h46M16 16l32 32M16 48l32-32' stroke='%23d5f591' stroke-width='5'/%3E%3C/svg%3E">
+    <link rel="sitemap" href={`${base}sitemap-index.xml`}>
+
+    <!-- Link previews (Upwork, LinkedIn, WhatsApp, X) -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content={`${owner.name} · Motion Lab`}>
+    <meta property="og:title" content={title}>
+    <meta property="og:description" content={description}>
+    <meta property="og:url" content={canonical}>
+    <meta property="og:image" content={ogImage}>
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content={ogImage}>
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+    <!-- Shared with every demo: the same lime page transition in both directions. -->
+    <link rel="stylesheet" href={`${base}shared/transition.css`}>
+    <script is:inline type="module" src={`${base}shared/transition.js`}></script>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

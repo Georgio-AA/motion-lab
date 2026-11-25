@@ -1,0 +1,38 @@
+---
+import { services } from '../data/site.js';
+---
+<section class="section section--band" id="services" aria-labelledby="services-title">
+  <div class="section-head reveal">
+    <div>
+      <span class="eyebrow">What I build · End to end</span>
+      <h2 id="services-title">More than the pixels.</h2>
+    </div>
+    <p>One person for the interface, the backend and the deployment. Every project gets a fixed quote after a short conversation.</p>
+  </div>
+
+  <ul class="service-grid" role="list">
+    {services.map((s, i) => (
+      <li class="service reveal">
+        <span class="service-num">{String(i + 1).padStart(2, '0')}</span>
+        <h3>{s.title}</h3>
+        <p class="service-text">{s.text}</p>
+        <ul class="service-list" role="list">{s.deliverables.map(d => <li>{d}</li>)}</ul>
+        <p class="service-stack">{s.stack}</p>
+        <a class="text-link" href="#contact">Get a quote <span aria-hidden="true">&rarr;</span></a>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 270px), 1fr)); gap: 20px; }
+  .service { display: flex; flex-direction: column; gap: 14px; padding: 28px 26px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); transition: border-color .3s; }
+  .service:hover { border-color: #d5f59166; }
+  .service-num { font-size: 13px; font-weight: 600; color: var(--lime); }
+  .service h3 { font-size: var(--step-1); letter-spacing: -.03em; }
+  .service-text { font-size: 15px; color: var(--muted); }
+  .service-list { display: grid; gap: 8px; margin: 4px 0 6px; }
+  .service-list li { display: flex; gap: 10px; font-size: 14px; color: #dfe5d9; }
+  .service-list li::before { content: '✓'; color: var(--lime); font-weight: 700; }
+  .service-stack { margin-top: auto; font-size: 12px; letter-spacing: .06em; color: #d5f591cc; }
+</style>
