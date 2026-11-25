@@ -44,8 +44,10 @@ const [firstName, ...rest] = owner.name.split(' ');
 </section>
 
 <style>
+  /* z-index -1: the atmosphere lives inside <main>'s stacking context, so at 0 it painted over every
+     non-positioned section (lab card text vanished until hover). -1 keeps it behind all content. */
   .atmosphere {
-    position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; color: var(--lime);
+    position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; color: var(--lime);
     background:
       radial-gradient(ellipse at 78% 32%, #d5f59124, transparent 62%),
       radial-gradient(ellipse at 25% 92%, #78cfac1c, transparent 60%),
